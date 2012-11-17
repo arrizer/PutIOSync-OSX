@@ -5,8 +5,8 @@
 
 @property (readonly) NSString *username;
 @property (readonly) NSString *eMailAddress;
-@property (readonly) NSString *freeDiskSpace;
-@property (readonly) NSInteger usedDiskSpace;
-@property (readonly) NSInteger totalDiskSpace;
+@property (readonly) NSUInteger freeDiskSpace;
+@property (readonly) NSUInteger usedDiskSpace;
+@property (readonly) NSUInteger totalDiskSpace;
 
 @end

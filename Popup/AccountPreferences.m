@@ -1,5 +1,8 @@
 
+#import "Utilities.h"
 #import "AccountPreferences.h"
+#import "SyncScheduler.h"
+#import "PutIODownload.h"
 
 @implementation AccountPreferences
 
@@ -29,6 +32,8 @@
 
 -(void)viewWillAppear
 {
+    [activityLabel setHidden:YES];
+    [activitySpinner setHidden:YES];
     [self updateAccountDetailLabels];
     [self fetchAccountDetails];
 }
@@ -55,7 +60,7 @@ didFinishRequest:(PutIOAPIRequest)request
 withResult:(id)result
 {
     PutIOAPIAccountInfo *accountInfo = (PutIOAPIAccountInfo*)result;
-    
+        
     NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
     [d setObject:[accountInfo eMailAddress] forKey:@"account_email"];
     [d setObject:[accountInfo username] forKey:@"account_username"];
@@ -67,6 +72,12 @@ withResult:(id)result
     [self updateAccountDetailLabels];
 }
 
+-(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
+{
+    [activityLabel setHidden:YES];
+    [activitySpinner setHidden:YES];
+}
+
 
 #pragma mark - Account Setup Delegate
 
@@ -74,10 +85,22 @@ withResult:(id)result
 {
     [[accountSetup window] close];
     [NSApp endSheet:[accountSetup window]];
-    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-    [d setBool:YES forKey:@"account_setup"];
+    
+    // Abort all running syncs and downloads
+    [[SyncScheduler sharedSyncScheduler] cancelAllSyncsInProgress];
+    for(PutIODownload* download in [PutIODownload allDownloads])
+        [download cancelDownload];
+    
+    // Nuke all sync instructions (since we change the put.io account)
+    [[SyncInstruction allSyncInstructions] removeAllObjects];
+    [SyncInstruction saveAllSyncInstructions];
+    
     [PutIOAPI setOAuthAccessToken:token];
-    // TODO: Store the access token in the keychain here
+    
+    // Reset username/email, we need to retrieve those from put.io
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d setObject:@"" forKey:@"account_email"];
+    [d setObject:@"" forKey:@"account_username"];
     [self viewWillAppear];
 }
 
@@ -91,8 +114,7 @@ withResult:(id)result
 
 - (void)fetchAccountDetails
 {
-    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-    BOOL accountSetUp = [d boolForKey:@"account_setup"];
+    BOOL accountSetUp = ([PutIOAPI oAuthAccessToken] != nil);
     if(accountSetUp){
         [spaceLabel setHidden:YES];
         [activitySpinner startAnimation:self];
@@ -105,24 +127,38 @@ withResult:(id)result
 - (void)updateAccountDetailLabels
 {
     NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-    BOOL accountSetUp = [d boolForKey:@"account_setup"];
-    NSString *accountEMailAddress = [d stringForKey:@"account_email"];
-    NSString *accountUsername = [d stringForKey:@"account_username"];
-    NSInteger accountUsedSpace = [d integerForKey:@"account_space_used"];
-    NSInteger accountTotalSpace = [d integerForKey:@"account_space_total"];
+    BOOL accountSetUp = ([PutIOAPI oAuthAccessToken] != nil);
+
     
-    [signedInView setHidden:!accountSetUp];
-    [signedOutView setHidden:accountSetUp];
-    
-    [accountEMailAddressLabel setHidden:(!accountEMailAddress)];
-    [accountUsernameLabel setHidden:(!accountUsername)];
-    [spaceLabel setHidden:(accountUsedSpace == 0 || accountTotalSpace == 0)];
-    if(accountUsername)
-        [accountUsernameLabel setStringValue:accountUsername];
-    if(accountEMailAddress)
-        [accountEMailAddressLabel setStringValue:accountEMailAddress];
-    if(accountUsedSpace > 0 && accountTotalSpace > 0)
-        [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Used space: %i of %i", @"Account used and total space"), accountUsedSpace, accountTotalSpace]];
+    if(accountSetUp){
+        infoLabel.stringValue = NSLocalizedString(@"You are signed in as", nil);
+        connectButton.stringValue = NSLocalizedString(@"Change account...", nil);
+        
+        NSString *accountEMailAddress = [d stringForKey:@"account_email"];
+        NSString *accountUsername = [d stringForKey:@"account_username"];
+        NSUInteger accountUsedSpace = [d integerForKey:@"account_space_used"];
+        NSUInteger accountTotalSpace = [d integerForKey:@"account_space_total"];
+        if(accountUsername){
+            [accountUsernameLabel setHidden:NO];
+            [accountUsernameLabel setStringValue:accountUsername];
+        }
+        if(accountEMailAddress){
+            [accountEMailAddressLabel setHidden:NO];
+            [accountEMailAddressLabel setStringValue:accountEMailAddress];
+        }
+        if(accountUsedSpace > 0 && accountTotalSpace > 0){
+            NSString *accountUsedSpaceString = unitStringFromBytes(accountUsedSpace, kUnitStringBinaryUnits | kUnitStringLocalizedFormat);
+            NSString *accountTotalSpaceString = unitStringFromBytes(accountTotalSpace, kUnitStringBinaryUnits | kUnitStringLocalizedFormat);
+            [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Used space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString]];
+            [spaceLabel setHidden:NO];
+        }
+    }else{
+        infoLabel.stringValue = NSLocalizedString(@"You did not connect your put.io account yet", nil);
+        connectButton.stringValue = NSLocalizedString(@"Sign in...", nil);
+        [accountEMailAddressLabel setHidden:YES];
+        [accountUsernameLabel setHidden:YES];
+        [spaceLabel setHidden:YES];
+    }
 }
 
 @end

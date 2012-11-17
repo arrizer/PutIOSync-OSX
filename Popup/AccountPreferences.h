@@ -7,11 +7,11 @@
 @interface AccountPreferences : NSViewController
 <MASPreferencesViewController, AccountSetupControllerDelegate, PutIOAPIDelegate>
 {
-    IBOutlet NSView *signedInView;
-    IBOutlet NSView *signedOutView;
+    IBOutlet NSTextField *infoLabel;
     IBOutlet NSTextField *accountEMailAddressLabel;
     IBOutlet NSTextField *accountUsernameLabel;
     IBOutlet NSTextField *spaceLabel;
+    IBOutlet NSButton *connectButton;
     
     IBOutlet NSProgressIndicator *activitySpinner;
     IBOutlet NSTextField *activityLabel;

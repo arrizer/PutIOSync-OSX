@@ -18,6 +18,7 @@
 }
 
 - (id)initWithDelegate:(id<PanelControllerDelegate>)delegate;
+- (NSRect)statusRectForWindow:(NSWindow *)window;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, weak) IBOutlet BackgroundView *backgroundView;

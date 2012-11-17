@@ -31,7 +31,7 @@ typedef enum{
 
 +(id)api;
 +(id)apiWithDelegate:(id<PutIOAPIDelegate>)delegate;
-+(void)setOAuthAccessToken:(NSString*)token;
++(void)setOAuthAccessToken:(NSString*)accessToken;
 +(NSString*)oAuthAccessToken;
 
 @property (readonly, getter = isBusy) BOOL busy;
@@ -51,5 +51,8 @@ typedef enum{
 - (void)filesInFolderWithID:(NSInteger)folderID;
 
 - (void)cancel;
+
+// Helpers
++(NSString*)urlParameterStringFromDictionary:(NSDictionary*)parameters;
 
 @end

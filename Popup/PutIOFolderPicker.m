@@ -131,6 +131,8 @@
 -(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
 {
     [fileQueue removeAllObjects];
+    [activitySpinner stopAnimation:self];
+
 }
 
 @end

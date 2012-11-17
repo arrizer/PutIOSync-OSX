@@ -17,8 +17,13 @@
         self.dateCreated = [PutIOAPIObject dateFromRawDataString:data[@"created_at"]];
         self.contentType = data[@"content_type"];
         self.iconURL = [NSURL URLWithString:data[@"icon"]];
+        self.size = [data[@"size"] integerValue];
         if(data[@"screenshot"] != [NSNull null])
             self.screenshotURL = [NSURL URLWithString:data[@"screenshot"]];
+        if(data[@"is_shared"] != [NSNull null])
+            self.isShared = [data[@"is_shared"] boolValue];
+        if(data[@"is_mp4_available"] != [NSNull null])
+            self.mp4VersionAvailable = [data[@"is_mp4_available"] boolValue];
     }
     return self;
 }

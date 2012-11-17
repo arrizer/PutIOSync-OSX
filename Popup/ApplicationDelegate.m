@@ -4,6 +4,9 @@
 #import "GeneralPreferences.h"
 #import "AccountPreferences.h"
 #import "SyncPreferences.h"
+#import "PutIODownload.h"
+#import "SyncInstruction.h"
+#import "PutIOAPI.h"
 
 @implementation ApplicationDelegate
 
@@ -48,6 +51,15 @@ void *kContextActivePanel = &kContextActivePanel;
     return _preferencesWindowController;
 }
 
+- (PanelController *)panelController
+{
+    if (_panelController == nil) {
+        _panelController = [[MainPanel alloc] initWithDelegate:self];
+        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
+    }
+    return _panelController;
+}
+
 #pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -55,11 +67,13 @@ void *kContextActivePanel = &kContextActivePanel;
     [ApplicationDelegate setupUserDefaults];
     // Install icon into the menu bar
     self.menubarController = [[MenubarController alloc] init];
+    [PutIODownload allDownloads];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    // Explicitly remove the icon from the menu bar
+    [PutIODownload pauseAndSaveAllDownloads];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.menubarController = nil;
     return NSTerminateNow;
@@ -79,15 +93,9 @@ void *kContextActivePanel = &kContextActivePanel;
     [NSApp activateIgnoringOtherApps:YES];
 }
 
-#pragma mark - Public accessors
-
-- (PanelController *)panelController
+- (IBAction)checkForUpdates:(id)sender
 {
-    if (_panelController == nil) {
-        _panelController = [[TransfersPanel alloc] initWithDelegate:self];
-        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
-    }
-    return _panelController;
+    [updater checkForUpdates:self];
 }
 
 #pragma mark - PanelControllerDelegate

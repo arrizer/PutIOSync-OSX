@@ -43,11 +43,6 @@
     [panel setLevel:NSPopUpMenuWindowLevel];
     [panel setOpaque:NO];
     [panel setBackgroundColor:[NSColor clearColor]];
-    
-    // Resize panel
-    NSRect panelRect = [[self window] frame];
-    //panelRect.size.height = POPUP_HEIGHT;
-    [[self window] setFrame:panelRect display:NO];
 }
 
 #pragma mark - Public accessors
@@ -138,7 +133,6 @@
     NSRect statusRect = [self statusRectForWindow:panel];
 
     NSRect panelRect = [panel frame];
-    //panelRect.size.width = PANEL_WIDTH;
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
     
@@ -173,8 +167,8 @@
     [[panel animator] setFrame:panelRect display:YES];
     [[panel animator] setAlphaValue:1];
     [NSAnimationContext endGrouping];
-    
-    //    [panel performSelector:@selector(makeFirstResponder:) withObject:self.searchField afterDelay:openDuration];
+//    [self.window setFrame:panelRect display:YES];
+//    [self.window setAlphaValue:1.0f];
 }
 
 - (void)closePanel

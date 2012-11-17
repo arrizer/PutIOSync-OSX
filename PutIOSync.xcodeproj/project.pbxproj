@@ -10,27 +10,40 @@
 		392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221C4163CAB140003352E /* PutIOFolderPicker.m */; };
 		392221C7163CAB140003352E /* PutIOFolderPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392221C5163CAB140003352E /* PutIOFolderPicker.xib */; };
 		392221CB163CB1190003352E /* PutIOAPIFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221CA163CB1190003352E /* PutIOAPIFile.m */; };
+		392252811643132900B0B4A6 /* PutIODownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 392252801643132900B0B4A6 /* PutIODownload.m */; };
+		392460F1163EB36500954B64 /* SyncScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F0163EB36500954B64 /* SyncScheduler.m */; };
+		392460F5163EB38600954B64 /* SyncRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F4163EB38600954B64 /* SyncRunner.m */; };
 		3935CA7616376A94004BA671 /* PutIOAPIAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3935CA7516376A94004BA671 /* PutIOAPIAccountInfo.m */; };
 		39452132163C8CC300AA7001 /* systemFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 39452131163C8CC300AA7001 /* systemFolder.png */; };
 		39452135163C8CFA00AA7001 /* putioFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 39452134163C8CFA00AA7001 /* putioFolder.png */; };
 		39452137163C8DE200AA7001 /* syncRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 39452136163C8DE200AA7001 /* syncRightArrow.png */; };
+		394892A0164C43EE0011E5BE /* gearMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3948929F164C43EE0011E5BE /* gearMenu.png */; };
+		394892A2164C4F480011E5BE /* iconPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A1164C4F480011E5BE /* iconPlaceholder.png */; };
+		394892A9164C50010011E5BE /* stopImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A7164C50010011E5BE /* stopImage.png */; };
+		394892AA164C50010011E5BE /* stopImagePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A8164C50010011E5BE /* stopImagePressed.png */; };
+		394892AC164C51150011E5BE /* resumeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892AB164C51150011E5BE /* resumeImage.png */; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
 		3986C5BF163857C400F19764 /* SyncPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3986C5BD163857C400F19764 /* SyncPreferences.xib */; };
+		39910AB7164FFB3D00967014 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39910AB6164FFB3D00967014 /* Security.framework */; };
+		39910ABD16501E7C00967014 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 39910ABC16501E7C00967014 /* Utilities.m */; };
+		39910AC016503D0800967014 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39910ABF16503D0800967014 /* Sparkle.framework */; };
+		39910AC216503D5F00967014 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39910ABF16503D0800967014 /* Sparkle.framework */; };
 		3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCC163AC97B0020AE61 /* SyncInstruction.m */; };
 		3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */; };
 		3993ABD2163AD36A0020AE61 /* SyncInstructionEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */; };
-		39C51FC816343FBA006BD1C8 /* TransfersPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C51FC716343FBA006BD1C8 /* TransfersPanel.m */; };
+		39A86DE01643F32D004CAAEE /* DownloadCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A86DDF1643F32D004CAAEE /* DownloadCellView.m */; };
+		39A86DE71644000E004CAAEE /* syncing.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A86DE61644000E004CAAEE /* syncing.png */; };
+		39C51FC816343FBA006BD1C8 /* MainPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C51FC716343FBA006BD1C8 /* MainPanel.m */; };
 		39C51FCB16344ED0006BD1C8 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39C51FCA16344ED0006BD1C8 /* UserDefaults.plist */; };
 		39C51FCD16345B81006BD1C8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C51FCC16345B81006BD1C8 /* WebKit.framework */; };
 		39C51FD41634A127006BD1C8 /* PutIOAPIObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C51FD31634A127006BD1C8 /* PutIOAPIObject.m */; };
 		39C51FD71634A924006BD1C8 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 39C51FD61634A924006BD1C8 /* logo.png */; };
+		39EFBFBB164EA60400B160E0 /* PersistenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39EFBFBA164EA60400B160E0 /* PersistenceManager.m */; };
 		39F1C8C4163D9E0100AD5E1A /* syncIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 39F1C8C3163D9E0100AD5E1A /* syncIcon.png */; };
-		39F1C8C7163DAE0F00AD5E1A /* grayPanelIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 39F1C8C6163DAE0F00AD5E1A /* grayPanelIcon.png */; };
 		39F1C8C9163DB0FC00AD5E1A /* panelSeparator.png in Resources */ = {isa = PBXBuildFile; fileRef = 39F1C8C8163DB0FC00AD5E1A /* panelSeparator.png */; };
 		39F87441163427D600D9026F /* PutIOAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F87440163427D600D9026F /* PutIOAPI.m */; };
 		39F874431634290400D9026F /* AccountSetupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F874421634290400D9026F /* AccountSetupController.xib */; };
 		39F8744616342D9000D9026F /* AccountSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F8744516342D9000D9026F /* AccountSetupController.m */; };
-		39F874481634320600D9026F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F874471634320600D9026F /* Preferences.xib */; };
 		39F8745A1634375D00D9026F /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F874581634375D00D9026F /* MASPreferencesWindow.xib */; };
 		39F8745B1634375D00D9026F /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F874591634375D00D9026F /* MASPreferencesWindowController.m */; };
 		39F874661634386300D9026F /* GeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F874611634386300D9026F /* GeneralPreferences.m */; };
@@ -44,12 +57,25 @@
 		DD4F7C3813C317A500825C6E /* MenubarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4F7C3713C317A500825C6E /* MenubarController.m */; };
 		DD4F7C3C13C3180800825C6E /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4F7C3B13C3180800825C6E /* StatusItemView.m */; };
 		DD4F7C3F13C318D600825C6E /* PanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4F7C3E13C318D600825C6E /* PanelController.m */; };
-		DD4F7C4113C31B4A00825C6E /* TransfersPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD4F7C4013C31B4A00825C6E /* TransfersPanel.xib */; };
+		DD4F7C4113C31B4A00825C6E /* MainPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD4F7C4013C31B4A00825C6E /* MainPanel.xib */; };
 		DD4F7C4413C31BD200825C6E /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4F7C4313C31BD200825C6E /* Panel.m */; };
 		DD4F7C4713C3208500825C6E /* BackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4F7C4613C3208500825C6E /* BackgroundView.m */; };
 		DD4F7C4B13C322FA00825C6E /* Status.png in Resources */ = {isa = PBXBuildFile; fileRef = DD4F7C4913C322FA00825C6E /* Status.png */; };
 		DD4F7C4C13C322FA00825C6E /* StatusHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = DD4F7C4A13C322FA00825C6E /* StatusHighlighted.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		39910AC116503D4000967014 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				39910AC216503D5F00967014 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		392221C3163CAB140003352E /* PutIOFolderPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOFolderPicker.h; sourceTree = "<group>"; };
@@ -57,35 +83,53 @@
 		392221C5163CAB140003352E /* PutIOFolderPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PutIOFolderPicker.xib; sourceTree = "<group>"; };
 		392221C9163CB1190003352E /* PutIOAPIFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIFile.h; path = PutIOAPI/PutIOAPIFile.h; sourceTree = "<group>"; };
 		392221CA163CB1190003352E /* PutIOAPIFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFile.m; path = PutIOAPI/PutIOAPIFile.m; sourceTree = "<group>"; };
+		392252801643132900B0B4A6 /* PutIODownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIODownload.m; path = ../PutIODownload.m; sourceTree = "<group>"; };
+		392460EF163EB36500954B64 /* SyncScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncScheduler.h; sourceTree = "<group>"; };
+		392460F0163EB36500954B64 /* SyncScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncScheduler.m; sourceTree = "<group>"; };
+		392460F3163EB38600954B64 /* SyncRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncRunner.h; sourceTree = "<group>"; };
+		392460F4163EB38600954B64 /* SyncRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRunner.m; sourceTree = "<group>"; };
 		3935CA7416376A94004BA671 /* PutIOAPIAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIAccountInfo.h; path = PutIOAPI/PutIOAPIAccountInfo.h; sourceTree = "<group>"; };
 		3935CA7516376A94004BA671 /* PutIOAPIAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIAccountInfo.m; path = PutIOAPI/PutIOAPIAccountInfo.m; sourceTree = "<group>"; };
 		39452131163C8CC300AA7001 /* systemFolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = systemFolder.png; sourceTree = "<group>"; };
 		39452134163C8CFA00AA7001 /* putioFolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = putioFolder.png; sourceTree = "<group>"; };
 		39452136163C8DE200AA7001 /* syncRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syncRightArrow.png; sourceTree = "<group>"; };
+		3948929F164C43EE0011E5BE /* gearMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gearMenu.png; sourceTree = "<group>"; };
+		394892A1164C4F480011E5BE /* iconPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconPlaceholder.png; sourceTree = "<group>"; };
+		394892A7164C50010011E5BE /* stopImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopImage.png; sourceTree = "<group>"; };
+		394892A8164C50010011E5BE /* stopImagePressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopImagePressed.png; sourceTree = "<group>"; };
+		394892AB164C51150011E5BE /* resumeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resumeImage.png; sourceTree = "<group>"; };
 		3986C5BB163857C400F19764 /* SyncPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPreferences.h; sourceTree = "<group>"; };
 		3986C5BC163857C400F19764 /* SyncPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPreferences.m; sourceTree = "<group>"; };
 		3986C5BD163857C400F19764 /* SyncPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SyncPreferences.xib; sourceTree = "<group>"; };
+		39910AB6164FFB3D00967014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		39910ABB16501BEE00967014 /* Utilities.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Utilities.h; sourceTree = "<group>"; };
+		39910ABC16501E7C00967014 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		39910ABE16502B5300967014 /* PutIODownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIODownload.h; sourceTree = "<group>"; };
+		39910ABF16503D0800967014 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		3993ABCB163AC97B0020AE61 /* SyncInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncInstruction.h; path = Popup/SyncInstruction.h; sourceTree = "<group>"; };
 		3993ABCC163AC97B0020AE61 /* SyncInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncInstruction.m; path = Popup/SyncInstruction.m; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
 		3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SyncInstructionEditor.xib; sourceTree = "<group>"; };
-		39C51FC616343FBA006BD1C8 /* TransfersPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersPanel.h; sourceTree = "<group>"; };
-		39C51FC716343FBA006BD1C8 /* TransfersPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersPanel.m; sourceTree = "<group>"; };
+		39A86DDE1643F32D004CAAEE /* DownloadCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadCellView.h; sourceTree = "<group>"; };
+		39A86DDF1643F32D004CAAEE /* DownloadCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadCellView.m; sourceTree = "<group>"; };
+		39A86DE61644000E004CAAEE /* syncing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syncing.png; sourceTree = "<group>"; };
+		39C51FC616343FBA006BD1C8 /* MainPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPanel.h; sourceTree = "<group>"; };
+		39C51FC716343FBA006BD1C8 /* MainPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPanel.m; sourceTree = "<group>"; };
 		39C51FCA16344ED0006BD1C8 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		39C51FCC16345B81006BD1C8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		39C51FD21634A127006BD1C8 /* PutIOAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIObject.h; path = PutIOAPI/PutIOAPIObject.h; sourceTree = "<group>"; };
 		39C51FD31634A127006BD1C8 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = PutIOAPI/PutIOAPIObject.m; sourceTree = "<group>"; };
 		39C51FD61634A924006BD1C8 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		39EFBFB9164EA60400B160E0 /* PersistenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistenceManager.h; path = Popup/PersistenceManager.h; sourceTree = "<group>"; };
+		39EFBFBA164EA60400B160E0 /* PersistenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistenceManager.m; path = Popup/PersistenceManager.m; sourceTree = "<group>"; };
 		39F1C8C3163D9E0100AD5E1A /* syncIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syncIcon.png; sourceTree = "<group>"; };
-		39F1C8C6163DAE0F00AD5E1A /* grayPanelIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayPanelIcon.png; sourceTree = "<group>"; };
 		39F1C8C8163DB0FC00AD5E1A /* panelSeparator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panelSeparator.png; sourceTree = "<group>"; };
 		39F8743F163427D600D9026F /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = PutIOAPI/PutIOAPI.h; sourceTree = "<group>"; };
 		39F87440163427D600D9026F /* PutIOAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPI.m; path = PutIOAPI/PutIOAPI.m; sourceTree = "<group>"; };
 		39F874421634290400D9026F /* AccountSetupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AccountSetupController.xib; path = ../AccountSetupController.xib; sourceTree = "<group>"; };
 		39F8744416342D9000D9026F /* AccountSetupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSetupController.h; sourceTree = "<group>"; };
 		39F8744516342D9000D9026F /* AccountSetupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSetupController.m; sourceTree = "<group>"; };
-		39F874471634320600D9026F /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		39F874561634375D00D9026F /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
 		39F874571634375D00D9026F /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		39F874581634375D00D9026F /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -113,7 +157,7 @@
 		DD4F7C3B13C3180800825C6E /* StatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemView.m; sourceTree = "<group>"; };
 		DD4F7C3D13C318D600825C6E /* PanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelController.h; sourceTree = "<group>"; };
 		DD4F7C3E13C318D600825C6E /* PanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelController.m; sourceTree = "<group>"; };
-		DD4F7C4013C31B4A00825C6E /* TransfersPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransfersPanel.xib; sourceTree = "<group>"; };
+		DD4F7C4013C31B4A00825C6E /* MainPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainPanel.xib; sourceTree = "<group>"; };
 		DD4F7C4213C31BD200825C6E /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
 		DD4F7C4313C31BD200825C6E /* Panel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panel.m; sourceTree = "<group>"; };
 		DD4F7C4513C3208500825C6E /* BackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundView.h; sourceTree = "<group>"; };
@@ -127,8 +171,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39910AB7164FFB3D00967014 /* Security.framework in Frameworks */,
 				39C51FCD16345B81006BD1C8 /* WebKit.framework in Frameworks */,
 				DD4F7C0913C30F9F00825C6E /* Cocoa.framework in Frameworks */,
+				39910AC016503D0800967014 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +186,8 @@
 			children = (
 				3993ABCB163AC97B0020AE61 /* SyncInstruction.h */,
 				3993ABCC163AC97B0020AE61 /* SyncInstruction.m */,
+				39EFBFB9164EA60400B160E0 /* PersistenceManager.h */,
+				39EFBFBA164EA60400B160E0 /* PersistenceManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -183,9 +231,15 @@
 				39F874631634386300D9026F /* AccountPreferences.h */,
 				39F874641634386300D9026F /* AccountPreferences.m */,
 				39F874651634386300D9026F /* AccountPreferences.xib */,
+				39F8744416342D9000D9026F /* AccountSetupController.h */,
+				39F8744516342D9000D9026F /* AccountSetupController.m */,
+				39F874421634290400D9026F /* AccountSetupController.xib */,
 				3986C5BB163857C400F19764 /* SyncPreferences.h */,
 				3986C5BC163857C400F19764 /* SyncPreferences.m */,
 				3986C5BD163857C400F19764 /* SyncPreferences.xib */,
+				3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */,
+				3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */,
+				3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -193,14 +247,15 @@
 		DD4F7BF913C30F9F00825C6E = {
 			isa = PBXGroup;
 			children = (
-				3993ABC9163AC9380020AE61 /* Model */,
-				39C51FCC16345B81006BD1C8 /* WebKit.framework */,
+				39910ABB16501BEE00967014 /* Utilities.h */,
+				39910ABC16501E7C00967014 /* Utilities.m */,
 				DD4F7C1A13C30F9F00825C6E /* ApplicationDelegate.h */,
 				DD4F7C1B13C30F9F00825C6E /* ApplicationDelegate.m */,
+				3993ABC9163AC9380020AE61 /* Model */,
 				39F8743E1634279400D9026F /* PutIO API */,
 				DD4F7C2613C311DF00825C6E /* Controllers */,
 				DD4F7C3913C317EC00825C6E /* Views */,
-				DD4F7C2813C3123E00825C6E /* User Interface */,
+				DD4F7C4813C322D800825C6E /* Graphics */,
 				DD4F7C0713C30F9F00825C6E /* Frameworks */,
 				DD4F7C0F13C30F9F00825C6E /* Supporting Files */,
 				DD4F7C0513C30F9F00825C6E /* Products */,
@@ -220,6 +275,9 @@
 		DD4F7C0713C30F9F00825C6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39910ABF16503D0800967014 /* Sparkle.framework */,
+				39910AB6164FFB3D00967014 /* Security.framework */,
+				39C51FCC16345B81006BD1C8 /* WebKit.framework */,
 				DD4F7C0B13C30F9F00825C6E /* AppKit.framework */,
 				DD4F7C0C13C30F9F00825C6E /* CoreData.framework */,
 				DD4F7C0D13C30F9F00825C6E /* Foundation.framework */,
@@ -241,41 +299,24 @@
 		DD4F7C2613C311DF00825C6E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				39C51FC616343FBA006BD1C8 /* MainPanel.h */,
+				39C51FC716343FBA006BD1C8 /* MainPanel.m */,
+				DD4F7C4013C31B4A00825C6E /* MainPanel.xib */,
+				DD4F7C1D13C30F9F00825C6E /* MainMenu.xib */,
 				39C51FC9163440A1006BD1C8 /* Menu Item */,
 				39F8744F1634347A00D9026F /* Preferences */,
-				39C51FC616343FBA006BD1C8 /* TransfersPanel.h */,
-				39C51FC716343FBA006BD1C8 /* TransfersPanel.m */,
-				DD4F7C4013C31B4A00825C6E /* TransfersPanel.xib */,
-				39F8744416342D9000D9026F /* AccountSetupController.h */,
-				39F8744516342D9000D9026F /* AccountSetupController.m */,
-				39F874421634290400D9026F /* AccountSetupController.xib */,
-				3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */,
-				3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */,
-				3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */,
 				392221C3163CAB140003352E /* PutIOFolderPicker.h */,
 				392221C4163CAB140003352E /* PutIOFolderPicker.m */,
 				392221C5163CAB140003352E /* PutIOFolderPicker.xib */,
+				392460EF163EB36500954B64 /* SyncScheduler.h */,
+				392460F0163EB36500954B64 /* SyncScheduler.m */,
+				392460F3163EB38600954B64 /* SyncRunner.h */,
+				392460F4163EB38600954B64 /* SyncRunner.m */,
+				39910ABE16502B5300967014 /* PutIODownload.h */,
+				392252801643132900B0B4A6 /* PutIODownload.m */,
 			);
 			name = Controllers;
 			path = Popup;
-			sourceTree = "<group>";
-		};
-		DD4F7C2813C3123E00825C6E /* User Interface */ = {
-			isa = PBXGroup;
-			children = (
-				DD4F7C4813C322D800825C6E /* Graphics */,
-				DD4F7C2913C3124300825C6E /* XIBs */,
-			);
-			name = "User Interface";
-			sourceTree = "<group>";
-		};
-		DD4F7C2913C3124300825C6E /* XIBs */ = {
-			isa = PBXGroup;
-			children = (
-				DD4F7C1D13C30F9F00825C6E /* MainMenu.xib */,
-				39F874471634320600D9026F /* Preferences.xib */,
-			);
-			name = XIBs;
 			sourceTree = "<group>";
 		};
 		DD4F7C3913C317EC00825C6E /* Views */ = {
@@ -287,6 +328,8 @@
 				DD4F7C3B13C3180800825C6E /* StatusItemView.m */,
 				DD4F7C4513C3208500825C6E /* BackgroundView.h */,
 				DD4F7C4613C3208500825C6E /* BackgroundView.m */,
+				39A86DDE1643F32D004CAAEE /* DownloadCellView.h */,
+				39A86DDF1643F32D004CAAEE /* DownloadCellView.m */,
 			);
 			name = Views;
 			path = Popup;
@@ -295,6 +338,12 @@
 		DD4F7C4813C322D800825C6E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				394892AB164C51150011E5BE /* resumeImage.png */,
+				394892A7164C50010011E5BE /* stopImage.png */,
+				394892A8164C50010011E5BE /* stopImagePressed.png */,
+				394892A1164C4F480011E5BE /* iconPlaceholder.png */,
+				3948929F164C43EE0011E5BE /* gearMenu.png */,
+				39A86DE61644000E004CAAEE /* syncing.png */,
 				39F1C8C8163DB0FC00AD5E1A /* panelSeparator.png */,
 				39F1C8C3163D9E0100AD5E1A /* syncIcon.png */,
 				39452136163C8DE200AA7001 /* syncRightArrow.png */,
@@ -303,7 +352,6 @@
 				39C51FD61634A924006BD1C8 /* logo.png */,
 				DD4F7C4913C322FA00825C6E /* Status.png */,
 				DD4F7C4A13C322FA00825C6E /* StatusHighlighted.png */,
-				39F1C8C6163DAE0F00AD5E1A /* grayPanelIcon.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -318,6 +366,7 @@
 				DD4F7C0013C30F9F00825C6E /* Sources */,
 				DD4F7C0113C30F9F00825C6E /* Frameworks */,
 				DD4F7C0213C30F9F00825C6E /* Resources */,
+				39910AC116503D4000967014 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -359,11 +408,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD4F7C1F13C30F9F00825C6E /* MainMenu.xib in Resources */,
-				DD4F7C4113C31B4A00825C6E /* TransfersPanel.xib in Resources */,
+				DD4F7C4113C31B4A00825C6E /* MainPanel.xib in Resources */,
 				DD4F7C4B13C322FA00825C6E /* Status.png in Resources */,
 				DD4F7C4C13C322FA00825C6E /* StatusHighlighted.png in Resources */,
 				39F874431634290400D9026F /* AccountSetupController.xib in Resources */,
-				39F874481634320600D9026F /* Preferences.xib in Resources */,
 				39F8745A1634375D00D9026F /* MASPreferencesWindow.xib in Resources */,
 				39F874671634386300D9026F /* GeneralPreferences.xib in Resources */,
 				39F874691634386300D9026F /* AccountPreferences.xib in Resources */,
@@ -376,8 +424,13 @@
 				39452137163C8DE200AA7001 /* syncRightArrow.png in Resources */,
 				392221C7163CAB140003352E /* PutIOFolderPicker.xib in Resources */,
 				39F1C8C4163D9E0100AD5E1A /* syncIcon.png in Resources */,
-				39F1C8C7163DAE0F00AD5E1A /* grayPanelIcon.png in Resources */,
 				39F1C8C9163DB0FC00AD5E1A /* panelSeparator.png in Resources */,
+				39A86DE71644000E004CAAEE /* syncing.png in Resources */,
+				394892A0164C43EE0011E5BE /* gearMenu.png in Resources */,
+				394892A2164C4F480011E5BE /* iconPlaceholder.png in Resources */,
+				394892A9164C50010011E5BE /* stopImage.png in Resources */,
+				394892AA164C50010011E5BE /* stopImagePressed.png in Resources */,
+				394892AC164C51150011E5BE /* resumeImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +453,7 @@
 				39F8745B1634375D00D9026F /* MASPreferencesWindowController.m in Sources */,
 				39F874661634386300D9026F /* GeneralPreferences.m in Sources */,
 				39F874681634386300D9026F /* AccountPreferences.m in Sources */,
-				39C51FC816343FBA006BD1C8 /* TransfersPanel.m in Sources */,
+				39C51FC816343FBA006BD1C8 /* MainPanel.m in Sources */,
 				39C51FD41634A127006BD1C8 /* PutIOAPIObject.m in Sources */,
 				3935CA7616376A94004BA671 /* PutIOAPIAccountInfo.m in Sources */,
 				3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */,
@@ -408,6 +461,12 @@
 				3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */,
 				392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */,
 				392221CB163CB1190003352E /* PutIOAPIFile.m in Sources */,
+				392460F1163EB36500954B64 /* SyncScheduler.m in Sources */,
+				392460F5163EB38600954B64 /* SyncRunner.m in Sources */,
+				392252811643132900B0B4A6 /* PutIODownload.m in Sources */,
+				39A86DE01643F32D004CAAEE /* DownloadCellView.m in Sources */,
+				39EFBFBB164EA60400B160E0 /* PersistenceManager.m in Sources */,
+				39910ABD16501E7C00967014 /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +479,6 @@
 				DD4F7C1E13C30F9F00825C6E /* en */,
 			);
 			name = MainMenu.xib;
-			path = Popup;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -476,6 +534,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Popup/PutIOSync-Prefix.pch";
 				INFOPLIST_FILE = "Popup/PutIOSync-Info.plist";
@@ -490,6 +552,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Popup/PutIOSync-Prefix.pch";
 				INFOPLIST_FILE = "Popup/PutIOSync-Info.plist";

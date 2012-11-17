@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 
 @interface PutIOAPIObject : NSObject
+<NSCoding>
 {
     id rawData;
 }

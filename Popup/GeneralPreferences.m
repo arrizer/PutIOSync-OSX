@@ -1,5 +1,6 @@
 
 #import "GeneralPreferences.h"
+#import "ApplicationDelegate.h"
 
 @implementation GeneralPreferences
 
@@ -24,6 +25,11 @@
 - (NSString *)toolbarItemLabel
 {
     return NSLocalizedString(@"General", @"General Preferences title");
+}
+
+-(void)checkForUpdatesNow:(id)sender
+{
+    [(ApplicationDelegate*)[NSApp delegate] checkForUpdates:sender];
 }
 
 @end

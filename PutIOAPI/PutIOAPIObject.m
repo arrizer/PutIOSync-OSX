@@ -12,6 +12,18 @@
     return self;
 }
 
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    rawData = [decoder decodeObjectForKey:@"rawData"];
+    self = [self initWithRawData:rawData];
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:rawData forKey:@"rawData"];
+}
+
 -(id)rawData
 {
     return rawData;

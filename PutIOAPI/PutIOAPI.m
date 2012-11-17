@@ -1,12 +1,12 @@
 
 #import "PutIOAPI.h"
+#include <Security/Security.h>
+#include <CoreServices/CoreServices.h>
 
 #define PUTIO_API_SECRET @"a4gz4pnrnxm2jxchok8v"
 #define PUTIO_API_CLIENTID @"197"
-#define PUTIO_API_OAUTH_TOKEN @"Q9XHRF0E"
 #define PUTIO_API_OAUTH_REDIRECTURI @"https://matthiasschwab.de/putiosync/callback.html"
 #define PUTIO_API_URL @"https://api.put.io/v2"
-// Test token = Q9XHRF0E
 
 typedef enum{
     PutIOAPIEndpointMethodGET,
@@ -33,11 +33,6 @@ static NSString *oAuthAccessToken;
 +(id)api
 {
     PutIOAPI *api = [[PutIOAPI alloc] init];
-    BOOL accountSetup = [[NSUserDefaults standardUserDefaults] boolForKey:@"account_setup"];
-    if(accountSetup){
-        // TODO: Set the OAuth access token from the keychain
-        [PutIOAPI setOAuthAccessToken:@"Q9XHRF0E"];
-    }
     return api;
 }
 
@@ -48,13 +43,20 @@ static NSString *oAuthAccessToken;
     return api;
 }
 
-+(void)setOAuthAccessToken:(NSString *)token
++(void)setOAuthAccessToken:(NSString*)accessToken
 {
-    oAuthAccessToken = token;
+    oAuthAccessToken = accessToken;
+    [PutIOAPI setKeychainItemPassword:oAuthAccessToken];
 }
+
+static BOOL triedToLoadAccessToken = NO;
 
 +(NSString *)oAuthAccessToken
 {
+    if(oAuthAccessToken == nil && !triedToLoadAccessToken){
+        oAuthAccessToken = [PutIOAPI keychainItemPassword];
+        //triedToLoadAccessToken = YES;
+    }
     return oAuthAccessToken;
 }
 
@@ -111,7 +113,7 @@ static NSString *oAuthAccessToken;
                      parameters:(NSDictionary *)inParameters
 {
     if([self isBusy]) [self cancel];
-    if(oAuthAccessToken == nil){
+    if([PutIOAPI oAuthAccessToken] == nil){
         [self failWithInternalError:PutIOAPIInternalErrorNotAuthorized userMessage:nil];
         return;
     }
@@ -123,7 +125,7 @@ static NSString *oAuthAccessToken;
     }else{
         parameters = [inParameters mutableCopy];
     }
-    [parameters setObject:oAuthAccessToken forKey:@"oauth_token"];
+    [parameters setObject:[PutIOAPI oAuthAccessToken] forKey:@"oauth_token"];
     NSString *parameterString = [PutIOAPI urlParameterStringFromDictionary:parameters];
     if(method == PutIOAPIEndpointMethodGET)
         requestURLString = [requestURLString stringByAppendingFormat:@"?%@", parameterString];
@@ -134,7 +136,7 @@ static NSString *oAuthAccessToken;
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
-    NSLog(@"API request to endpoint: %@\nParameters: %@", endpoint, parameters);
+    NSLog(@"API request to endpoint: %@\nParameters: %@", endpoint, [[parameters description] stringByReplacingOccurrencesOfString:@"\n" withString:@""]);
     if([_delegate respondsToSelector:@selector(api:didBeginRequest:)])
         [_delegate api:self didBeginRequest:currentRequest];
     incomingData = nil;
@@ -192,7 +194,7 @@ static NSString *oAuthAccessToken;
 
 -(void)handleResponseWithJSONResult:(NSDictionary*)jsonResponse
 {
-    NSLog(@"Result: %@", [jsonResponse description]);
+    //NSLog(@"Result: %@", [jsonResponse description]);
     id response;
     switch (currentRequest) {
         case PutIOAPIRequestObtainOAuthToken:{
@@ -332,6 +334,59 @@ didReceiveResponse:(NSURLResponse *)response
     NSLog(@"API Error: %@", [error description]);
     if([_delegate respondsToSelector:@selector(api:didFailRequest:withError:)])
         [_delegate api:self didFailRequest:currentRequest withError:error];
+}
+
+static void *keychainServiceName = "PutIOSync";
+static void *keychainAccountName = "APIOAuthToken";
+
++ (NSString*)keychainItemPassword
+{
+    OSStatus status;
+    UInt32 passwordLength;
+    void *passwordData = nil;
+    SecKeychainItemRef itemRef = nil;
+    NSString *password = nil;
+    status = SecKeychainFindGenericPassword(NULL,
+                                            (UInt32)strlen(keychainServiceName), keychainServiceName,
+                                            (UInt32)strlen(keychainAccountName), keychainAccountName,
+                                            &passwordLength, &passwordData, &itemRef);
+    if(status == noErr){
+        password = [[NSString alloc] initWithBytes:passwordData length:passwordLength encoding:NSUTF8StringEncoding];
+        SecKeychainItemFreeContent(NULL, passwordData);
+        NSLog(@"Successfully read keychain item");
+    }else{
+        if(status != noErr)
+            NSLog(@"Failed to get keychain item: %@", (NSString*)CFBridgingRelease(SecCopyErrorMessageString(status, NULL)));
+    }
+    return password;
+}
+
++ (void)setKeychainItemPassword:(NSString*)password
+{
+    OSStatus status;
+    SecKeychainItemRef itemRef = nil;
+    void *passwordData = (void*)[password cStringUsingEncoding:NSUTF8StringEncoding];
+    // Check if the item is already in the keycain
+    status = SecKeychainFindGenericPassword(NULL,
+                                            (UInt32)strlen(keychainServiceName), keychainServiceName,
+                                            (UInt32)strlen(keychainAccountName), keychainAccountName,
+                                            NULL, NULL,
+                                            &itemRef);
+    if(status == noErr){
+        // Update the existing item
+        status = SecKeychainItemModifyAttributesAndData(itemRef, NULL, (UInt32)strlen(passwordData), passwordData);
+        if(status != noErr)
+            NSLog(@"Failed to update keychain item: %@", (NSString*)CFBridgingRelease(SecCopyErrorMessageString(status, NULL)));
+    }else if(status == errSecItemNotFound){
+        // Create a new item
+        status = SecKeychainAddGenericPassword(NULL,
+                                               (UInt32)strlen(keychainServiceName), keychainServiceName,
+                                               (UInt32)strlen(keychainAccountName), keychainAccountName,
+                                               (UInt32)strlen(passwordData), passwordData,
+                                               NULL);
+        if(status != noErr)
+            NSLog(@"Failed to add new keychain item: %@", (NSString*)CFBridgingRelease(SecCopyErrorMessageString(status, NULL)));
+    }
 }
 
 @end

@@ -212,11 +212,8 @@ static NSString *const PreferencesKeyForViewBounds (NSString *identifier)
         return;
 
     // Retrieve the new window tile from the controller view
-    if ([self.title length] == 0)
-    {
         NSString *label = controller.toolbarItemLabel;
         self.window.title = label;
-    }
 
     [[self.window toolbar] setSelectedItemIdentifier:controller.identifier];
 

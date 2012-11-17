@@ -6,11 +6,10 @@
 @interface SyncPreferences : NSViewController
 <MASPreferencesViewController, NSTableViewDataSource, NSTableViewDelegate, SyncInstructionEditorDelegate>
 {
-    NSMutableArray *syncInstructions;
     SyncInstructionEditor *syncInstructionEditor;
     NSInteger editedSyncInstructionIndex;
     
-    IBOutlet NSArrayController *syncInstructionsController;
+    IBOutlet NSButton *addButton;
     IBOutlet NSButton *removeButton;
     IBOutlet NSTableView *tableView;
 }

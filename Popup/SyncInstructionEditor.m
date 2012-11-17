@@ -53,6 +53,26 @@
         [destinationLabel setHidden:YES];
     }
     [deleteAfterSyncCheckbox setState:(_editedSyncInstruction.deleteRemoteFilesAfterSync ? NSOnState : NSOffState)];
+    [recursiveCheckbox setState:(_editedSyncInstruction.recursive ? NSOnState : NSOffState)];
+    if(_editedSyncInstruction.recursive){
+        [flattenCheckbox setState:(_editedSyncInstruction.flattenSubdirectories ? NSOnState : NSOffState)];
+        [flattenCheckbox setEnabled:YES];
+    }else{
+        [flattenCheckbox setState:NSOffState];
+        [flattenCheckbox setEnabled:NO];
+    }
+    if(_editedSyncInstruction.lastSynced != nil){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
+        [dateFormatter setLocale:[NSLocale currentLocale]];
+        NSString *dateString = [dateFormatter stringFromDate:_editedSyncInstruction.lastSynced];
+        lastSyncLabel.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Last sync: %@",nil), dateString];
+        [resetKnownItemsButton setEnabled:YES];
+    }else{
+        lastSyncLabel.stringValue = NSLocalizedString(@"Last sync: never", nil);
+        [resetKnownItemsButton setEnabled:NO];
+    }
     BOOL configurationIsValid = (_editedSyncInstruction.originFolderName != nil && _editedSyncInstruction.localDestination != nil);
     [commitButton setEnabled:configurationIsValid];
 }
@@ -76,8 +96,10 @@
 -(void)folderPicker:(PutIOFolderPicker *)picker didPickFolder:(PutIOAPIFile *)folder
 {
     [NSApp endSheet:folderPicker.window];
-    _editedSyncInstruction.originFolderID = folder.fileID;
-    _editedSyncInstruction.originFolderName = folder.name;
+    if(folder.fileID != _originalSyncInstruction.originFolderID){
+        _editedSyncInstruction.originFolderID = folder.fileID;
+        _editedSyncInstruction.originFolderName = folder.name;
+    }
     [self updateLabels];
 }
 
@@ -107,10 +129,41 @@
 -(void)optionsChanged:(id)sender
 {
     _editedSyncInstruction.deleteRemoteFilesAfterSync = (deleteAfterSyncCheckbox.state == NSOnState);
+    _editedSyncInstruction.recursive = (recursiveCheckbox.state == NSOnState);
+    _editedSyncInstruction.flattenSubdirectories = (flattenCheckbox.state == NSOnState);
+    [self updateLabels];
+}
+
+-(void)resetKnownItems:(id)sender
+{
+    NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Are you sure that you want to forget all previously synced items",nil)
+                                     defaultButton:NSLocalizedString(@"Forget synced items",nil)
+                                   alternateButton:NSLocalizedString(@"Cancel",nil)
+                                       otherButton:nil
+                         informativeTextWithFormat:NSLocalizedString(@"After forgetting all syned items, files that have already been downloaded but are still available at the put.io origin folder will be downloaded again",nil)];
+    [alert beginSheetModalForWindow:self.window
+                      modalDelegate:self
+                     didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+                        contextInfo:nil];
+}
+
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    if(returnCode == NSAlertDefaultReturn){
+        [_originalSyncInstruction resetKnownItems];
+        [_editedSyncInstruction resetKnownItems];
+        [self updateLabels];
+    }
 }
 
 -(IBAction)commit:(id)sender
 {
+    if(_originalSyncInstruction){
+        // Update the last sync time and known items since they might have changed since
+        // we made a copy of the sync instruction being edited
+        _editedSyncInstruction.knownItems = _originalSyncInstruction.knownItems;
+        _editedSyncInstruction.lastSynced = _originalSyncInstruction.lastSynced;
+    }
     _originalSyncInstruction = _editedSyncInstruction;
     _editedSyncInstruction = nil;
     [self.window close];

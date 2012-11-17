@@ -52,7 +52,6 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
         NSString *code = [URL stringByReplacingOccurrencesOfString:callbackURL withString:@""];
         NSLog(@"Obtained OAuth auth code: %@", code);
         [putio obtainOAuthAccessTokenForCode:code];
-        // [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
         [listener ignore];
     }else{
         [listener use];
