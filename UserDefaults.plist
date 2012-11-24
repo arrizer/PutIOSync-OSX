@@ -4,7 +4,17 @@
 <dict>
 	<key>general_launchonlogin</key>
 	<false/>
-	<key>account_setup</key>
+	<key>general_syncinterval</key>
+	<integer>2</integer>
+	<key>general_notifications_newfiles</key>
+	<true/>
+	<key>general_notifications_downloadfinished</key>
+	<true/>
+	<key>general_notifications_downloadfailed</key>
 	<false/>
+	<key>general_sounds_newfiles</key>
+	<true/>
+	<key>general_sounds_downloadfinished</key>
+	<true/>
 </dict>
 </plist>

@@ -33,7 +33,7 @@
     if(path){
         path = [path stringByAppendingFormat:@"/%@.plist", key];
         if([NSKeyedArchiver archiveRootObject:object toFile:path]){
-            NSLog(@"Archived persistent object for key: %@", key);
+            //NSLog(@"Archived persistent object for key: %@", key);
         }else{
             NSLog(@"Unable to archive persistent object for key: %@", key);            
         }

@@ -32,7 +32,8 @@
 {
     if([self isBusy])
         return;
-    NSLog(@"%@ sync run began", [self description]);
+    //NSLog(@"%@ sync run began", [self description]);
+    foundFiles = 0;
     [self performPreflightChecks];
 }
 
@@ -91,16 +92,17 @@
     NSString *relativePath = nil;
     if(!syncInstruction.flattenSubdirectories)
         relativePath = [self relativePathOfFileAtNode:node];
-    NSString *filename = [file name];
+    //NSString *filename = [file name];
 
     if(![PutIODownload downloadExistsForFile:file]){
-        NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
+        //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
         NSString *localPath = [syncInstruction.localDestination relativePath];
         PutIODownload *download = [[PutIODownload alloc] initWithPutIOFile:file
                                                                  localPath:localPath
                                                           subdirectoryPath:relativePath 
                                                 originatingSyncInstruction:syncInstruction];
         [download startDownload];
+        foundFiles++;
     }
     //[syncInstruction addKnownItemWithID:[file fileID]];
 }
@@ -185,8 +187,8 @@
 //    if([downloadQueue count] > 0)
 //        if([_delegate respondsToSelector:@selector(syncRunner:foundFilesForDownload:)])
 //            [_delegate syncRunner:self foundFilesForDownload:downloadQueue];
-    if([_delegate respondsToSelector:@selector(syncRunnerDidFinish:)])
-        [_delegate syncRunnerDidFinish:self];
+    if([_delegate respondsToSelector:@selector(syncRunnerDidFinish:afterFindingFiles:)])
+        [_delegate syncRunnerDidFinish:self afterFindingFiles:foundFiles];
 }
 
 -(NSString *)description

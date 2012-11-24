@@ -12,7 +12,7 @@ typedef enum{
 @class SyncRunner;
 @protocol SyncRunnerDelegate <NSObject>
 - (void)syncRunner:(SyncRunner*)runner willBeginOperation:(SyncRunnerOperation)operation;
-- (void)syncRunnerDidFinish:(SyncRunner*)runner;
+- (void)syncRunnerDidFinish:(SyncRunner*)runner afterFindingFiles:(NSUInteger)fileCount;
 - (void)syncRunnerDidCancel:(SyncRunner*)runner;
 - (void)syncRunner:(SyncRunner*)runner didFailWithError:(NSError*)error;
 @end
@@ -28,7 +28,7 @@ typedef enum{
     NSMutableArray *nodeQueue;
     NSTreeNode *originTree;
     NSString *destinationPath;
-    //    NSMutableArray *downloadQueue;
+    NSUInteger foundFiles;
 }
 
 @property (weak) id<SyncRunnerDelegate> delegate;

@@ -31,6 +31,7 @@
 		3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCC163AC97B0020AE61 /* SyncInstruction.m */; };
 		3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */; };
 		3993ABD2163AD36A0020AE61 /* SyncInstructionEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */; };
+		3993BFDE165EFA9E003220BD /* Icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 3993BFDD165EFA9E003220BD /* Icon.iconset */; };
 		39A86DE01643F32D004CAAEE /* DownloadCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A86DDF1643F32D004CAAEE /* DownloadCellView.m */; };
 		39A86DE71644000E004CAAEE /* syncing.png in Resources */ = {isa = PBXBuildFile; fileRef = 39A86DE61644000E004CAAEE /* syncing.png */; };
 		39C51FC816343FBA006BD1C8 /* MainPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C51FC716343FBA006BD1C8 /* MainPanel.m */; };
@@ -111,6 +112,7 @@
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
 		3993ABD0163AD36A0020AE61 /* SyncInstructionEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SyncInstructionEditor.xib; sourceTree = "<group>"; };
+		3993BFDD165EFA9E003220BD /* Icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Icon.iconset; sourceTree = "<group>"; };
 		39A86DDE1643F32D004CAAEE /* DownloadCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadCellView.h; sourceTree = "<group>"; };
 		39A86DDF1643F32D004CAAEE /* DownloadCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadCellView.m; sourceTree = "<group>"; };
 		39A86DE61644000E004CAAEE /* syncing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syncing.png; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		DD4F7C4813C322D800825C6E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				3993BFDD165EFA9E003220BD /* Icon.iconset */,
 				394892AB164C51150011E5BE /* resumeImage.png */,
 				394892A7164C50010011E5BE /* stopImage.png */,
 				394892A8164C50010011E5BE /* stopImagePressed.png */,
@@ -383,7 +386,7 @@
 		DD4F7BFB13C30F9F00825C6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = DD4F7BFE13C30F9F00825C6E /* Build configuration list for PBXProject "PutIOSync" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -431,6 +434,7 @@
 				394892A9164C50010011E5BE /* stopImage.png in Resources */,
 				394892AA164C50010011E5BE /* stopImagePressed.png in Resources */,
 				394892AC164C51150011E5BE /* resumeImage.png in Resources */,
+				3993BFDE165EFA9E003220BD /* Icon.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +493,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -503,6 +511,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
@@ -515,6 +524,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -523,6 +536,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;

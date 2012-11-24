@@ -136,7 +136,7 @@ static BOOL triedToLoadAccessToken = NO;
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
-    NSLog(@"API request to endpoint: %@\nParameters: %@", endpoint, [[parameters description] stringByReplacingOccurrencesOfString:@"\n" withString:@""]);
+    //NSLog(@"API request to endpoint: %@\nParameters: %@", endpoint, [[parameters description] stringByReplacingOccurrencesOfString:@"\n" withString:@""]);
     if([_delegate respondsToSelector:@selector(api:didBeginRequest:)])
         [_delegate api:self didBeginRequest:currentRequest];
     incomingData = nil;
@@ -353,7 +353,7 @@ static void *keychainAccountName = "APIOAuthToken";
     if(status == noErr){
         password = [[NSString alloc] initWithBytes:passwordData length:passwordLength encoding:NSUTF8StringEncoding];
         SecKeychainItemFreeContent(NULL, passwordData);
-        NSLog(@"Successfully read keychain item");
+        //NSLog(@"Successfully read keychain item");
     }else{
         if(status != noErr)
             NSLog(@"Failed to get keychain item: %@", (NSString*)CFBridgingRelease(SecCopyErrorMessageString(status, NULL)));

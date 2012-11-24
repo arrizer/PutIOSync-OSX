@@ -12,10 +12,13 @@
 @property (nonatomic, strong) MenubarController *menubarController;
 @property (nonatomic, strong) PanelController *panelController;
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
+@property (readonly) SUUpdater *updater;
 
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)togglePanel:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
+
+- (void)deliverUserNotificationWithIdentifier:(NSString*)identifier message:(NSString*)message;
 
 + (void)setupUserDefaults;
 

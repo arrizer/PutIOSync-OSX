@@ -12,6 +12,12 @@
 #pragma mark -
 #pragma mark MASPreferencesViewController
 
+-(void)viewWillAppear
+{
+    SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
+    autocheckForUpdatesCheckbox.state = ([updater automaticallyChecksForUpdates] ? NSOnState : NSOffState);
+}
+
 - (NSString *)identifier
 {
     return @"GeneralPreferences";

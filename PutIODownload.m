@@ -1,6 +1,7 @@
 
 #import "PutIODownload.h"
 #import "PersistenceManager.h"
+#import "ApplicationDelegate.h"
 
 #define PUTIO_API_DOWNLOAD_ENDPOINT @"https://api.put.io/v2/files/%ld/download?oauth_token=%@"
 
@@ -110,7 +111,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
         localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
         self.status = [decoder decodeIntForKey:@"status"];
-        [self changeStatus:self.status];
+        [self changeStatus:self.status andDeliverNotification:NO];
         numberOfRetries = 0;
 
         [allDownloads addObject:self];
@@ -190,8 +191,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 - (void)cancelDownload
 {
     if(!connection)
-        return;
-    [self cancelConnection];
+        [self cancelConnection];
     [self deleteTemporaryDataFile];
     [self changeStatus:PutIODownloadStatusCancelled];
 }
@@ -413,6 +413,11 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)changeStatus:(PutIODownloadStatus)newStatus
 {
+    [self changeStatus:newStatus andDeliverNotification:YES];
+}
+
+-(void)changeStatus:(PutIODownloadStatus)newStatus andDeliverNotification:(BOOL)deliverNotification
+{
     NSDictionary *localizedStatusDescriptions = @{
     @((int)PutIODownloadStatusPending) : NSLocalizedString(@"Pending", nil),
     @((int)PutIODownloadStatusDownloading) : NSLocalizedString(@"Downloading", nil),
@@ -423,6 +428,25 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     };
     self.localizedStatus = localizedStatusDescriptions[@((int)newStatus)];
     self.status = newStatus;
+    
+    if(deliverNotification)
+        [self deliverUserNotification];
+}
+
+- (void)deliverUserNotification
+{
+    NSString *identifier = nil;
+    NSString *message = self.putioFile.name;
+    if(self.status == PutIODownloadStatusFinished){
+        identifier = @"downloadfinished";
+    }
+    if(self.status == self.status == PutIODownloadStatusFailed){
+        identifier = @"downloadfailed";
+        message = [message stringByAppendingFormat:NSLocalizedString(@" failed: %@",nil), self.downloadError.localizedDescription];
+    }
+    if(identifier == nil)
+        return;
+    [(ApplicationDelegate*)[NSApp delegate] deliverUserNotificationWithIdentifier:identifier message:message];
 }
 
 -(NSString *)description

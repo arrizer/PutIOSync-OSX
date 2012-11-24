@@ -6,6 +6,7 @@
 #import "SyncPreferences.h"
 #import "PutIODownload.h"
 #import "SyncInstruction.h"
+#import "SyncScheduler.h"
 #import "PutIOAPI.h"
 
 @implementation ApplicationDelegate
@@ -60,6 +61,11 @@ void *kContextActivePanel = &kContextActivePanel;
     return _panelController;
 }
 
+-(SUUpdater *)updater
+{
+    return updater;
+}
+
 #pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -68,7 +74,8 @@ void *kContextActivePanel = &kContextActivePanel;
     // Install icon into the menu bar
     self.menubarController = [[MenubarController alloc] init];
     [PutIODownload allDownloads];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+    [[SyncScheduler sharedSyncScheduler] scheduleSyncs];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -117,6 +124,26 @@ void *kContextActivePanel = &kContextActivePanel;
     
     // set them in the standard user defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:userDefaultsValuesDict];
+}
+
+static NSDictionary *userNotifications = nil;
+
+- (void)deliverUserNotificationWithIdentifier:(NSString*)identifier message:(NSString*)message
+{
+    NSString *preferenceKey = [NSString stringWithFormat:@"general_notifications_%@", identifier];
+    if(!userNotifications)
+        userNotifications = @{@"newfiles": NSLocalizedString(@"Downloading new files", nil),
+                              @"downloadfinished": NSLocalizedString(@"Download finished", nil),
+                              @"downloadfailed": NSLocalizedString(@"Download failed", nil)};
+    if(!userNotifications[identifier])
+        return;
+    if([[NSUserDefaults standardUserDefaults] boolForKey:preferenceKey]){
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = userNotifications[identifier];
+        notification.hasActionButton = NO;
+        notification.informativeText = message;
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    }
 }
 
 @end
