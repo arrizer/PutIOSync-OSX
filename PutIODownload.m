@@ -162,11 +162,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
                                                            cachePolicy:NSURLCacheStorageNotAllowed
                                                        timeoutInterval:60.0f];
     
-    if(self.status == PutIODownloadStatusPaused && [self canResume]){
+    if([self canResume]){
         // Resume the download
         [request setValue:[NSString stringWithFormat:@"bytes=%li-", self.receivedSize] forHTTPHeaderField:@"Range"];
         NSLog(@"%@ resuming download from byte %li", self, self.receivedSize);
     }else{
+        [self deleteTemporaryDataFile];
         // Download from beginning
         self.totalSize = 0;
         self.receivedSize = 0;
@@ -190,7 +191,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 - (void)cancelDownload
 {
-    if(!connection)
+    if(connection)
         [self cancelConnection];
     [self deleteTemporaryDataFile];
     [self changeStatus:PutIODownloadStatusCancelled];
@@ -257,7 +258,9 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 - (BOOL)canResume
 {
     // We can only resume if the temporary file is still there and has the expected size
-    if(self.receivedSize > 0 && localFileTemporary != nil && [[NSFileManager defaultManager] fileExistsAtPath:localFileTemporary]){
+    if(self.receivedSize <= 0)
+        return NO;
+    if(localFileTemporary != nil && [[NSFileManager defaultManager] fileExistsAtPath:localFileTemporary]){
         NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:localFileTemporary error:nil];
         if([attributes fileSize] == self.receivedSize)
             return YES;
@@ -278,7 +281,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         return YES;
     }else{
         NSLog(@"%@ downloaded file has not expected size:\nBytes received = %li\nContent-length = %li\nPutIO file size = %li\nActual file size = %lli", self, self.receivedSize, self.totalSize, self.putioFile.size, [attributes fileSize]);
-        [self failWithError:nil];
+        //[self failWithError:nil];
+        [self startDownload];
     }
     return NO;
 }
@@ -335,17 +339,23 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    BOOL shouldRetry = ([error code] == NSURLErrorTimedOut
-                     || [error code] == NSURLErrorCannotConnectToHost);
+    NSInteger c = [error code];
+    if(c == NSURLErrorNetworkConnectionLost|| c == NSURLErrorNotConnectedToInternet){
+        [self pauseDownload];
+        return;
+    }
+    
+    BOOL shouldRetry = (c == NSURLErrorTimedOut
+                     || c == NSURLErrorCannotConnectToHost);
     
     if(shouldRetry && numberOfRetries < 5){
         // PutIO servers are wonky, so retry a few times
         numberOfRetries++;
         NSLog(@"%@ failed: %@ but trying again, retry number %li", self, error.localizedDescription, numberOfRetries);
         [self cancelConnection];
-        [self deleteTemporaryDataFile];
         [self startDownload];
     }else{
+        numberOfRetries = 0;
         [self failWithError:error];
     }
 }
@@ -405,7 +415,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(void)failWithError:(NSError *)error
 {
     [self cancelConnection];
-    [self deleteTemporaryDataFile];
     self.downloadError = error;
     NSLog(@"%@ failed: %@", self, error.localizedDescription);
     [self changeStatus:PutIODownloadStatusFailed];
@@ -419,12 +428,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(void)changeStatus:(PutIODownloadStatus)newStatus andDeliverNotification:(BOOL)deliverNotification
 {
     NSDictionary *localizedStatusDescriptions = @{
-    @((int)PutIODownloadStatusPending) : NSLocalizedString(@"Pending", nil),
-    @((int)PutIODownloadStatusDownloading) : NSLocalizedString(@"Downloading", nil),
-    @((int)PutIODownloadStatusPaused) : NSLocalizedString(@"Paused", nil),
-    @((int)PutIODownloadStatusFinished) : NSLocalizedString(@"Finished", nil),
-    @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
-    @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
+        @((int)PutIODownloadStatusPending) : NSLocalizedString(@"Pending", nil),
+        @((int)PutIODownloadStatusDownloading) : NSLocalizedString(@"Downloading", nil),
+        @((int)PutIODownloadStatusPaused) : NSLocalizedString(@"Paused", nil),
+        @((int)PutIODownloadStatusFinished) : NSLocalizedString(@"Finished", nil),
+        @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
+        @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
     };
     self.localizedStatus = localizedStatusDescriptions[@((int)newStatus)];
     self.status = newStatus;
