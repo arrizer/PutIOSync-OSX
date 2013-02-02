@@ -30,6 +30,8 @@ static NSString *oAuthAccessToken;
 @implementation PutIOAPI
 @synthesize busy;
 
+#pragma mark - Class Methods
+
 +(id)api
 {
     PutIOAPI *api = [[PutIOAPI alloc] init];
@@ -60,6 +62,8 @@ static BOOL triedToLoadAccessToken = NO;
     return oAuthAccessToken;
 }
 
+#pragma mark -
+
 - (id)init
 {
     self = [super init];
@@ -76,7 +80,7 @@ static BOOL triedToLoadAccessToken = NO;
     NSString *url = @"https://api.put.io/v2/oauth2/authenticate?";
     NSDictionary *parameters = @{
         @"client_id" : PUTIO_API_CLIENTID,
-        @"response_type" : @"token",
+        @"response_type" : @"code",
         @"redirect_uri" : PUTIO_API_OAUTH_REDIRECTURI
     };
     url = [url stringByAppendingString:[PutIOAPI urlParameterStringFromDictionary:parameters]];
@@ -149,8 +153,8 @@ static BOOL triedToLoadAccessToken = NO;
     NSMutableArray *parts = [NSMutableArray array];
     for(NSString *key in parameters){
         NSString *value = [parameters objectForKey:key];
-        NSString *encodedKey = [key stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *encodedValue = [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *encodedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
         [parts addObject: part];
     }
@@ -177,6 +181,8 @@ static BOOL triedToLoadAccessToken = NO;
     [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil];
 }
 
+#pragma mark Files
+
 -(void)filesInRootFolder
 {
     [self filesInFolderWithID:0];
@@ -188,6 +194,23 @@ static BOOL triedToLoadAccessToken = NO;
     NSString *endpoint = @"/files/list";
     NSDictionary *parameters = @{@"parent_id" : [@(folderID) stringValue]};
     [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:parameters];
+}
+
+- (void)deleteFileWithID:(NSInteger)fileID
+{
+    currentRequest = PutIOAPIRequestFilesDelete;
+    NSString *endpoint = @"/files/delete";
+    NSDictionary *parameters = @{@"file_ids" : [@(fileID) stringValue]};
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodPOST parameters:parameters];
+}
+
+#pragma mark Transfers
+
+- (void)activeTransfers
+{
+    currentRequest = PutIOAPIRequestTransfersList;
+    NSString *endpoint = @"/transfers/list";
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil];
 }
 
 #pragma mark - Result Handling
@@ -217,6 +240,15 @@ static BOOL triedToLoadAccessToken = NO;
             };
             break;
         }
+        case PutIOAPIRequestTransfersList:{
+            NSMutableArray *transfers = [NSMutableArray array];
+            for(NSDictionary *transferData in jsonResponse[@"transfers"]){
+                PutIOAPITransfer *transfer = [[PutIOAPITransfer alloc] initWithRawData:transferData];
+                [transfers addObject:transfer];
+            }
+            response = transfers;
+            break;
+        }
         default:
             break;
     }
@@ -236,7 +268,7 @@ static BOOL triedToLoadAccessToken = NO;
         [_delegate api:self didFinishRequest:currentRequest withResult:object];
 }
 
-#pragma mark URL Connection Delegate
+#pragma mark - URL Connection Delegate
 
 - (void)connection:(NSURLConnection *)connection
 didReceiveResponse:(NSURLResponse *)response
@@ -258,7 +290,7 @@ didReceiveResponse:(NSURLResponse *)response
     NSDictionary *responseHeaders = [(NSHTTPURLResponse*)urlResponse allHeaderFields];
     NSInteger httpStatus = [(NSHTTPURLResponse*)urlResponse statusCode];
     if(httpStatus >= 400){
-        [self failWithInternalError:PutIOAPIInternalErrorBadHTTPStatus userMessage:nil];
+        [self failWithInternalError:PutIOAPIInternalErrorBadHTTPStatus userMessage:NSLocalizedString(@"The server responded with an error", nil)];
     }else{
         if(incomingData){
             NSString *contentType = [responseHeaders objectForKey:@"Content-Type"];
@@ -335,6 +367,8 @@ didReceiveResponse:(NSURLResponse *)response
     if([_delegate respondsToSelector:@selector(api:didFailRequest:withError:)])
         [_delegate api:self didFailRequest:currentRequest withError:error];
 }
+
+#pragma mark - Keychain
 
 static void *keychainServiceName = "PutIOSync";
 static void *keychainAccountName = "APIOAuthToken";

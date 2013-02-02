@@ -17,10 +17,6 @@
 
 @property (strong) PutIODownload *download;
 
-static BOOL leopardOrGreater();
-NSString* unitStringFromBytes(double bytes, uint8_t flags);
-NSString* unitStringFromSeconds(NSTimeInterval interval);
-
 - (IBAction)pauseOrResumeDownload:(id)sender;
 
 @end

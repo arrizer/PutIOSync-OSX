@@ -1,11 +1,18 @@
 
 #import "PanelController.h"
 
+typedef enum  : NSInteger{
+    MainPanelListModeDownloads = 1,
+    MainPanelListModeTransfers = 0
+} MainPanelListMode;
+
 @interface MainPanel : PanelController
 <NSTableViewDataSource, NSTableViewDelegate>
 {
     IBOutlet NSTableView *tableView;
     IBOutlet NSMenu *optionsMenu;
+    IBOutlet NSSegmentedControl *listModeSelector;
+    MainPanelListMode listMode;
 }
 
 - (IBAction)showOptionsMenu:(id)sender;
@@ -15,5 +22,6 @@
 - (IBAction)resumeAllDownloads:(id)sender;
 - (IBAction)clearDownloads:(id)sender;
 - (IBAction)quit:(id)sender;
+- (IBAction)changeListMode:(id)sender;
 
 @end

@@ -147,9 +147,9 @@ withResult:(id)result
             [accountEMailAddressLabel setStringValue:accountEMailAddress];
         }
         if(accountUsedSpace > 0 && accountTotalSpace > 0){
-            NSString *accountUsedSpaceString = unitStringFromBytes(accountUsedSpace, kUnitStringBinaryUnits | kUnitStringLocalizedFormat);
-            NSString *accountTotalSpaceString = unitStringFromBytes(accountTotalSpace, kUnitStringBinaryUnits | kUnitStringLocalizedFormat);
-            [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Used space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString]];
+            NSString *accountUsedSpaceString = unitStringFromBytes(accountUsedSpace);
+            NSString *accountTotalSpaceString = unitStringFromBytes(accountTotalSpace);
+            [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Free space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString]];
             [spaceLabel setHidden:NO];
         }
     }else{

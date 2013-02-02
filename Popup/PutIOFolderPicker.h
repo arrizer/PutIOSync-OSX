@@ -21,7 +21,7 @@
     IBOutlet NSProgressIndicator *activitySpinner;
 }
 
-@property (weak) id<PutIOFolderPickerDelegate>delegate;
+@property (unsafe_unretained) id<PutIOFolderPickerDelegate>delegate;
 
 - (IBAction)chooseSelectedFolder:(id)sender;
 - (IBAction)cancel:(id)sender;

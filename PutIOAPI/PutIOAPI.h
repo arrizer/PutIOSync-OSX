@@ -3,11 +3,14 @@
 #import "PutIOAPIObject.h"
 #import "PutIOAPIAccountInfo.h"
 #import "PutIOAPIFile.h"
+#import "PutIOAPITransfer.h"
 
 typedef enum{
     PutIOAPIRequestObtainOAuthToken,
     PutIOAPIRequestAccountInfo,
-    PutIOAPIRequestFilesList
+    PutIOAPIRequestFilesList,
+    PutIOAPIRequestFilesDelete,
+    PutIOAPIRequestTransfersList
 } PutIOAPIRequest;
 
 @class PutIOAPI;
@@ -35,7 +38,7 @@ typedef enum{
 +(NSString*)oAuthAccessToken;
 
 @property (readonly, getter = isBusy) BOOL busy;
-@property (weak) id<PutIOAPIDelegate>delegate;
+@property (unsafe_unretained) id<PutIOAPIDelegate>delegate;
 
 - (NSURL*)oauthAuthenticationURL;
 - (NSURL*)oauthAuthenticationCallbackURL;
@@ -49,6 +52,10 @@ typedef enum{
 // Files
 - (void)filesInRootFolder;
 - (void)filesInFolderWithID:(NSInteger)folderID;
+- (void)deleteFileWithID:(NSInteger)fileID;
+
+// Transfers
+- (void)activeTransfers;
 
 - (void)cancel;
 

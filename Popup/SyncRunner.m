@@ -128,7 +128,7 @@
 {
     switch (currentOperation) {
         case SyncRunnerOperationPreflight:{
-
+            
             break;
         }
         case SyncRunnerOperationOriginScan:{
@@ -156,6 +156,11 @@
         default:
             break;
     }
+}
+
+-(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
+{
+    [self failWithError:error];
 }
 
 #pragma mark - Flow Control

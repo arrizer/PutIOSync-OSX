@@ -78,4 +78,14 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
     [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
 }
 
+-(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
+{
+    [self.window presentError:error modalForWindow:self.window delegate:self didPresentSelector:@selector(errorDismissed) contextInfo:nil];
+}
+
+- (void)errorDismissed
+{
+    [self cancelButtonClicked:self];
+}
+
 @end

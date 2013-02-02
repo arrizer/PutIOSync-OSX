@@ -21,8 +21,8 @@
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
 @property (nonatomic) BOOL hasActivePanel;
-@property (nonatomic, weak) IBOutlet BackgroundView *backgroundView;
-@property (nonatomic, weak, readonly) id<PanelControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) IBOutlet BackgroundView *backgroundView;
+@property (nonatomic, unsafe_unretained, readonly) id<PanelControllerDelegate> delegate;
 
 - (void)openPanel;
 - (void)closePanel;

@@ -50,7 +50,6 @@
     return ([[(NSTreeNode*)item mutableChildNodes] count] > 0);
 }
 
-
 -(NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
     if(item == nil && folderTree == nil)

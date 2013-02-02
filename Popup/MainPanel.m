@@ -4,6 +4,8 @@
 #import "SyncScheduler.h"
 #import "PutIODownload.h"
 #import "DownloadCellView.h"
+#import "PutIOTransfersMonitor.h"
+#import "TransferCellView.h"
 
 @implementation MainPanel
 
@@ -13,12 +15,17 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(reloadTableData) name:SyncDidBeginOrFinishNotification object:nil];
     [nc addObserver:self selector:@selector(reloadTableData) name:NewDownloadNotification object:nil];
+    [nc addObserver:self selector:@selector(reloadTableData) name:TransfersUpdatedNotification object:nil];
+    listMode = MainPanelListModeDownloads;
+    [listModeSelector setSelectedSegment:listMode];
+    [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
     return self;
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
 }
 
 -(void)openPanel
@@ -102,25 +109,42 @@
     [self reloadTableData];
 }
 
+- (IBAction)changeListMode:(id)sender
+{
+    NSInteger index = [listModeSelector selectedSegment];
+    listMode = index;
+    [self reloadTableData];
+}
+
 #pragma mark - TableView Delegate
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return ([[[SyncScheduler sharedSyncScheduler] runningSyncs] count] + [[PutIODownload allDownloads] count]);
+    if(listMode == MainPanelListModeDownloads){
+        return ([[[SyncScheduler sharedSyncScheduler] runningSyncs] count] + [[PutIODownload allDownloads] count]);
+    }else if(listMode == MainPanelListModeTransfers){
+        return ([[[PutIOTransfersMonitor monitor] allActiveTransfers] count]);
+    }
+    return 0;
 }
 
 -(NSView *)tableView:(NSTableView *)aTableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
-        NSTableCellView *cell = [tableView makeViewWithIdentifier:@"syncRunnerCell" owner:self];
-        SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
-        cell.textField.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Syncing '%@'...", nil), runner.syncInstruction.originFolderName];
-        return cell;
-    }else{
-        row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
-        DownloadCellView *cell = [tableView makeViewWithIdentifier:@"downloadCell" owner:self];
-        PutIODownload *download = [PutIODownload allDownloads][row];
-        [cell setDownload:download];
+    if(listMode == MainPanelListModeDownloads){
+        if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
+            NSTableCellView *cell = [tableView makeViewWithIdentifier:@"syncRunnerCell" owner:self];
+            SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
+            cell.textField.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Syncing '%@'...", nil), runner.syncInstruction.originFolderName];
+            return cell;
+        }else{
+            row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
+            DownloadCellView *cell = [tableView makeViewWithIdentifier:@"downloadCell" owner:self];
+            PutIODownload *download = [PutIODownload allDownloads][row];
+            [cell setDownload:download];
+            return cell;
+        }
+    }else if(listMode == MainPanelListModeTransfers){
+        TransferCellView *cell = [tableView makeViewWithIdentifier:@"transferCell" owner:self];
         return cell;
     }
     return nil;
@@ -128,13 +152,18 @@
 
 -(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
-        SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
-        return runner;
-    }else{
-        row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
-        PutIODownload *download = [PutIODownload allDownloads][row];
-        return download;
+    if(listMode == MainPanelListModeDownloads){
+        if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
+            SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
+            return runner;
+        }else{
+            row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
+            PutIODownload *download = [PutIODownload allDownloads][row];
+            return download;
+        }
+    }else if(listMode == MainPanelListModeTransfers){
+        PutIOAPITransfer *transfer = [[PutIOTransfersMonitor monitor] allActiveTransfers][row];
+        return transfer;
     }
     return nil;
 }

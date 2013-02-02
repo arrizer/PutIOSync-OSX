@@ -31,7 +31,7 @@ typedef enum{
     NSUInteger foundFiles;
 }
 
-@property (weak) id<SyncRunnerDelegate> delegate;
+@property (unsafe_unretained) id<SyncRunnerDelegate> delegate;
 @property (readonly) BOOL isBusy;
 @property (readonly) SyncInstruction *syncInstruction;
 @property (readonly, strong) NSString *localizedOperationName;

@@ -15,7 +15,12 @@ static BOOL leopardOrGreater(){
     return leopardOrGreater;
 }
 
-NSString* unitStringFromBytes(double bytes, uint8_t flags)
+NSString* unitStringFromBytes(double bytes)
+{
+    return unitStringFromBytes2(bytes, kUnitStringOSNativeUnits | kUnitStringLocalizedFormat);
+}
+
+NSString* unitStringFromBytes2(double bytes, uint8_t flags)
 {
     static const char units[] = { '\0', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
     static int maxUnits = sizeof units - 1;

@@ -18,7 +18,7 @@
     PutIOAPI *putio;
 }
 
-@property (weak) id<AccountSetupControllerDelegate> delegate;
+@property (unsafe_unretained) id<AccountSetupControllerDelegate> delegate;
 
 -(void)beginAccountSetup;
 -(IBAction)cancelButtonClicked:(id)sender;

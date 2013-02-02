@@ -14,8 +14,21 @@
 
 -(void)viewWillAppear
 {
+    [self updateUpdaterState];
+}
+
+- (void)updateUpdaterState
+{
     SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
     autocheckForUpdatesCheckbox.state = ([updater automaticallyChecksForUpdates] ? NSOnState : NSOffState);
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    NSString *dateString = (updater.lastUpdateCheckDate == nil
+                            ? NSLocalizedString(@"never", nil)
+                            : [dateFormatter stringFromDate:updater.lastUpdateCheckDate]);
+    lastUpdateLabel.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Last update: %@", nil), dateString];
 }
 
 - (NSString *)identifier
@@ -33,9 +46,16 @@
     return NSLocalizedString(@"General", @"General Preferences title");
 }
 
--(void)checkForUpdatesNow:(id)sender
+-(IBAction)checkForUpdatesNow:(id)sender
 {
     [(ApplicationDelegate*)[NSApp delegate] checkForUpdates:sender];
+    [self updateUpdaterState];
+}
+
+-(IBAction)autocheckForUpdatesChanged:(id)sender
+{
+    SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
+    updater.automaticallyChecksForUpdates = ((autocheckForUpdatesCheckbox.state == NSOnState) ? YES : NO);
 }
 
 @end

@@ -27,7 +27,7 @@
 }
 
 @property (strong) SyncInstruction *syncInstruction;
-@property (weak) id<SyncInstructionEditorDelegate>delegate;
+@property (unsafe_unretained) id<SyncInstructionEditorDelegate>delegate;
 
 -(IBAction)pickOriginFolder:(id)sender;
 -(IBAction)pickDestinationFolder:(id)sender;

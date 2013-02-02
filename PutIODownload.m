@@ -16,14 +16,14 @@
 @property (assign) NSUInteger totalSize;
 @property (assign) NSUInteger receivedSize;
 @property (assign) NSUInteger bytesPerSecond;
-@property (weak) SyncInstruction *originatingSyncInstruction;
+@property (unsafe_unretained) SyncInstruction *originatingSyncInstruction;
 @property (strong) NSError *downloadError;
 @property (strong) NSString *localFile;
 @end
 
 @implementation PutIODownload
 
-#pragma mark - Static methods
+#pragma mark - Manage Download List
 
 static NSMutableArray* allDownloads;
 
@@ -91,6 +91,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     return self;
 }
 
+#pragma mark - Coding
+
 -(id)initWithCoder:(NSCoder *)decoder
 {
     self = [super init];
@@ -136,8 +138,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
     [coder encodeInt:(int)self.status forKey:@"status"];
 }
-
-#pragma mark - Getter/Setter
 
 #pragma mark - Controlling the download
 
@@ -209,6 +209,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     }
 }
 
+#pragma mark - Manage temporary file
+
 - (void)createAndOpenTemporaryDataFile
 {
     if(localFileTemporary == nil){
@@ -255,6 +257,18 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     return YES;
 }
 
+- (NSString*)resolveNamingConflictForFileAtPath:(NSString*)filePath
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSUInteger number = 0;
+    while([fm fileExistsAtPath:filePath])
+        filePath = [NSString stringWithFormat:@"%@/%@-%li.%@", [filePath stringByDeletingLastPathComponent],
+                    [[filePath lastPathComponent] stringByDeletingPathExtension], ++number, [filePath pathExtension]];
+    return filePath;
+}
+
+#pragma mark - Resuming downloads
+
 - (BOOL)canResume
 {
     // We can only resume if the temporary file is still there and has the expected size
@@ -271,6 +285,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     return NO;
 }
 
+#pragma mark - Verifying downloaded files
+
 - (BOOL)verifyDownload
 {
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:localFileTemporary error:nil];
@@ -285,16 +301,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         [self startDownload];
     }
     return NO;
-}
-
-- (NSString*)resolveNamingConflictForFileAtPath:(NSString*)filePath
-{
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSUInteger number = 0;
-    while([fm fileExistsAtPath:filePath])
-        filePath = [NSString stringWithFormat:@"%@/%@-%li.%@", [filePath stringByDeletingLastPathComponent],
-            [[filePath lastPathComponent] stringByDeletingPathExtension], ++number, [filePath pathExtension]];
-    return filePath;
 }
 
 - (void)unlinkFromOriginatingSyncInstruction
@@ -379,9 +385,14 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     connection = nil;
     [self changeStatus:PutIODownloadStatusFinished];
     NSLog(@"%@: Download finished", self);
-    if(self.originatingSyncInstruction != nil)
+    if(self.originatingSyncInstruction != nil){
         [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
+        if(self.originatingSyncInstruction.deleteRemoteFilesAfterSync)
+            [[PutIOAPI api] deleteFileWithID:self.putioFile.fileID];
+    }
 }
+
+#pragma mark - Progress and remaining time calulations
 
 -(void)updateProgress
 {
@@ -404,6 +415,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     lastProgressUpdate = now;
 }
 
+#pragma mark - Error handling
+
 -(void)failWithLocalizedErrorDescription:(NSString*)errorDescription
 {
     NSError *error = [NSError errorWithDomain:@"putiodownload"
@@ -419,6 +432,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSLog(@"%@ failed: %@", self, error.localizedDescription);
     [self changeStatus:PutIODownloadStatusFailed];
 }
+
+#pragma mark - Download status
 
 -(void)changeStatus:(PutIODownloadStatus)newStatus
 {
@@ -441,6 +456,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     if(deliverNotification)
         [self deliverUserNotification];
 }
+
+#pragma mark - User Notifications
 
 - (void)deliverUserNotification
 {

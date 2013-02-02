@@ -62,14 +62,14 @@
     }
 
     NSString *statusString = download.localizedStatus;
-    NSString *sizeReceivedString = unitStringFromBytes(download.receivedSize, kUnitStringOSNativeUnits & kUnitStringLocalizedFormat);
-    NSString *sizeTotalString = unitStringFromBytes(download.totalSize, kUnitStringOSNativeUnits & kUnitStringLocalizedFormat);
+    NSString *sizeReceivedString = unitStringFromBytes(download.receivedSize);
+    NSString *sizeTotalString = unitStringFromBytes(download.totalSize);
     NSString *sizesString = [NSString stringWithFormat:@"%@ of %@", sizeReceivedString, sizeTotalString];
     
     if(download.status == PutIODownloadStatusDownloading && download.progressIsKnown){
         statusString = sizesString;
         if(download.bytesPerSecond > 0){
-            NSString *speedString = unitStringFromBytes(download.bytesPerSecond, kUnitStringOSNativeUnits & kUnitStringLocalizedFormat);
+            NSString *speedString = unitStringFromBytes(download.bytesPerSecond);
             statusString = [statusString stringByAppendingFormat:@" (%@/s)", speedString];
         }
         statusString = [statusString stringByAppendingString:@" - "];

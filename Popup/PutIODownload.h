@@ -46,7 +46,7 @@ typedef enum{
 @property (readonly) NSUInteger totalSize;
 @property (readonly) NSUInteger receivedSize;
 @property (readonly) NSUInteger bytesPerSecond;
-@property (readonly,weak) SyncInstruction *originatingSyncInstruction;
+@property (readonly,unsafe_unretained) SyncInstruction *originatingSyncInstruction;
 @property (readonly,strong) NSError *downloadError;
 @property (readonly,strong) NSString *localFile;
 
