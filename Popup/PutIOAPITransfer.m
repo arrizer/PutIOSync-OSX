@@ -30,6 +30,11 @@
             self.status = PutIOAPITransferStatusDownloading;
         else if([data[@"status"] isEqualToString:@"SEEDING"])
             self.status = PutIOAPITransferStatusSeeding;
+        else if([data[@"status"] isEqualToString:@"COMPLETED"])
+            self.status = PutIOAPITransferStatusCompleted;
+        else if([data[@"status"] isEqualToString:@"ERROR"])
+            self.status = PutIOAPITransferStatusFailed;
+
         self.filename = data[@"name"];
         self.progress = (float)[data[@"percent_done"] integerValue];
         self.seedingToPeersCount = [data[@"peers_getting_from_us"] integerValue];

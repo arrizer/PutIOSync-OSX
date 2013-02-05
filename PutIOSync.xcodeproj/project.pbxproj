@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39010C7716BE082C00846535 /* transfer_finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7616BE082C00846535 /* transfer_finished.png */; };
+		39010C7916BE0A4D00846535 /* transfer_failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7816BE0A4C00846535 /* transfer_failed.png */; };
+		39010C7B16BE0C5000846535 /* transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7A16BE0C5000846535 /* transfer.png */; };
+		39010C7E16BE10C700846535 /* AddTransfersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39010C7D16BE10C700846535 /* AddTransfersController.m */; };
+		39010C8016BE10FF00846535 /* AddTransfersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7F16BE10FF00846535 /* AddTransfersController.xib */; };
 		392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221C4163CAB140003352E /* PutIOFolderPicker.m */; };
 		392221C7163CAB140003352E /* PutIOFolderPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392221C5163CAB140003352E /* PutIOFolderPicker.xib */; };
 		392221CB163CB1190003352E /* PutIOAPIFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221CA163CB1190003352E /* PutIOAPIFile.m */; };
@@ -82,6 +87,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		39010C7516BE053F00846535 /* PutIOSync copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PutIOSync copy-Info.plist"; path = "/Users/matthias/Documents/Projects/PutIOSync/PutIOSync copy-Info.plist"; sourceTree = "<absolute>"; };
+		39010C7616BE082C00846535 /* transfer_finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer_finished.png; sourceTree = "<group>"; };
+		39010C7816BE0A4C00846535 /* transfer_failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer_failed.png; sourceTree = "<group>"; };
+		39010C7A16BE0C5000846535 /* transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer.png; sourceTree = "<group>"; };
+		39010C7C16BE10C700846535 /* AddTransfersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTransfersController.h; sourceTree = "<group>"; };
+		39010C7D16BE10C700846535 /* AddTransfersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTransfersController.m; sourceTree = "<group>"; };
+		39010C7F16BE10FF00846535 /* AddTransfersController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTransfersController.xib; sourceTree = "<group>"; };
 		392221C3163CAB140003352E /* PutIOFolderPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOFolderPicker.h; sourceTree = "<group>"; };
 		392221C4163CAB140003352E /* PutIOFolderPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIOFolderPicker.m; sourceTree = "<group>"; };
 		392221C5163CAB140003352E /* PutIOFolderPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PutIOFolderPicker.xib; sourceTree = "<group>"; };
@@ -274,6 +286,7 @@
 				DD4F7C0513C30F9F00825C6E /* Products */,
 				39C51FCA16344ED0006BD1C8 /* UserDefaults.plist */,
 				DD4F7C1013C30F9F00825C6E /* PutIOSync-Info.plist */,
+				39010C7516BE053F00846535 /* PutIOSync copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -321,6 +334,9 @@
 				392221C3163CAB140003352E /* PutIOFolderPicker.h */,
 				392221C4163CAB140003352E /* PutIOFolderPicker.m */,
 				392221C5163CAB140003352E /* PutIOFolderPicker.xib */,
+				39010C7C16BE10C700846535 /* AddTransfersController.h */,
+				39010C7D16BE10C700846535 /* AddTransfersController.m */,
+				39010C7F16BE10FF00846535 /* AddTransfersController.xib */,
 				392460EF163EB36500954B64 /* SyncScheduler.h */,
 				392460F0163EB36500954B64 /* SyncScheduler.m */,
 				392460F3163EB38600954B64 /* SyncRunner.h */,
@@ -367,6 +383,9 @@
 				39452136163C8DE200AA7001 /* syncRightArrow.png */,
 				39452131163C8CC300AA7001 /* systemFolder.png */,
 				39452134163C8CFA00AA7001 /* putioFolder.png */,
+				39010C7A16BE0C5000846535 /* transfer.png */,
+				39010C7616BE082C00846535 /* transfer_finished.png */,
+				39010C7816BE0A4C00846535 /* transfer_failed.png */,
 				39C51FD61634A924006BD1C8 /* logo.png */,
 				DD4F7C4913C322FA00825C6E /* Status.png */,
 				DD4F7C4A13C322FA00825C6E /* StatusHighlighted.png */,
@@ -450,6 +469,10 @@
 				394892AA164C50010011E5BE /* stopImagePressed.png in Resources */,
 				394892AC164C51150011E5BE /* resumeImage.png in Resources */,
 				3993BFDE165EFA9E003220BD /* Icon.iconset in Resources */,
+				39010C7716BE082C00846535 /* transfer_finished.png in Resources */,
+				39010C7916BE0A4D00846535 /* transfer_failed.png in Resources */,
+				39010C7B16BE0C5000846535 /* transfer.png in Resources */,
+				39010C8016BE10FF00846535 /* AddTransfersController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +512,7 @@
 				39C5B0AA16BD64A1004E8D65 /* TransferCellView.m in Sources */,
 				39C5B0AD16BD682D004E8D65 /* PutIOAPITransfer.m in Sources */,
 				39C5B0B016BD7709004E8D65 /* PutIOTransfersMonitor.m in Sources */,
+				39010C7E16BE10C700846535 /* AddTransfersController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +537,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -544,6 +569,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
