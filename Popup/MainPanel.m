@@ -6,6 +6,7 @@
 #import "DownloadCellView.h"
 #import "PutIOTransfersMonitor.h"
 #import "TransferCellView.h"
+#import "PanelRowView.h"
 
 @implementation MainPanel
 
@@ -13,12 +14,17 @@
 {
     self = [super initWithDelegate:delegate];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(reloadTableData) name:SyncDidBeginOrFinishNotification object:nil];
-    [nc addObserver:self selector:@selector(reloadTableData) name:NewDownloadNotification object:nil];
-    [nc addObserver:self selector:@selector(reloadTableData) name:TransfersUpdatedNotification object:nil];
+    [nc addObserver:self selector:@selector(reloadTableData)
+               name:SyncSchedulerSyncDidChangeNotification
+             object:nil];
+    [nc addObserver:self selector:@selector(reloadTableData)
+               name:PutIODownloadAddedNotification
+             object:nil];
+    [nc addObserver:self selector:@selector(reloadTableData)
+               name:PutIOTransfersMonitorUpdatedNotification
+             object:nil];
     listMode = MainPanelListModeDownloads;
     [listModeSelector setSelectedSegment:listMode];
-    [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
     return self;
 }
 
@@ -31,6 +37,10 @@
 -(void)openPanel
 {
     [self adaptiveResizeAnimated:NO];
+    if(listMode == MainPanelListModeTransfers)
+        [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
+    else
+        [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
     [super openPanel];
 }
 
@@ -57,6 +67,21 @@
     [NSAnimationContext endGrouping];
 }
 
+#pragma mark - Window Delegate
+
+-(void)windowWillClose:(NSNotification *)notification
+{
+    [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
+    [super windowWillClose:notification];
+}
+
+-(void)windowDidResignKey:(NSNotification *)notification
+{
+    if([self.window isVisible])
+        [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
+    [super windowDidResignKey:notification];
+}
+
 #pragma mark - Actions
 
 -(IBAction)showOptionsMenu:(id)sender
@@ -66,7 +91,7 @@
                                                                toView:nil];
     NSEvent *event =  [NSEvent mouseEventWithType:NSLeftMouseDown
                                          location:menuOrigin
-                                    modifierFlags:NSLeftMouseDownMask // 0x100
+                                    modifierFlags:NSLeftMouseDownMask
                                         timestamp:0
                                      windowNumber:[[(NSButton *)sender window] windowNumber]
                                           context:[[(NSButton *)sender window] graphicsContext]
@@ -105,8 +130,12 @@
 
 -(IBAction)clearDownloads:(id)sender
 {
-    [PutIODownload clearDownloadList];
-    [self reloadTableData];
+    if(listMode == MainPanelListModeDownloads){
+        [PutIODownload clearDownloadList];
+        [self reloadTableData];
+    }else if(listMode == MainPanelListModeTransfers){
+        
+    }
 }
 
 - (IBAction)changeListMode:(id)sender
@@ -114,6 +143,10 @@
     NSInteger index = [listModeSelector selectedSegment];
     listMode = index;
     [self reloadTableData];
+    if(listMode == MainPanelListModeTransfers)
+        [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
+    else
+        [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
 }
 
 #pragma mark - TableView Delegate
@@ -148,6 +181,11 @@
         return cell;
     }
     return nil;
+}
+
+-(NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
+{
+    return [[PanelRowView alloc] init];
 }
 
 -(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row

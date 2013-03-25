@@ -38,6 +38,17 @@
     return _download;
 }
 
+-(void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle
+{
+    [super setBackgroundStyle:backgroundStyle];
+    if(backgroundStyle == NSBackgroundStyleDark){
+        statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
+    }else if (backgroundStyle == NSBackgroundStyleLight){
+        statusLabel.textColor = [NSColor controlShadowColor];
+    }
+    [self updateStatus];
+}
+
 #pragma mark - Displaying status
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -51,11 +62,13 @@
     [progressBar setHidden:!(download.status == PutIODownloadStatusDownloading)];
     [statusLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 0 : -8)];
     [textLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 3 : 12)];
-    if(download.status == PutIODownloadStatusDownloading){
-        [pauseResumeButton setImage:[NSImage imageNamed:@"stopImage.png"]];
+    if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
+        NSString *stopImage = (self.backgroundStyle == NSBackgroundStyleDark ? @"stopImageInverted.png" : @"stopImage.png");
+        [pauseResumeButton setImage:[NSImage imageNamed:stopImage]];
         [pauseResumeButton setHidden:NO];
     }else if(download.status == PutIODownloadStatusPaused || download.status == PutIODownloadStatusFailed){
-        [pauseResumeButton setImage:[NSImage imageNamed:@"resumeImage.png"]];
+        NSString *resumeImage = (self.backgroundStyle == NSBackgroundStyleDark ? @"resumeImageInverted.png" : @"resumeImage.png");
+        [pauseResumeButton setImage:[NSImage imageNamed:resumeImage]];
         [pauseResumeButton setHidden:NO];
     }else{
         [pauseResumeButton setHidden:YES];
@@ -79,7 +92,7 @@
             statusString = [statusString stringByAppendingString:NSLocalizedString(@"Estimating remaining time", nil)];
         }
     }
-    else if(download.status == PutIODownloadStatusPaused){
+    else if(download.status == PutIODownloadStatusPaused || (download.status == PutIODownloadStatusPending && download.receivedSize > 0)){
         statusString = [NSString stringWithFormat:@"%@ - %@", sizesString, download.localizedStatus];
     }
     else if(download.status == PutIODownloadStatusFinished){
@@ -94,7 +107,7 @@
 
 -(IBAction)pauseOrResumeDownload:(id)sender
 {
-    if(_download.status == PutIODownloadStatusDownloading)
+    if(_download.status == PutIODownloadStatusDownloading || _download.status == PutIODownloadStatusPending)
         [_download pauseDownload];
     else if(_download.status == PutIODownloadStatusPaused || _download.status == PutIODownloadStatusFailed)
         [_download startDownload];

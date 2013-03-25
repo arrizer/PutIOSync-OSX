@@ -26,6 +26,7 @@
 #pragma mark - Manage Download List
 
 static NSMutableArray* allDownloads;
+static NSInteger numberOfRunningDownloads = 0;
 
 + (NSArray*)allDownloads
 {
@@ -60,8 +61,37 @@ static NSMutableArray* allDownloads;
 {
     // Call this before the application terminates
     for(PutIODownload *download in allDownloads)
+        [download stopWaitingForOtherDownloads];
+    for(PutIODownload *download in allDownloads)
         [download pauseDownload];
     [PersistenceManager storePersistentObject:allDownloads forKey:@"downloads"];
+}
+
++ (NSInteger)numberOfRunningDownloads
+{
+//    NSInteger count = 0;
+//    for(PutIODownload *download in allDownloads)
+//        if(download.status == PutIODownloadStatusDownloading)
+//            count++;
+//    return count;
+    return numberOfRunningDownloads;
+}
+
++ (void)complyWithMaximumParallelDownloads
+{
+    NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
+    while([PutIODownload numberOfRunningDownloads] > maxParallelDownloads){
+        for(PutIODownload *download in allDownloads)
+            if(download.status == PutIODownloadStatusDownloading){
+                [download pauseDownload];
+                [download startDownload];
+                break;
+            }
+    }
+    for(PutIODownload *download in allDownloads){
+        if(download.status == PutIODownloadStatusPending)
+            [download startDownload];
+    }
 }
 
 #pragma mark - Init
@@ -86,9 +116,14 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         numberOfRetries = 0;
         [self changeStatus:PutIODownloadStatusPending];
         [allDownloads addObject:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NewDownloadNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
     }
     return self;
+}
+
+-(void)dealloc
+{
+    [self stopWaitingForOtherDownloads];
 }
 
 #pragma mark - Coding
@@ -117,7 +152,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         numberOfRetries = 0;
 
         [allDownloads addObject:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NewDownloadNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
     }
     return self;
 }
@@ -147,6 +182,17 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         return;
     if([PutIOAPI oAuthAccessToken] == nil)
         return;
+    
+    [self changeStatus:PutIODownloadStatusPending];
+    [self stopWaitingForOtherDownloads];
+    
+    NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
+    if(maxParallelDownloads != 0 && [PutIODownload numberOfRunningDownloads] >= maxParallelDownloads){
+        // The maximum number of downloads is already runnung, wait for another
+        //NSLog(@"%@ max. number of parallel downloads reached, waiting", self);
+        [self startWaitingForOtherDownloads];
+        return;
+    }
     
     self.estimatedRemainingTimeIsKnown = NO;
     self.bytesPerSecond = 0;
@@ -181,10 +227,11 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 - (void)pauseDownload
 {
-    if(!connection)
-        return;
-    [self cancelConnection];
-    self.receivedSize += receivedBytesSinceLastProgressUpdate;
+    [self stopWaitingForOtherDownloads];
+    if(connection){
+        [self cancelConnection];
+        self.receivedSize += receivedBytesSinceLastProgressUpdate;
+    }
     //NSLog(@"%@ paused download after receiving %li bytes", self, self.receivedSize);
     [self changeStatus:PutIODownloadStatusPaused];
 }
@@ -194,6 +241,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     if(connection)
         [self cancelConnection];
     [self deleteTemporaryDataFile];
+    [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusCancelled];
 }
 
@@ -430,7 +478,9 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [self cancelConnection];
     self.downloadError = error;
     NSLog(@"%@ failed: %@", self, error.localizedDescription);
+    [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusFailed];
+    
 }
 
 #pragma mark - Download status
@@ -450,9 +500,22 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
         @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
     };
+    NSDictionary *notificationNames = @{
+        @((int)PutIODownloadStatusDownloading) : PutIODownloadStartedNotification,
+        @((int)PutIODownloadStatusPaused) : PutIODownloadPausedNotification,
+        @((int)PutIODownloadStatusFinished) : PutIODownloadFinishedNotification,
+        @((int)PutIODownloadStatusCancelled) : PutIODownloadCancelledNotification,
+        @((int)PutIODownloadStatusFailed) : PutIODownloadFailedNotification
+    };
+    if(newStatus == PutIODownloadStatusDownloading)
+        numberOfRunningDownloads++;
+    else if(self.status == PutIODownloadStatusDownloading)
+        numberOfRunningDownloads--;
     self.localizedStatus = localizedStatusDescriptions[@((int)newStatus)];
     self.status = newStatus;
-    
+    NSString *notificationName = notificationNames[@((int)newStatus)];
+    if(notificationName != nil)
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
     if(deliverNotification)
         [self deliverUserNotification];
 }
@@ -478,6 +541,32 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"PutIODownload<%@>", self.putioFile.name];
+}
+
+#pragma mark - Coordinate Parallel Downloads
+
+- (void)startWaitingForOtherDownloads
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(otherDownloadDidFinishOrPause)
+               name:PutIODownloadFinishedNotification
+             object:nil];
+    [nc addObserver:self
+           selector:@selector(otherDownloadDidFinishOrPause)
+               name:PutIODownloadPausedNotification
+             object:nil];
+}
+
+- (void)stopWaitingForOtherDownloads
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)otherDownloadDidFinishOrPause
+{
+    if(self.status == PutIODownloadStatusPending)
+        [self startDownload];
 }
 
 @end

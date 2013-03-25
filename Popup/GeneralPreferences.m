@@ -1,6 +1,7 @@
 
 #import "GeneralPreferences.h"
 #import "ApplicationDelegate.h"
+#import "PutIODownload.h"
 
 @implementation GeneralPreferences
 
@@ -46,6 +47,8 @@
     return NSLocalizedString(@"General", @"General Preferences title");
 }
 
+#pragma mark - Actions
+
 -(IBAction)checkForUpdatesNow:(id)sender
 {
     [(ApplicationDelegate*)[NSApp delegate] checkForUpdates:sender];
@@ -56,6 +59,20 @@
 {
     SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
     updater.automaticallyChecksForUpdates = ((autocheckForUpdatesCheckbox.state == NSOnState) ? YES : NO);
+}
+
+-(IBAction)launchOnLoginToggled:(id)sender
+{
+    ApplicationDelegate *appDelegate = (ApplicationDelegate*)[NSApp delegate];
+    if(launchOnLoginCheckbox.state == NSOnState)
+        [appDelegate addApplicationAsLoginItem];
+    else
+        [appDelegate removeApplicationLoginItem];
+}
+
+-(IBAction)maxParallelDownloadsChanged:(id)sender
+{
+    [PutIODownload complyWithMaximumParallelDownloads];
 }
 
 @end

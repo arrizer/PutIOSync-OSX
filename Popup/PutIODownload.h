@@ -3,7 +3,12 @@
 #import "PutIOAPI.h"
 #import "SyncInstruction.h"
 
-#define NewDownloadNotification @"putioDownloadListChanged"
+#define PutIODownloadAddedNotification @"PutIODownloadAddedNotification"
+#define PutIODownloadFinishedNotification @"PutIODownloadFinishedNotification"
+#define PutIODownloadPausedNotification @"PutIODownloadPausedNotification"
+#define PutIODownloadStartedNotification @"PutIODownloadStartedNotification"
+#define PutIODownloadCancelledNotification @"PutIODownloadCancelledNotification"
+#define PutIODownloadFailedNotification @"PutIODownloadFailedNotification"
 
 typedef enum{
     PutIODownloadStatusPending,
@@ -33,6 +38,7 @@ typedef enum{
 + (void)clearDownloadList;
 + (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
 + (void)pauseAndSaveAllDownloads;
++ (void)complyWithMaximumParallelDownloads;
 
 - (id)initWithPutIOFile:(PutIOAPIFile*)file localPath:(NSString*)path subdirectoryPath:(NSString*)subdirectoryPath originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 

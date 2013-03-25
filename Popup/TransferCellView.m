@@ -51,6 +51,18 @@
     statusLabel.stringValue = status;
 }
 
+-(void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle
+{
+    [super setBackgroundStyle:backgroundStyle];
+    if(backgroundStyle == NSBackgroundStyleDark){
+        statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
+        [cancelButton setImage:[NSImage imageNamed:@"stopImageInverted.png"]];
+    }else if (backgroundStyle == NSBackgroundStyleLight){
+        statusLabel.textColor = [NSColor controlShadowColor];
+        [cancelButton setImage:[NSImage imageNamed:@"stopImage.png"]];
+    }
+}
+
 -(void)cancelTransfer:(id)sender
 {
     

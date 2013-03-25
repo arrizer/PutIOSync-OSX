@@ -10,8 +10,9 @@
 		39010C7716BE082C00846535 /* transfer_finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7616BE082C00846535 /* transfer_finished.png */; };
 		39010C7916BE0A4D00846535 /* transfer_failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7816BE0A4C00846535 /* transfer_failed.png */; };
 		39010C7B16BE0C5000846535 /* transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7A16BE0C5000846535 /* transfer.png */; };
-		39010C7E16BE10C700846535 /* AddTransfersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39010C7D16BE10C700846535 /* AddTransfersController.m */; };
-		39010C8016BE10FF00846535 /* AddTransfersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39010C7F16BE10FF00846535 /* AddTransfersController.xib */; };
+		391A9F3316E388E2003BDE51 /* PanelRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 391A9F3216E388E2003BDE51 /* PanelRowView.m */; };
+		391A9F3616E39447003BDE51 /* resumeImageInverted.png in Resources */ = {isa = PBXBuildFile; fileRef = 391A9F3416E39447003BDE51 /* resumeImageInverted.png */; };
+		391A9F3716E39447003BDE51 /* stopImageInverted.png in Resources */ = {isa = PBXBuildFile; fileRef = 391A9F3516E39447003BDE51 /* stopImageInverted.png */; };
 		392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221C4163CAB140003352E /* PutIOFolderPicker.m */; };
 		392221C7163CAB140003352E /* PutIOFolderPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392221C5163CAB140003352E /* PutIOFolderPicker.xib */; };
 		392221CB163CB1190003352E /* PutIOAPIFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221CA163CB1190003352E /* PutIOAPIFile.m */; };
@@ -25,7 +26,6 @@
 		394892A0164C43EE0011E5BE /* gearMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3948929F164C43EE0011E5BE /* gearMenu.png */; };
 		394892A2164C4F480011E5BE /* iconPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A1164C4F480011E5BE /* iconPlaceholder.png */; };
 		394892A9164C50010011E5BE /* stopImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A7164C50010011E5BE /* stopImage.png */; };
-		394892AA164C50010011E5BE /* stopImagePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892A8164C50010011E5BE /* stopImagePressed.png */; };
 		394892AC164C51150011E5BE /* resumeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 394892AB164C51150011E5BE /* resumeImage.png */; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
 		3986C5BF163857C400F19764 /* SyncPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3986C5BD163857C400F19764 /* SyncPreferences.xib */; };
@@ -91,9 +91,10 @@
 		39010C7616BE082C00846535 /* transfer_finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer_finished.png; sourceTree = "<group>"; };
 		39010C7816BE0A4C00846535 /* transfer_failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer_failed.png; sourceTree = "<group>"; };
 		39010C7A16BE0C5000846535 /* transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transfer.png; sourceTree = "<group>"; };
-		39010C7C16BE10C700846535 /* AddTransfersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTransfersController.h; sourceTree = "<group>"; };
-		39010C7D16BE10C700846535 /* AddTransfersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTransfersController.m; sourceTree = "<group>"; };
-		39010C7F16BE10FF00846535 /* AddTransfersController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTransfersController.xib; sourceTree = "<group>"; };
+		391A9F3116E388E2003BDE51 /* PanelRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelRowView.h; sourceTree = "<group>"; };
+		391A9F3216E388E2003BDE51 /* PanelRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelRowView.m; sourceTree = "<group>"; };
+		391A9F3416E39447003BDE51 /* resumeImageInverted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resumeImageInverted.png; sourceTree = "<group>"; };
+		391A9F3516E39447003BDE51 /* stopImageInverted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopImageInverted.png; sourceTree = "<group>"; };
 		392221C3163CAB140003352E /* PutIOFolderPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOFolderPicker.h; sourceTree = "<group>"; };
 		392221C4163CAB140003352E /* PutIOFolderPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIOFolderPicker.m; sourceTree = "<group>"; };
 		392221C5163CAB140003352E /* PutIOFolderPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PutIOFolderPicker.xib; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 		3948929F164C43EE0011E5BE /* gearMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gearMenu.png; sourceTree = "<group>"; };
 		394892A1164C4F480011E5BE /* iconPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconPlaceholder.png; sourceTree = "<group>"; };
 		394892A7164C50010011E5BE /* stopImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopImage.png; sourceTree = "<group>"; };
-		394892A8164C50010011E5BE /* stopImagePressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopImagePressed.png; sourceTree = "<group>"; };
 		394892AB164C51150011E5BE /* resumeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resumeImage.png; sourceTree = "<group>"; };
 		3986C5BB163857C400F19764 /* SyncPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPreferences.h; sourceTree = "<group>"; };
 		3986C5BC163857C400F19764 /* SyncPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPreferences.m; sourceTree = "<group>"; };
@@ -280,7 +280,7 @@
 				39F8743E1634279400D9026F /* PutIO API */,
 				DD4F7C2613C311DF00825C6E /* Controllers */,
 				DD4F7C3913C317EC00825C6E /* Views */,
-				DD4F7C4813C322D800825C6E /* Graphics */,
+				DD4F7C4813C322D800825C6E /* Images */,
 				DD4F7C0713C30F9F00825C6E /* Frameworks */,
 				DD4F7C0F13C30F9F00825C6E /* Supporting Files */,
 				DD4F7C0513C30F9F00825C6E /* Products */,
@@ -334,9 +334,6 @@
 				392221C3163CAB140003352E /* PutIOFolderPicker.h */,
 				392221C4163CAB140003352E /* PutIOFolderPicker.m */,
 				392221C5163CAB140003352E /* PutIOFolderPicker.xib */,
-				39010C7C16BE10C700846535 /* AddTransfersController.h */,
-				39010C7D16BE10C700846535 /* AddTransfersController.m */,
-				39010C7F16BE10FF00846535 /* AddTransfersController.xib */,
 				392460EF163EB36500954B64 /* SyncScheduler.h */,
 				392460F0163EB36500954B64 /* SyncScheduler.m */,
 				392460F3163EB38600954B64 /* SyncRunner.h */,
@@ -363,18 +360,21 @@
 				39A86DDF1643F32D004CAAEE /* DownloadCellView.m */,
 				39C5B0A816BD64A1004E8D65 /* TransferCellView.h */,
 				39C5B0A916BD64A1004E8D65 /* TransferCellView.m */,
+				391A9F3116E388E2003BDE51 /* PanelRowView.h */,
+				391A9F3216E388E2003BDE51 /* PanelRowView.m */,
 			);
 			name = Views;
 			path = Popup;
 			sourceTree = "<group>";
 		};
-		DD4F7C4813C322D800825C6E /* Graphics */ = {
+		DD4F7C4813C322D800825C6E /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				3993BFDD165EFA9E003220BD /* Icon.iconset */,
 				394892AB164C51150011E5BE /* resumeImage.png */,
 				394892A7164C50010011E5BE /* stopImage.png */,
-				394892A8164C50010011E5BE /* stopImagePressed.png */,
+				391A9F3416E39447003BDE51 /* resumeImageInverted.png */,
+				391A9F3516E39447003BDE51 /* stopImageInverted.png */,
 				394892A1164C4F480011E5BE /* iconPlaceholder.png */,
 				3948929F164C43EE0011E5BE /* gearMenu.png */,
 				39A86DE61644000E004CAAEE /* syncing.png */,
@@ -390,7 +390,7 @@
 				DD4F7C4913C322FA00825C6E /* Status.png */,
 				DD4F7C4A13C322FA00825C6E /* StatusHighlighted.png */,
 			);
-			name = Graphics;
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,13 +466,13 @@
 				394892A0164C43EE0011E5BE /* gearMenu.png in Resources */,
 				394892A2164C4F480011E5BE /* iconPlaceholder.png in Resources */,
 				394892A9164C50010011E5BE /* stopImage.png in Resources */,
-				394892AA164C50010011E5BE /* stopImagePressed.png in Resources */,
 				394892AC164C51150011E5BE /* resumeImage.png in Resources */,
 				3993BFDE165EFA9E003220BD /* Icon.iconset in Resources */,
 				39010C7716BE082C00846535 /* transfer_finished.png in Resources */,
 				39010C7916BE0A4D00846535 /* transfer_failed.png in Resources */,
 				39010C7B16BE0C5000846535 /* transfer.png in Resources */,
-				39010C8016BE10FF00846535 /* AddTransfersController.xib in Resources */,
+				391A9F3616E39447003BDE51 /* resumeImageInverted.png in Resources */,
+				391A9F3716E39447003BDE51 /* stopImageInverted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,7 +512,7 @@
 				39C5B0AA16BD64A1004E8D65 /* TransferCellView.m in Sources */,
 				39C5B0AD16BD682D004E8D65 /* PutIOAPITransfer.m in Sources */,
 				39C5B0B016BD7709004E8D65 /* PutIOTransfersMonitor.m in Sources */,
-				39010C7E16BE10C700846535 /* AddTransfersController.m in Sources */,
+				391A9F3316E388E2003BDE51 /* PanelRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -609,6 +610,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

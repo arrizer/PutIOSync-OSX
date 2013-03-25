@@ -766,10 +766,14 @@
 										<int key="NSCellFlags">67108864</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents"/>
-										<reference key="NSSupport" ref="431043270"/>
+										<object class="NSFont" key="NSSupport">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">12</double>
+											<int key="NSfFlags">4883</int>
+										</object>
 										<string key="NSCellIdentifier">_NS:9</string>
 										<reference key="NSControlView" ref="301652389"/>
-										<int key="NSButtonFlags">-2041823232</int>
+										<int key="NSButtonFlags">139214848</int>
 										<int key="NSButtonFlags2">36</int>
 										<object class="NSCustomResource" key="NSNormalImage" id="277339902">
 											<string key="NSClassName">NSImage</string>
@@ -2057,11 +2061,6 @@
 						<reference key="parent" ref="898450067"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">663</int>
-						<reference key="object" ref="443932027"/>
-						<reference key="parent" ref="301652389"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">677</int>
 						<reference key="object" ref="615204524"/>
 						<reference key="parent" ref="882168153"/>
@@ -2127,11 +2126,6 @@
 						<reference key="parent" ref="276506112"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">838</int>
-						<reference key="object" ref="458947989"/>
-						<reference key="parent" ref="276506112"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">839</int>
 						<reference key="object" ref="502409371"/>
 						<reference key="parent" ref="276506112"/>
@@ -2144,11 +2138,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">848</int>
 						<reference key="object" ref="1014394185"/>
-						<reference key="parent" ref="276506112"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">854</int>
-						<reference key="object" ref="1053319605"/>
 						<reference key="parent" ref="276506112"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2170,11 +2159,6 @@
 						<int key="objectID">865</int>
 						<reference key="object" ref="448481634"/>
 						<reference key="parent" ref="229616213"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">873</int>
-						<reference key="object" ref="365455388"/>
-						<reference key="parent" ref="201932336"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">874</int>
@@ -2700,6 +2684,26 @@
 						<reference key="object" ref="889403191"/>
 						<reference key="parent" ref="411054707"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">838</int>
+						<reference key="object" ref="458947989"/>
+						<reference key="parent" ref="276506112"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">873</int>
+						<reference key="object" ref="365455388"/>
+						<reference key="parent" ref="201932336"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">854</int>
+						<reference key="object" ref="1053319605"/>
+						<reference key="parent" ref="276506112"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">663</int>
+						<reference key="object" ref="443932027"/>
+						<reference key="parent" ref="301652389"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2939,7 +2943,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">972</int>
+			<int key="maxID">989</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

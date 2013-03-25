@@ -7,7 +7,7 @@ typedef enum  : NSInteger{
 } MainPanelListMode;
 
 @interface MainPanel : PanelController
-<NSTableViewDataSource, NSTableViewDelegate>
+<NSTableViewDataSource, NSTableViewDelegate, NSWindowDelegate>
 {
     IBOutlet NSTableView *tableView;
     IBOutlet NSMenu *optionsMenu;

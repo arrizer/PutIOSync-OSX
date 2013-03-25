@@ -22,4 +22,7 @@
 
 + (void)setupUserDefaults;
 
+- (void)addApplicationAsLoginItem;
+- (void)removeApplicationLoginItem;
+
 @end

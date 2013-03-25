@@ -6,6 +6,8 @@
 	<false/>
 	<key>general_syncinterval</key>
 	<integer>2</integer>
+	<key>general_paralleldownloads</key>
+	<integer>5</integer>
 	<key>general_notifications_newfiles</key>
 	<true/>
 	<key>general_notifications_downloadfinished</key>

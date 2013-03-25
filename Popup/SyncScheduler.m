@@ -79,7 +79,7 @@ static SyncScheduler* sharedInstance;
         [runner setDelegate:self];
         [runner run];
         [self.runningSyncs addObject:runner];
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncDidBeginOrFinishNotification object:runner];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncSchedulerSyncDidChangeNotification object:runner];
     }
 }
 
@@ -113,14 +113,14 @@ static SyncScheduler* sharedInstance;
 -(void)syncRunner:(SyncRunner *)runner didFailWithError:(NSError *)error
 {
     [self.runningSyncs removeObject:runner];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncDidBeginOrFinishNotification object:runner];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncSchedulerSyncDidChangeNotification object:runner];
     [self deliverNotificationConditionally];
 }
 
 -(void)syncRunnerDidFinish:(SyncRunner *)runner afterFindingFiles:(NSUInteger)fileCount
 {
     [self.runningSyncs removeObject:runner];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncDidBeginOrFinishNotification object:runner];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncSchedulerSyncDidChangeNotification object:runner];
     foundFiles += fileCount;
     [self deliverNotificationConditionally];
 }
@@ -128,7 +128,7 @@ static SyncScheduler* sharedInstance;
 -(void)syncRunnerDidCancel:(SyncRunner *)runner
 {
     [self.runningSyncs removeObject:runner];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncDidBeginOrFinishNotification object:runner];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncSchedulerSyncDidChangeNotification object:runner];
     [self deliverNotificationConditionally];
 }
 

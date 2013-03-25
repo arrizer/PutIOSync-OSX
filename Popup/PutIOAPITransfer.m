@@ -60,7 +60,11 @@
         }else{
             self.errorMessage = nil;
         }
-        self.sourceURL = [NSURL URLWithString:data[@"source"]];
+        if(data[@"source"] != [NSNull null]){
+            self.sourceURL = [NSURL URLWithString:data[@"source"]];
+        }else{
+            self.sourceURL = nil;
+        }
         self.startTime = [PutIOAPIObject dateFromRawDataString:data[@"created_at"]];
         if(data[@"estimated_time"] != [NSNull null]){
             self.estimatedTimeRemaining = [data[@"estimated_time"] doubleValue];

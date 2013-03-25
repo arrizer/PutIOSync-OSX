@@ -24,6 +24,7 @@ static PutIOTransfersMonitor *sharedInstance;
 
 -(void)startMonitoringTransfers
 {
+    [self stopMonitoringTransfers];
     [self updateTransfers];
 }
 
@@ -48,7 +49,7 @@ static PutIOTransfersMonitor *sharedInstance;
 -(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
 {
     activeTransfers = (NSArray*)result;
-    [[NSNotificationCenter defaultCenter] postNotificationName:TransfersUpdatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PutIOTransfersMonitorUpdatedNotification object:nil];
     // Update again in a few seconds:
     updateTransfersTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTransfers) userInfo:nil repeats:NO];
 }

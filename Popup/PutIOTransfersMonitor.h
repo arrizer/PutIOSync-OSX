@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "PutIOAPI.h"
 
-#define TransfersUpdatedNotification @"putioTransfersUpdated"
+#define PutIOTransfersMonitorUpdatedNotification @"PutIOTransfersMonitorUpdatedNotification"
 
 @interface PutIOTransfersMonitor : NSObject
 <PutIOAPIDelegate>

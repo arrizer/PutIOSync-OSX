@@ -3,7 +3,7 @@
 #import "SyncRunner.h"
 #import "SyncInstruction.h"
 
-#define SyncDidBeginOrFinishNotification @"runningSyncsDidChange"
+#define SyncSchedulerSyncDidChangeNotification @"SyncSchedulerSyncDidChangeNotification"
 
 @interface SyncScheduler : NSObject
 <SyncRunnerDelegate>
