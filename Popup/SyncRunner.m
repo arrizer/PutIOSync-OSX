@@ -128,7 +128,6 @@
 {
     switch (currentOperation) {
         case SyncRunnerOperationPreflight:{
-            
             break;
         }
         case SyncRunnerOperationOriginScan:{

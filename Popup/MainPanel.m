@@ -41,6 +41,8 @@
         [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
     else
         [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
+    [tableView setTarget:self];
+    [tableView setDoubleAction:@selector(doubleClickTableViewRow:)];
     [super openPanel];
 }
 
@@ -147,6 +149,18 @@
         [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
     else
         [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
+}
+
+- (IBAction)doubleClickTableViewRow:(id)sender
+{
+    NSInteger row = [tableView clickedRow];
+    NSTableCellView *cell = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
+    if([cell.objectValue isKindOfClass:[PutIODownload class]]){
+        PutIODownload *download = (PutIODownload*)cell.objectValue;
+        if(download.status == PutIODownloadStatusFinished){
+            [[NSWorkspace sharedWorkspace] openFile:download.localFile];
+        }
+    }
 }
 
 #pragma mark - TableView Delegate

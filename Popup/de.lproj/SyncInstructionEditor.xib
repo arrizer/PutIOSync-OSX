@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SyncInstructionEditor">
+            <connections>
+                <action selector="cancel:" destination="277" id="302"/>
+                <action selector="commit:" destination="276" id="303"/>
+                <action selector="optionsChanged:" destination="288" id="308"/>
+                <action selector="optionsChanged:" destination="412" id="414"/>
+                <action selector="optionsChanged:" destination="427" id="429"/>
+                <action selector="pickDestinationFolder:" destination="238" id="301"/>
+                <action selector="pickOriginFolder:" destination="246" id="300"/>
+                <action selector="resetKnownItems:" destination="368" id="393"/>
+                <outlet property="commitButton" destination="276" id="307"/>
+                <outlet property="deleteAfterSyncCheckbox" destination="288" id="309"/>
+                <outlet property="destinationLabel" destination="237" id="304"/>
+                <outlet property="flattenCheckbox" destination="427" id="434"/>
+                <outlet property="lastSyncLabel" destination="357" id="391"/>
+                <outlet property="originLabel" destination="247" id="305"/>
+                <outlet property="recursiveCheckbox" destination="412" id="435"/>
+                <outlet property="resetKnownItemsButton" destination="368" id="392"/>
+                <outlet property="window" destination="224" id="306"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Edit synced folder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="163" y="199" width="462" height="340"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <value key="minSize" type="size" width="462" height="270"/>
+            <view key="contentView" id="225">
+                <rect key="frame" x="0.0" y="0.0" width="462" height="340"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="226">
+                        <rect key="frame" x="20" y="190" width="203" height="130"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="245">
+                                <rect key="frame" x="67" y="63" width="70" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="315"/>
+                                    <constraint firstAttribute="height" constant="70" id="316"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="putioFolder" id="260"/>
+                            </imageView>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="247">
+                                <rect key="frame" x="76" y="41" width="51" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Origin" id="256">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
+                                <rect key="frame" x="20" y="5" width="163" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Quelle auswählen..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="257">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="130" id="248"/>
+                            <constraint firstItem="246" firstAttribute="top" secondItem="247" secondAttribute="bottom" constant="8" symbolic="YES" id="254"/>
+                            <constraint firstItem="246" firstAttribute="centerX" secondItem="247" secondAttribute="centerX" id="255"/>
+                            <constraint firstAttribute="bottom" secondItem="246" secondAttribute="bottom" constant="12" id="318"/>
+                            <constraint firstItem="245" firstAttribute="top" secondItem="226" secondAttribute="top" constant="-3" id="319"/>
+                            <constraint firstAttribute="centerX" secondItem="247" secondAttribute="centerX" id="duo-rQ-lj5"/>
+                            <constraint firstAttribute="centerX" secondItem="245" secondAttribute="centerX" constant="-0.5" id="lBn-Ao-e6U"/>
+                        </constraints>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="227">
+                        <rect key="frame" x="239" y="190" width="203" height="130"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="239">
+                                <rect key="frame" x="67" y="63" width="70" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="310"/>
+                                    <constraint firstAttribute="height" constant="70" id="311"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="systemFolder" id="240"/>
+                            </imageView>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="237">
+                                <rect key="frame" x="59" y="41" width="86" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Destination" id="244">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="238">
+                                <rect key="frame" x="21" y="5" width="163" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Ziel auswählen..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="243">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="130" id="228"/>
+                            <constraint firstAttribute="centerX" secondItem="237" secondAttribute="centerX" id="233"/>
+                            <constraint firstItem="237" firstAttribute="centerX" secondItem="238" secondAttribute="centerX" id="235"/>
+                            <constraint firstItem="238" firstAttribute="top" secondItem="237" secondAttribute="bottom" constant="8" symbolic="YES" id="236"/>
+                            <constraint firstItem="239" firstAttribute="top" secondItem="227" secondAttribute="top" constant="-3" id="312"/>
+                            <constraint firstAttribute="bottom" secondItem="238" secondAttribute="bottom" constant="12" id="314"/>
+                            <constraint firstAttribute="centerX" secondItem="239" secondAttribute="centerX" constant="-0.5" id="ysl-ej-WtS"/>
+                        </constraints>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="276">
+                        <rect key="frame" x="340" y="13" width="108" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Speichern" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="280">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="277">
+                        <rect key="frame" x="232" y="13" width="108" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Abbrechen" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="278">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="288">
+                        <rect key="frame" x="18" y="154" width="375" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Erfolgreich heruntergeladene Dateien auf put.io löschen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="289">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="412">
+                        <rect key="frame" x="18" y="134" width="229" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Alle Unterordner synchronisieren" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="413">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="427">
+                        <rect key="frame" x="18" y="114" width="340" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Unterordner vor dem Herunterladen entschachteln" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="428">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="320">
+                        <rect key="frame" x="191" y="252" width="80" height="80"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="334"/>
+                            <constraint firstAttribute="height" constant="80" id="335"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="syncRightArrow" id="321"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="357">
+                        <rect key="frame" x="17" y="80" width="157" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Zuletzt synchronisiert: Nie" id="358">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="368">
+                        <rect key="frame" x="15" y="48" width="208" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Synchronisierte Dateien vergessen" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="369">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="226" firstAttribute="width" secondItem="227" secondAttribute="width" id="261"/>
+                    <constraint firstItem="227" firstAttribute="leading" secondItem="226" secondAttribute="trailing" constant="16" id="262"/>
+                    <constraint firstItem="226" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="20" symbolic="YES" id="269"/>
+                    <constraint firstItem="227" firstAttribute="top" secondItem="225" secondAttribute="top" constant="20" symbolic="YES" id="270"/>
+                    <constraint firstItem="226" firstAttribute="top" secondItem="225" secondAttribute="top" constant="20" symbolic="YES" id="272"/>
+                    <constraint firstAttribute="bottom" secondItem="276" secondAttribute="bottom" constant="20" symbolic="YES" id="285"/>
+                    <constraint firstAttribute="trailing" secondItem="276" secondAttribute="trailing" constant="20" symbolic="YES" id="286"/>
+                    <constraint firstItem="288" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="20" symbolic="YES" id="291"/>
+                    <constraint firstItem="288" firstAttribute="top" secondItem="225" secondAttribute="top" constant="170" id="299"/>
+                    <constraint firstItem="320" firstAttribute="top" secondItem="225" secondAttribute="top" constant="8" id="333"/>
+                    <constraint firstAttribute="trailing" secondItem="227" secondAttribute="trailing" constant="20" symbolic="YES" id="354"/>
+                    <constraint firstItem="320" firstAttribute="centerX" secondItem="225" secondAttribute="centerX" id="355"/>
+                    <constraint firstItem="276" firstAttribute="leading" secondItem="277" secondAttribute="trailing" constant="12" symbolic="YES" id="377"/>
+                    <constraint firstItem="368" firstAttribute="top" secondItem="357" secondAttribute="bottom" constant="8" symbolic="YES" id="387"/>
+                    <constraint firstItem="412" firstAttribute="top" secondItem="288" secondAttribute="bottom" constant="6" symbolic="YES" id="418"/>
+                    <constraint firstItem="427" firstAttribute="top" secondItem="412" secondAttribute="bottom" constant="6" symbolic="YES" id="433"/>
+                    <constraint firstItem="357" firstAttribute="top" secondItem="427" secondAttribute="bottom" constant="20" id="436"/>
+                    <constraint firstItem="276" firstAttribute="centerY" secondItem="277" secondAttribute="centerY" id="5w5-ev-yCs"/>
+                    <constraint firstItem="276" firstAttribute="width" secondItem="277" secondAttribute="width" id="DVF-1J-tiW"/>
+                    <constraint firstItem="357" firstAttribute="leading" secondItem="368" secondAttribute="leading" id="OwY-ZW-FnT"/>
+                    <constraint firstItem="246" firstAttribute="width" secondItem="238" secondAttribute="width" id="YB4-Tg-eMi"/>
+                    <constraint firstItem="412" firstAttribute="leading" secondItem="288" secondAttribute="leading" id="eBv-hT-VZE"/>
+                    <constraint firstItem="427" firstAttribute="leading" secondItem="412" secondAttribute="leading" id="iMK-Mb-W7k"/>
+                    <constraint firstItem="357" firstAttribute="leading" secondItem="427" secondAttribute="leading" id="yW3-fC-i3R"/>
+                </constraints>
+            </view>
+        </window>
+    </objects>
+    <resources>
+        <image name="putioFolder" width="30" height="30"/>
+        <image name="syncRightArrow" width="90" height="90"/>
+        <image name="systemFolder" width="512" height="512"/>
+    </resources>
+</document>
