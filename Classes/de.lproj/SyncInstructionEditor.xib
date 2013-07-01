@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.9" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
+        <development version="5000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.9"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SyncInstructionEditor">
@@ -227,4 +228,28 @@ Gw
         <image name="syncRightArrow" width="90" height="90"/>
         <image name="systemFolder" width="512" height="512"/>
     </resources>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SyncInstructionEditor" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SyncInstructionEditor.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="commit:"/>
+                <relationship kind="action" name="optionsChanged:"/>
+                <relationship kind="action" name="pickDestinationFolder:"/>
+                <relationship kind="action" name="pickOriginFolder:"/>
+                <relationship kind="action" name="resetKnownItems:"/>
+                <relationship kind="outlet" name="commitButton" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="deleteAfterSyncCheckbox" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="destinationLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="flattenCheckbox" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="lastSyncLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="originLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="recursiveCheckbox" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="resetKnownItemsButton" candidateClass="NSButton"/>
+            </relationships>
+        </class>
+    </classes>
 </document>

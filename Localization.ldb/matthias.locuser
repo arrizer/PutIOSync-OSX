@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>lastDocumentSavePath</key>
+	<string>/Users/matthias/Documents/Projects/PutIOSync/Localization.ldb</string>
+	<key>lastSelectedLanguage</key>
+	<string>de</string>
+	<key>openFolderAfterWriteOut</key>
+	<false/>
+	<key>saveToOneFile</key>
+	<integer>1</integer>
+	<key>showComments</key>
+	<true/>
+	<key>showEmptyStrings</key>
+	<true/>
+	<key>showRemovedStrings</key>
+	<false/>
+</dict>
+</plist>

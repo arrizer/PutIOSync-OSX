@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.9" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="nonLocalizable" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.9"/>
     </dependencies>
     <objects>
@@ -37,9 +36,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="108" userLabel="Clear Button">
-                        <rect key="frame" x="362" y="289" width="53" height="25"/>
+                        <rect key="frame" x="371" y="289" width="44" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="roundTextured" title="Leeren" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="109">
+                        <buttonCell key="cell" type="roundTextured" title="Clear" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="109">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="cellTitle"/>
                         </buttonCell>
@@ -323,13 +322,13 @@
                         </scroller>
                     </scrollView>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="909">
-                        <rect key="frame" x="113" y="289" width="195" height="25"/>
+                        <rect key="frame" x="127" y="289" width="166" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="selectOne" id="910">
                             <font key="font" metaFont="system"/>
                             <segments>
                                 <segment label="Transfers" width="82"/>
-                                <segment label="Herunterladen" selected="YES" tag="1"/>
+                                <segment label="Downloads" width="81" selected="YES" tag="1"/>
                             </segments>
                         </segmentedCell>
                     </segmentedControl>
@@ -353,24 +352,24 @@
         </window>
         <menu id="633">
             <items>
-                <menuItem title="Einstellungen..." id="634">
+                <menuItem title="Preferences..." id="634">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Jetzt synchronisieren" id="635">
+                <menuItem title="Sync now" id="635">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="707"/>
-                <menuItem title="Alle Downloads pausieren" enabled="NO" id="638">
+                <menuItem title="Pause all downloads" enabled="NO" id="638">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Alle Downloads fortsetzen" enabled="NO" id="639">
+                <menuItem title="Resume all downloads" enabled="NO" id="639">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Download Liste leeren" enabled="NO" id="640">
+                <menuItem title="Clear download list" enabled="NO" id="640">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="637"/>
-                <menuItem title="Beenden" id="636">
+                <menuItem title="Quit" id="636">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
             </items>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.9" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="nonLocalizable" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="nonLocalizable" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralPreferences">
@@ -26,45 +25,45 @@
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="176">
-                    <rect key="frame" x="165" y="306" width="38" height="17"/>
+                    <rect key="frame" x="149" y="306" width="54" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Start:" id="177">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Startup:" id="177">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="211">
-                    <rect key="frame" x="95" y="255" width="108" height="17"/>
+                    <rect key="frame" x="166" y="255" width="37" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Synchronisieren:" id="212">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sync:" id="212">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="266">
-                    <rect key="frame" x="70" y="216" width="133" height="17"/>
+                    <rect key="frame" x="115" y="216" width="88" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Benachrichtigungen:" id="267">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Notifications:" id="267">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="374">
-                    <rect key="frame" x="45" y="87" width="158" height="17"/>
+                    <rect key="frame" x="85" y="87" width="118" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Software Aktualisierung:" id="375">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Software Updates:" id="375">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="407">
-                    <rect key="frame" x="205" y="63" width="151" height="16"/>
+                    <rect key="frame" x="205" y="63" width="120" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Zuletzt geprüft: Noch nie" id="408">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Last checked: Never" id="408">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -80,9 +79,9 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="199">
-                    <rect key="frame" x="206" y="305" width="169" height="18"/>
+                    <rect key="frame" x="206" y="305" width="108" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Beim Anmelden starten" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="200">
+                    <buttonCell key="cell" type="check" title="Start on login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="200">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -91,14 +90,14 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="226">
-                    <rect key="frame" x="206" y="275" width="107" height="26"/>
+                    <rect key="frame" x="206" y="275" width="94" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="227">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="228">
                             <items>
-                                <menuItem title="unbegrenzt" id="502"/>
+                                <menuItem title="unlimited" id="502"/>
                                 <menuItem title="1" id="229"/>
                                 <menuItem title="2" id="492"/>
                                 <menuItem title="3" id="494"/>
@@ -113,28 +112,28 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
-                    <rect key="frame" x="56" y="281" width="147" height="17"/>
+                    <rect key="frame" x="78" y="281" width="125" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Parallel herunterladen:" id="456">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Parallel downloads:" id="456">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="447">
-                    <rect key="frame" x="206" y="249" width="132" height="26"/>
+                    <rect key="frame" x="206" y="249" width="142" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="jede Minute" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455" id="448">
+                    <popUpButtonCell key="cell" type="push" title="every minute" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455" id="448">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="449">
                             <items>
-                                <menuItem title="jede Minute" state="on" id="455"/>
-                                <menuItem title="alle 5 Minuten" id="454"/>
-                                <menuItem title="alle 10 Minuten" id="453"/>
-                                <menuItem title="alle 39 Minuten" id="452"/>
-                                <menuItem title="Stündlich" id="451"/>
-                                <menuItem title="Manuell" id="450"/>
+                                <menuItem title="every minute" state="on" id="455"/>
+                                <menuItem title="every 5 minutes" id="454"/>
+                                <menuItem title="every 10 minutes" id="453"/>
+                                <menuItem title="every 30 minutes" id="452"/>
+                                <menuItem title="every hour" id="451"/>
+                                <menuItem title="manually" id="450"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -143,9 +142,9 @@
                     </connections>
                 </popUpButton>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="291">
-                    <rect key="frame" x="206" y="215" width="171" height="18"/>
+                    <rect key="frame" x="206" y="215" width="120" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Neue Dateien gefunden" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="292">
+                    <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="292">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -154,9 +153,9 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="323">
-                    <rect key="frame" x="206" y="195" width="207" height="18"/>
+                    <rect key="frame" x="206" y="195" width="139" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Herunterladen abgeschlossen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="324">
+                    <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="324">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -165,9 +164,9 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="351">
-                    <rect key="frame" x="206" y="175" width="211" height="18"/>
+                    <rect key="frame" x="206" y="175" width="124" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Herunterladen fehlgeschlagen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="352">
+                    <buttonCell key="cell" type="check" title="Download failed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="352">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -176,9 +175,9 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="338">
-                    <rect key="frame" x="206" y="141" width="171" height="18"/>
+                    <rect key="frame" x="206" y="141" width="120" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Neue Dateien gefunden" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="341">
+                    <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="341">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -187,9 +186,9 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="339">
-                    <rect key="frame" x="206" y="121" width="207" height="18"/>
+                    <rect key="frame" x="206" y="121" width="139" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Herunterladen abgeschlossen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="340">
+                    <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="340">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -198,9 +197,9 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="382">
-                    <rect key="frame" x="206" y="86" width="147" height="18"/>
+                    <rect key="frame" x="206" y="86" width="149" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Automatisch prüfen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="383">
+                    <buttonCell key="cell" type="check" title="Check automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="383">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -209,9 +208,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="387">
-                    <rect key="frame" x="203" y="31" width="100" height="28"/>
+                    <rect key="frame" x="203" y="31" width="95" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Jetzt prüfen..." bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="388">
+                    <buttonCell key="cell" type="push" title="Check now..." bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="388">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
