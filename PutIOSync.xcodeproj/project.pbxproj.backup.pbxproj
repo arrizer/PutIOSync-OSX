@@ -95,20 +95,20 @@
 		3986C5BC163857C400F19764 /* SyncPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPreferences.m; sourceTree = "<group>"; };
 		39910AB6164FFB3D00967014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		39910ABE16502B5300967014 /* PutIODownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIODownload.h; sourceTree = "<group>"; };
-		3993ABCB163AC97B0020AE61 /* SyncInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncInstruction.h; path = Classes/SyncInstruction.h; sourceTree = "<group>"; };
-		3993ABCC163AC97B0020AE61 /* SyncInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncInstruction.m; path = Classes/SyncInstruction.m; sourceTree = "<group>"; };
+		3993ABCB163AC97B0020AE61 /* SyncInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncInstruction.h; path = Popup/SyncInstruction.h; sourceTree = "<group>"; };
+		3993ABCC163AC97B0020AE61 /* SyncInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncInstruction.m; path = Popup/SyncInstruction.m; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
 		39A66FB8178213010073DB81 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		39A66FB9178213010073DB81 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
-		39A66FBB178213650073DB81 /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = Classes/PutIOAPI.h; sourceTree = "<group>"; };
-		39A66FBC178213650073DB81 /* PutIOAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPI.m; path = Classes/PutIOAPI.m; sourceTree = "<group>"; };
-		39A66FBD178213650073DB81 /* PutIOAPIAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIAccountInfo.h; path = Classes/PutIOAPIAccountInfo.h; sourceTree = "<group>"; };
-		39A66FBE178213650073DB81 /* PutIOAPIAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIAccountInfo.m; path = Classes/PutIOAPIAccountInfo.m; sourceTree = "<group>"; };
-		39A66FBF178213650073DB81 /* PutIOAPIFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIFile.h; path = Classes/PutIOAPIFile.h; sourceTree = "<group>"; };
-		39A66FC0178213650073DB81 /* PutIOAPIFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFile.m; path = Classes/PutIOAPIFile.m; sourceTree = "<group>"; };
-		39A66FC1178213650073DB81 /* PutIOAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIObject.h; path = Classes/PutIOAPIObject.h; sourceTree = "<group>"; };
-		39A66FC2178213650073DB81 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = Classes/PutIOAPIObject.m; sourceTree = "<group>"; };
+		39A66FBB178213650073DB81 /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = Popup/PutIOAPI.h; sourceTree = "<group>"; };
+		39A66FBC178213650073DB81 /* PutIOAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPI.m; path = Popup/PutIOAPI.m; sourceTree = "<group>"; };
+		39A66FBD178213650073DB81 /* PutIOAPIAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIAccountInfo.h; path = Popup/PutIOAPIAccountInfo.h; sourceTree = "<group>"; };
+		39A66FBE178213650073DB81 /* PutIOAPIAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIAccountInfo.m; path = Popup/PutIOAPIAccountInfo.m; sourceTree = "<group>"; };
+		39A66FBF178213650073DB81 /* PutIOAPIFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIFile.h; path = Popup/PutIOAPIFile.h; sourceTree = "<group>"; };
+		39A66FC0178213650073DB81 /* PutIOAPIFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFile.m; path = Popup/PutIOAPIFile.m; sourceTree = "<group>"; };
+		39A66FC1178213650073DB81 /* PutIOAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIObject.h; path = Popup/PutIOAPIObject.h; sourceTree = "<group>"; };
+		39A66FC2178213650073DB81 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = Popup/PutIOAPIObject.m; sourceTree = "<group>"; };
 		39A66FCB178213D20073DB81 /* PutIODownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIODownload.m; sourceTree = "<group>"; };
 		39A66FCF178214C20073DB81 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		39A66FD1178214DC0073DB81 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
@@ -126,12 +126,12 @@
 		39C51FCC16345B81006BD1C8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		39C5B0A816BD64A1004E8D65 /* TransferCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferCellView.h; sourceTree = "<group>"; };
 		39C5B0A916BD64A1004E8D65 /* TransferCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferCellView.m; sourceTree = "<group>"; };
-		39C5B0AB16BD682D004E8D65 /* PutIOAPITransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPITransfer.h; path = Classes/PutIOAPITransfer.h; sourceTree = "<group>"; };
-		39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPITransfer.m; path = Classes/PutIOAPITransfer.m; sourceTree = "<group>"; };
+		39C5B0AB16BD682D004E8D65 /* PutIOAPITransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPITransfer.h; path = Popup/PutIOAPITransfer.h; sourceTree = "<group>"; };
+		39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPITransfer.m; path = Popup/PutIOAPITransfer.m; sourceTree = "<group>"; };
 		39C5B0AE16BD7709004E8D65 /* PutIOTransfersMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOTransfersMonitor.h; sourceTree = "<group>"; };
 		39C5B0AF16BD7709004E8D65 /* PutIOTransfersMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIOTransfersMonitor.m; sourceTree = "<group>"; };
-		39EFBFB9164EA60400B160E0 /* PersistenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistenceManager.h; path = Classes/PersistenceManager.h; sourceTree = "<group>"; };
-		39EFBFBA164EA60400B160E0 /* PersistenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistenceManager.m; path = Classes/PersistenceManager.m; sourceTree = "<group>"; };
+		39EFBFB9164EA60400B160E0 /* PersistenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistenceManager.h; path = Popup/PersistenceManager.h; sourceTree = "<group>"; };
+		39EFBFBA164EA60400B160E0 /* PersistenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistenceManager.m; path = Popup/PersistenceManager.m; sourceTree = "<group>"; };
 		39F8744416342D9000D9026F /* AccountSetupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSetupController.h; sourceTree = "<group>"; };
 		39F8744516342D9000D9026F /* AccountSetupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSetupController.m; sourceTree = "<group>"; };
 		39F874601634386300D9026F /* GeneralPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPreferences.h; sourceTree = "<group>"; };
@@ -146,8 +146,8 @@
 		DD4F7C1013C30F9F00825C6E /* PutIOSync-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PutIOSync-Info.plist"; sourceTree = "<group>"; };
 		DD4F7C1413C30F9F00825C6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DD4F7C1613C30F9F00825C6E /* PutIOSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PutIOSync-Prefix.pch"; sourceTree = "<group>"; };
-		DD4F7C1A13C30F9F00825C6E /* ApplicationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ApplicationDelegate.h; path = Classes/ApplicationDelegate.h; sourceTree = "<group>"; };
-		DD4F7C1B13C30F9F00825C6E /* ApplicationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ApplicationDelegate.m; path = Classes/ApplicationDelegate.m; sourceTree = "<group>"; };
+		DD4F7C1A13C30F9F00825C6E /* ApplicationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ApplicationDelegate.h; path = Popup/ApplicationDelegate.h; sourceTree = "<group>"; };
+		DD4F7C1B13C30F9F00825C6E /* ApplicationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ApplicationDelegate.m; path = Popup/ApplicationDelegate.m; sourceTree = "<group>"; };
 		DD4F7C1E13C30F9F00825C6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		DD4F7C3613C317A500825C6E /* MenubarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenubarController.h; sourceTree = "<group>"; };
 		DD4F7C3713C317A500825C6E /* MenubarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenubarController.m; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 				DD4F7C1413C30F9F00825C6E /* main.m */,
 			);
 			name = "Supporting Files";
-			path = Classes;
+			path = Popup;
 			sourceTree = "<group>";
 		};
 		DD4F7C2613C311DF00825C6E /* Controller */ = {
@@ -324,7 +324,7 @@
 				39C5B0AF16BD7709004E8D65 /* PutIOTransfersMonitor.m */,
 			);
 			name = Controller;
-			path = Classes;
+			path = Popup;
 			sourceTree = "<group>";
 		};
 		DD4F7C3913C317EC00825C6E /* Views */ = {
@@ -344,7 +344,7 @@
 				391A9F3216E388E2003BDE51 /* PanelRowView.m */,
 			);
 			name = Views;
-			path = Classes;
+			path = Popup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,8 +620,8 @@
 					"$(SRCROOT)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";
-				INFOPLIST_FILE = "Classes/PutIOSync-Info.plist";
+				GCC_PREFIX_HEADER = "Popup/PutIOSync-Prefix.pch";
+				INFOPLIST_FILE = "Popup/PutIOSync-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;
@@ -641,8 +641,8 @@
 					"$(SRCROOT)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";
-				INFOPLIST_FILE = "Classes/PutIOSync-Info.plist";
+				GCC_PREFIX_HEADER = "Popup/PutIOSync-Prefix.pch";
+				INFOPLIST_FILE = "Popup/PutIOSync-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;
