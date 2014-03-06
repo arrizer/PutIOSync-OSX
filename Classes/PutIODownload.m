@@ -19,6 +19,7 @@
 @property (unsafe_unretained) SyncInstruction *originatingSyncInstruction;
 @property (strong) NSError *downloadError;
 @property (strong) NSString *localFile;
+@property (assign) BOOL shouldResumeOnAppLaunch;
 @end
 
 @implementation PutIODownload
@@ -35,6 +36,13 @@ static NSInteger numberOfRunningDownloads = 0;
         allDownloads = [PersistenceManager retrievePersistentObjectForKey:@"downloads"];
         if(allDownloads == nil)
             allDownloads = [NSMutableArray array];
+        else{
+            for(PutIODownload *download in allDownloads)
+                if(download.shouldResumeOnAppLaunch){
+                    download.shouldResumeOnAppLaunch = NO;
+                    [download startDownload];
+                }
+        }
     }
     return allDownloads;
 }
@@ -62,8 +70,17 @@ static NSInteger numberOfRunningDownloads = 0;
     // Call this before the application terminates
     for(PutIODownload *download in allDownloads)
         [download stopWaitingForOtherDownloads];
-    for(PutIODownload *download in allDownloads)
-        [download pauseDownload];
+    for(PutIODownload *download in allDownloads){
+        if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
+            [download pauseDownload];
+            download.shouldResumeOnAppLaunch = YES;
+        }
+    }
+    [PutIODownload saveDownloads];
+}
+
++ (void)saveDownloads
+{
     [PersistenceManager storePersistentObject:allDownloads forKey:@"downloads"];
 }
 
@@ -113,6 +130,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.estimatedRemainingTimeIsKnown = NO;
         self.originatingSyncInstruction = syncInstruction;
         self.totalSize = 0;
+        self.shouldResumeOnAppLaunch = NO;
         numberOfRetries = 0;
         [self changeStatus:PutIODownloadStatusPending];
         [allDownloads addObject:self];
@@ -147,6 +165,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.totalSize = [decoder decodeIntegerForKey:@"totalSize"];
         self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
         localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
+        self.shouldResumeOnAppLaunch = [decoder decodeBoolForKey:@"shouldResumeOnAppLaunch"];
         self.status = [decoder decodeIntForKey:@"status"];
         [self changeStatus:self.status andDeliverNotification:NO];
         numberOfRetries = 0;
@@ -172,6 +191,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [coder encodeInteger:self.receivedSize forKey:@"receivedSize"];
     [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
     [coder encodeInt:(int)self.status forKey:@"status"];
+    [coder encodeBool:self.shouldResumeOnAppLaunch forKey:@"shouldResumeOnAppLaunch"];
 }
 
 #pragma mark - Controlling the download
@@ -189,7 +209,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
     if(maxParallelDownloads != 0 && [PutIODownload numberOfRunningDownloads] >= maxParallelDownloads){
         // The maximum number of downloads is already runnung, wait for another
-        //NSLog(@"%@ max. number of parallel downloads reached, waiting", self);
         [self startWaitingForOtherDownloads];
         return;
     }
@@ -518,6 +537,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
     if(deliverNotification)
         [self deliverUserNotification];
+    [PutIODownload saveDownloads];
 }
 
 #pragma mark - User Notifications
@@ -555,6 +575,10 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [nc addObserver:self
            selector:@selector(otherDownloadDidFinishOrPause)
                name:PutIODownloadPausedNotification
+             object:nil];
+    [nc addObserver:self
+           selector:@selector(otherDownloadDidFinishOrPause)
+               name:PutIODownloadFailedNotification
              object:nil];
 }
 

@@ -38,6 +38,7 @@ typedef enum{
 + (void)clearDownloadList;
 + (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
 + (void)pauseAndSaveAllDownloads;
++ (void)saveDownloads;
 + (void)complyWithMaximumParallelDownloads;
 
 - (id)initWithPutIOFile:(PutIOAPIFile*)file localPath:(NSString*)path subdirectoryPath:(NSString*)subdirectoryPath originatingSyncInstruction:(SyncInstruction*)syncInstruction;

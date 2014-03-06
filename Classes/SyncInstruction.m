@@ -83,7 +83,7 @@ static NSMutableArray *allSyncInstructions;
 #pragma mark - Getters/Setters
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)theKey
-{   
+{
     BOOL automatic = NO;
     if ([theKey isEqualToString:@"originFolderID"])
         automatic = NO;

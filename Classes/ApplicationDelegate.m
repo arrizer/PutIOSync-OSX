@@ -71,6 +71,7 @@ void *kContextActivePanel = &kContextActivePanel;
     self.menubarController = [[MenubarController alloc] init];
     [PutIODownload allDownloads];
     [[SyncScheduler sharedSyncScheduler] scheduleSyncs];
+    [[SyncScheduler sharedSyncScheduler] startSyncingAll];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 }
 

@@ -12,7 +12,9 @@
 			<key>change date</key>
 			<date>2001-01-01T00:00:00Z</date>
 			<key>changed values</key>
-			<array/>
+			<array>
+				<string>de</string>
+			</array>
 			<key>class</key>
 			<string>BLBundleObject</string>
 			<key>errors</key>
@@ -101,8 +103,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -144,29 +144,6 @@
 					<string>SyncPreferences.xib</string>
 					<key>objects</key>
 					<array>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "11";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>2</integer>
-							<key>key</key>
-							<string>11.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>en</key>
-								<string>Text Cell</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
 						<dict>
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
@@ -314,8 +291,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -428,29 +403,6 @@
 								<string>Synchronisieren:</string>
 								<key>en</key>
 								<string>Sync:</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSMenu"; title = "OtherViews"; ObjectID = "228";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>2</integer>
-							<key>key</key>
-							<string>228.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>en</key>
-								<string>OtherViews</string>
 							</dict>
 							<key>snapshots</key>
 							<dict/>
@@ -747,29 +699,6 @@
 								<string>Zuletzt geprüft: Noch nie</string>
 								<key>en</key>
 								<string>Last checked: Never</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSMenu"; title = "OtherViews"; ObjectID = "449";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>2</integer>
-							<key>key</key>
-							<string>449.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>en</key>
-								<string>OtherViews</string>
 							</dict>
 							<key>snapshots</key>
 							<dict/>
@@ -1090,8 +1019,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -1280,8 +1207,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -1624,34 +1549,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSButtonCell"; title = "Test"; ObjectID = "69S-HW-vcG";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>0</integer>
-							<key>key</key>
-							<string>69S-HW-vcG.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>de</key>
-								<string>TestingGerman</string>
-								<key>en</key>
-								<string>Test</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
-					</array>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -1679,7 +1576,9 @@
 					<key>change date</key>
 					<date>2013-07-01T19:55:39Z</date>
 					<key>changed values</key>
-					<array/>
+					<array>
+						<string>de</string>
+					</array>
 					<key>class</key>
 					<string>BLNibFileObject</string>
 					<key>errors</key>
@@ -1714,29 +1613,6 @@
 								<string>Leeren</string>
 								<key>en</key>
 								<string>Clear</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "295";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>2</integer>
-							<key>key</key>
-							<string>295.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>en</key>
-								<string>Text Cell</string>
 							</dict>
 							<key>snapshots</key>
 							<dict/>
@@ -2035,7 +1911,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>de</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2080,8 +1958,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -5045,8 +4921,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -5109,29 +4983,6 @@
 								<string>Put.io Ordner auswählen</string>
 								<key>en</key>
 								<string>Choose PutIO Folder</string>
-							</dict>
-							<key>snapshots</key>
-							<dict/>
-						</dict>
-						<dict>
-							<key>change date</key>
-							<date>2001-01-01T00:00:00Z</date>
-							<key>changed values</key>
-							<array/>
-							<key>class</key>
-							<string>BLStringKeyObject</string>
-							<key>comment</key>
-							<string>Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "13";</string>
-							<key>errors</key>
-							<array/>
-							<key>flags</key>
-							<integer>2</integer>
-							<key>key</key>
-							<string>13.title</string>
-							<key>localizations</key>
-							<dict>
-								<key>en</key>
-								<string>Text Cell</string>
 							</dict>
 							<key>snapshots</key>
 							<dict/>
@@ -5210,8 +5061,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>snapshots</key>
 					<dict/>
 					<key>versions</key>
@@ -6529,8 +6378,6 @@
 							<dict/>
 						</dict>
 					</array>
-					<key>old objects</key>
-					<array/>
 					<key>plist file</key>
 					<false/>
 					<key>snapshots</key>
@@ -6561,52 +6408,18 @@
 	</array>
 	<key>preferences</key>
 	<dict>
-		<key>XcodeAddMissingFiles</key>
-		<true/>
-		<key>XcodeFileLimit</key>
-		<real>75</real>
-		<key>XcodeHasFileLimit</key>
-		<true/>
-		<key>XcodeHasLanguageLimit</key>
-		<true/>
-		<key>XcodeLanguageLimit</key>
-		<real>90</real>
-		<key>XcodeRemoveNotMatchingFiles</key>
-		<false/>
-		<key>autotranslateNewStrings</key>
-		<true/>
-		<key>compressLocalizationFiles</key>
-		<false/>
-		<key>deactivateEmptyStrings</key>
-		<true/>
-		<key>deactivatePlaceholderStrings</key>
-		<true/>
-		<key>defaultBundleNaming</key>
-		<integer>1</integer>
-		<key>defaultBundleReferencing</key>
-		<integer>1</integer>
-		<key>embedDictionary</key>
-		<false/>
-		<key>embedDictionaryGuesses</key>
-		<false/>
-		<key>importEmptyStrings</key>
-		<true/>
-		<key>includeInterfacePreview</key>
-		<true/>
-		<key>markAutotranslatedAsNotChanged</key>
-		<true/>
-		<key>rescanXcodeProjects</key>
-		<true/>
+		<key>leftLanguage</key>
+		<string>en</string>
+		<key>rightLanguage</key>
+		<string>de</string>
 		<key>saveCompressed</key>
-		<false/>
-		<key>updateXcodeProjects</key>
-		<false/>
-		<key>valueChangesResetStrings</key>
 		<false/>
 	</dict>
 	<key>reference language</key>
 	<string>en</string>
+	<key>supports preview</key>
+	<true/>
 	<key>version</key>
-	<integer>5</integer>
+	<integer>4</integer>
 </dict>
 </plist>

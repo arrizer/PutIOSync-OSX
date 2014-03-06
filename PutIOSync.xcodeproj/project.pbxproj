@@ -18,6 +18,8 @@
 		39585BB2177FC592004B74B3 /* AccountPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BB4177FC592004B74B3 /* AccountPreferences.xib */; };
 		39585BBA177FC5DE004B74B3 /* SyncPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BBC177FC5DE004B74B3 /* SyncPreferences.xib */; };
 		39585BBF177FC7F1004B74B3 /* SyncInstructionEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BC1177FC7F1004B74B3 /* SyncInstructionEditor.xib */; };
+		3965359F178231DD00BE21DE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; };
+		396535A0178232BE00BE21DE /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
 		39910AB7164FFB3D00967014 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39910AB6164FFB3D00967014 /* Security.framework */; };
 		3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCC163AC97B0020AE61 /* SyncInstruction.m */; };
@@ -29,7 +31,6 @@
 		39A66FC6178213650073DB81 /* PutIOAPIObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FC2178213650073DB81 /* PutIOAPIObject.m */; };
 		39A66FCC178213D20073DB81 /* PutIODownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FCB178213D20073DB81 /* PutIODownload.m */; };
 		39A66FD0178214C20073DB81 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FCF178214C20073DB81 /* Media.xcassets */; };
-		39A66FD2178214DC0073DB81 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39A66FD1178214DC0073DB81 /* Sparkle.framework */; };
 		39A66FD8178215430073DB81 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */; };
 		39A66FD9178215430073DB81 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */; };
 		39A66FDC178215C90073DB81 /* AccountSetupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FDA178215C90073DB81 /* AccountSetupController.xib */; };
@@ -62,6 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				396535A0178232BE00BE21DE /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +93,7 @@
 		39585BBE177FC69D004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
 		39585BC0177FC7F1004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		39585BC2177FC7FC004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
+		3965359E178231DD00BE21DE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		3986C5BB163857C400F19764 /* SyncPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPreferences.h; sourceTree = "<group>"; };
 		3986C5BC163857C400F19764 /* SyncPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPreferences.m; sourceTree = "<group>"; };
 		39910AB6164FFB3D00967014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -111,7 +114,6 @@
 		39A66FC2178213650073DB81 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = Classes/PutIOAPIObject.m; sourceTree = "<group>"; };
 		39A66FCB178213D20073DB81 /* PutIODownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIODownload.m; sourceTree = "<group>"; };
 		39A66FCF178214C20073DB81 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		39A66FD1178214DC0073DB81 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		39A66FD4178215430073DB81 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesViewController.h; path = Frameworks/MASPreferences/MASPreferencesViewController.h; sourceTree = "<group>"; };
 		39A66FD5178215430073DB81 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesWindowController.h; path = Frameworks/MASPreferences/MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MASPreferencesWindow.xib; path = Frameworks/MASPreferences/MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -169,7 +171,7 @@
 				39910AB7164FFB3D00967014 /* Security.framework in Frameworks */,
 				39C51FCD16345B81006BD1C8 /* WebKit.framework in Frameworks */,
 				DD4F7C0913C30F9F00825C6E /* Cocoa.framework in Frameworks */,
-				39A66FD2178214DC0073DB81 /* Sparkle.framework in Frameworks */,
+				3965359F178231DD00BE21DE /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				39A66FD3178215390073DB81 /* MASPreferences */,
-				39A66FD1178214DC0073DB81 /* Sparkle.framework */,
+				3965359E178231DD00BE21DE /* Sparkle.framework */,
 				39910AB6164FFB3D00967014 /* Security.framework */,
 				39C51FCC16345B81006BD1C8 /* WebKit.framework */,
 				DD4F7C0B13C30F9F00825C6E /* AppKit.framework */,
@@ -374,7 +376,7 @@
 		DD4F7BFB13C30F9F00825C6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					DD4F7C0313C30F9F00825C6E = {
 						SystemCapabilities = {
@@ -555,8 +557,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -574,7 +578,9 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
@@ -587,8 +593,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -600,7 +608,9 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;

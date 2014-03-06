@@ -35,6 +35,7 @@
     //NSLog(@"%@ sync run began", [self description]);
     foundFiles = 0;
     [self performPreflightChecks];
+    [self deepScanOrigin];
 }
 
 - (void)cancel
@@ -50,7 +51,7 @@
 {
     [self beginOperation:SyncRunnerOperationPreflight];
     // TODO: Check if the origin and destination locations exist
-    [self deepScanOrigin];
+    
 }
 
 #pragma mark - Scan Origin

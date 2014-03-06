@@ -29,7 +29,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Edit synced folder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
+        <window title="Synchronisierten Ordner bearbeiten" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="163" y="199" width="462" height="340"/>
@@ -53,9 +53,9 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="putioFolder" id="260"/>
                             </imageView>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="247">
-                                <rect key="frame" x="76" y="41" width="51" height="17"/>
+                                <rect key="frame" x="76" y="41" width="52" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Origin" id="256">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Quelle" id="256">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -94,16 +94,16 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="systemFolder" id="240"/>
                             </imageView>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="237">
-                                <rect key="frame" x="59" y="41" width="86" height="17"/>
+                                <rect key="frame" x="85" y="41" width="33" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Destination" id="244">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Ziel" id="244">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="238">
-                                <rect key="frame" x="21" y="5" width="163" height="32"/>
+                                <rect key="frame" x="20" y="5" width="163" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Ziel auswählen..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="243">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -228,28 +228,4 @@ Gw
         <image name="syncRightArrow" width="90" height="90"/>
         <image name="systemFolder" width="512" height="512"/>
     </resources>
-    <classes>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="SyncInstructionEditor" superclassName="NSWindowController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SyncInstructionEditor.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="commit:"/>
-                <relationship kind="action" name="optionsChanged:"/>
-                <relationship kind="action" name="pickDestinationFolder:"/>
-                <relationship kind="action" name="pickOriginFolder:"/>
-                <relationship kind="action" name="resetKnownItems:"/>
-                <relationship kind="outlet" name="commitButton" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="deleteAfterSyncCheckbox" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="destinationLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="flattenCheckbox" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="lastSyncLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="originLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="recursiveCheckbox" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="resetKnownItemsButton" candidateClass="NSButton"/>
-            </relationships>
-        </class>
-    </classes>
 </document>
