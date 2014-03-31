@@ -455,7 +455,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     if(self.originatingSyncInstruction != nil){
         [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
         if(self.originatingSyncInstruction.deleteRemoteFilesAfterSync)
-            [[PutIOAPI api] deleteFileWithID:self.putioFile.fileID];
+            [[PutIOAPI api] deleteFileWithID:self.putioFile.fileID completion:nil];
     }
 }
 
@@ -589,8 +589,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 - (void)otherDownloadDidFinishOrPause
 {
-    if(self.status == PutIODownloadStatusPending)
-        [self startDownload];
+    if(self.status == PutIODownloadStatusPending){
+        NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
+        if(maxParallelDownloads == 0 || [PutIODownload numberOfRunningDownloads] < maxParallelDownloads){
+            [self startDownload];
+        }
+    }
 }
 
 @end

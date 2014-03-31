@@ -9,7 +9,7 @@
 @end
 
 @interface PutIOFolderPicker : NSWindowController
-<PutIOAPIDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+<NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
     PutIOAPI *putio;
     NSMutableArray *fileQueue;

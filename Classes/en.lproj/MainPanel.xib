@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainPanel">
             <connections>
-                <action selector="changeListMode:" destination="909" id="959"/>
-                <action selector="clearDownloads:" destination="108" id="315"/>
-                <action selector="clearDownloads:" destination="640" id="647"/>
-                <action selector="pauseAllDownloads:" destination="638" id="644"/>
-                <action selector="quit:" destination="636" id="645"/>
-                <action selector="resumeAllDownloads:" destination="639" id="641"/>
-                <action selector="showOptionsMenu:" destination="232" id="646"/>
-                <action selector="showPreferences:" destination="634" id="642"/>
-                <action selector="syncNow:" destination="635" id="643"/>
                 <outlet property="backgroundView" destination="6" id="20"/>
                 <outlet property="listModeSelector" destination="909" id="958"/>
                 <outlet property="optionsMenu" destination="633" id="648"/>
@@ -42,6 +33,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="cellTitle"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="clearDownloads:" target="-2" id="315"/>
+                        </connections>
                     </button>
                     <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="232" userLabel="Options Button">
                         <rect key="frame" x="5" y="289" width="35" height="25"/>
@@ -50,6 +44,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="cellTitle"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="showOptionsMenu:" target="-2" id="646"/>
+                        </connections>
                     </button>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="56" horizontalPageScroll="10" verticalLineScroll="56" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="261">
                         <rect key="frame" x="0.0" y="0.0" width="420" height="286"/>
@@ -83,7 +80,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                                                            <rect key="frame" x="61" y="28" width="354" height="14"/>
+                                                            <rect key="frame" x="62" y="28" width="352" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Syncing &quot;FolderName&quot;..." id="301">
                                                                 <font key="font" metaFont="smallSystem"/>
@@ -92,7 +89,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="405">
-                                                            <rect key="frame" x="61" y="13" width="354" height="13"/>
+                                                            <rect key="frame" x="62" y="13" width="352" height="13"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current sync action" id="406">
                                                                 <font key="font" metaFont="system" size="10"/>
@@ -132,7 +129,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="328" userLabel="Filename">
-                                                            <rect key="frame" x="61" y="34" width="326" height="17"/>
+                                                            <rect key="frame" x="62" y="34" width="324" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="335"/>
@@ -145,7 +142,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="363" userLabel="Status">
-                                                            <rect key="frame" x="61" y="1" width="326" height="17"/>
+                                                            <rect key="frame" x="62" y="1" width="324" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="364"/>
@@ -187,6 +184,9 @@
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="cellTitle"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="pauseOrResumeDownload:" target="321" id="588"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -205,7 +205,6 @@
                                                         <constraint firstItem="328" firstAttribute="centerX" secondItem="363" secondAttribute="centerX" id="877"/>
                                                     </constraints>
                                                     <connections>
-                                                        <action selector="pauseOrResumeDownload:" destination="573" id="588"/>
                                                         <outlet property="imageView" destination="337" id="372"/>
                                                         <outlet property="pauseResumeButton" destination="573" id="675"/>
                                                         <outlet property="progressBar" destination="354" id="373"/>
@@ -220,7 +219,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="922" userLabel="Filename">
-                                                            <rect key="frame" x="45" y="34" width="326" height="17"/>
+                                                            <rect key="frame" x="46" y="34" width="324" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="936"/>
@@ -236,7 +235,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="921" userLabel="Status">
-                                                            <rect key="frame" x="45" y="1" width="326" height="17"/>
+                                                            <rect key="frame" x="46" y="1" width="324" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="940"/>
@@ -276,6 +275,9 @@
                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="cellTitle"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="cancelTransfer:" target="917" id="957"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -293,7 +295,6 @@
                                                         <constraint firstItem="922" firstAttribute="trailing" secondItem="921" secondAttribute="trailing" id="971"/>
                                                     </constraints>
                                                     <connections>
-                                                        <action selector="cancelTransfer:" destination="918" id="957"/>
                                                         <outlet property="cancelButton" destination="918" id="956"/>
                                                         <outlet property="icon" destination="919" id="972"/>
                                                         <outlet property="progressBar" destination="920" id="948"/>
@@ -331,6 +332,9 @@
                                 <segment label="Downloads" width="81" selected="YES" tag="1"/>
                             </segments>
                         </segmentedCell>
+                        <connections>
+                            <action selector="changeListMode:" target="-2" id="959"/>
+                        </connections>
                     </segmentedControl>
                 </subviews>
                 <constraints>
@@ -354,23 +358,41 @@
             <items>
                 <menuItem title="Preferences..." id="634">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showPreferences:" target="-2" id="642"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Sync now" id="635">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="syncNow:" target="-2" id="643"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="707"/>
                 <menuItem title="Pause all downloads" enabled="NO" id="638">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="pauseAllDownloads:" target="-2" id="644"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Resume all downloads" enabled="NO" id="639">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="resumeAllDownloads:" target="-2" id="641"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Clear download list" enabled="NO" id="640">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="clearDownloads:" target="-2" id="647"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="637"/>
                 <menuItem title="Quit" id="636">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quit:" target="-2" id="645"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>

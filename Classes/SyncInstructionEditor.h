@@ -21,6 +21,7 @@
     IBOutlet NSTextField *lastSyncLabel;
     IBOutlet NSButton *commitButton;
     IBOutlet NSButton *deleteAfterSyncCheckbox;
+    IBOutlet NSButton *deleteEmptyFoldersCheckbox;
     IBOutlet NSButton *recursiveCheckbox;
     IBOutlet NSButton *flattenCheckbox;
     IBOutlet NSButton *resetKnownItemsButton;

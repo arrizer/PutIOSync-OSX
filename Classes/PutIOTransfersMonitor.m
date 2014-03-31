@@ -1,6 +1,14 @@
 
 #import "PutIOTransfersMonitor.h"
 
+@interface PutIOTransfersMonitor()
+{
+    NSArray *activeTransfers;
+    NSTimer *updateTransfersTimer;
+    PutIOAPI *api;
+}
+@end
+
 @implementation PutIOTransfersMonitor
 
 static PutIOTransfersMonitor *sharedInstance;
@@ -17,7 +25,7 @@ static PutIOTransfersMonitor *sharedInstance;
     self = [super init];
     if (self) {
         activeTransfers = [NSArray array];
-        api = [PutIOAPI apiWithDelegate:self];
+        api = [PutIOAPI api];
     }
     return self;
 }
@@ -38,20 +46,19 @@ static PutIOTransfersMonitor *sharedInstance;
 
 -(void)updateTransfers
 {
-    [api activeTransfers];
+    [api activeTransfersWithCompletion:^(id result, NSError *error, BOOL cancelled) {
+        if(error == nil && !cancelled){
+            activeTransfers = (NSArray*)result;
+            [[NSNotificationCenter defaultCenter] postNotificationName:PutIOTransfersMonitorUpdatedNotification object:nil];
+            // Update again in a few seconds:
+            updateTransfersTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTransfers) userInfo:nil repeats:NO];
+        }
+    }];
 }
 
 -(NSArray *)allActiveTransfers
 {
     return activeTransfers;
-}
-
--(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
-{
-    activeTransfers = (NSArray*)result;
-    [[NSNotificationCenter defaultCenter] postNotificationName:PutIOTransfersMonitorUpdatedNotification object:nil];
-    // Update again in a few seconds:
-    updateTransfersTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTransfers) userInfo:nil repeats:NO];
 }
 
 @end

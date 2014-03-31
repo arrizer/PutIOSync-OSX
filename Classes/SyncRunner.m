@@ -13,7 +13,8 @@
     self = [super init];
     if (self) {
         syncInstruction = instruction;
-        putio = [PutIOAPI apiWithDelegate:self];
+        putio = [PutIOAPI api];
+        self.localizedOperationName = NSLocalizedString(@"Looking for items to download", nil);
     }
     return self;
 }
@@ -34,7 +35,7 @@
         return;
     //NSLog(@"%@ sync run began", [self description]);
     foundFiles = 0;
-    [self performPreflightChecks];
+//    [self performPreflightChecks];
     [self deepScanOrigin];
 }
 
@@ -45,20 +46,11 @@
         [_delegate syncRunnerDidCancel:self];
 }
 
-#pragma mark - Preflight
-
-- (void)performPreflightChecks
-{
-    [self beginOperation:SyncRunnerOperationPreflight];
-    // TODO: Check if the origin and destination locations exist
-    
-}
-
 #pragma mark - Scan Origin
 
 -(void)deepScanOrigin
 {
-    [self beginOperation:SyncRunnerOperationOriginScan];
+//    [self beginOperation:SyncRunnerOperationOriginScan];
     [putio cancel];
     originTree = nil;
     nodeQueue = [NSMutableArray array];
@@ -68,15 +60,50 @@
 
 -(void)scanNextOriginItem
 {
+    PutIOAPICompletionBlock completion = ^(id result, NSError *error, BOOL cancelled){
+        if(error == nil && !cancelled){
+            NSTreeNode *currentNode = nil;
+            if([nodeQueue objectAtIndex:0] == [NSNull null]){
+                originTree = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
+                currentNode = originTree;
+            }else{
+                currentNode = [nodeQueue objectAtIndex:0];
+            }
+            for(PutIOAPIFile *file in result[@"files"]){
+                NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
+                [[currentNode mutableChildNodes] addObject:node];
+                if([file isFolder]){
+                    if(syncInstruction.recursive)
+                        [nodeQueue addObject:node];
+                }else{
+                    [self evaulateFileAtNode:node];
+                }
+            }
+            [nodeQueue removeObjectAtIndex:0];
+            
+            PutIOAPIFile *folder = result[@"parent"];
+            if(syncInstruction.deleteRemoteEmptyFolders && folder.fileID != syncInstruction.originFolderID && [result[@"files"] count] == 0){
+                NSLog(@"Deleting empty folder");
+                [putio deleteFileWithID:folder.fileID completion:^(id result, NSError *error, BOOL cancelled) {
+                    [self scanNextOriginItem];
+                }];
+            }else{
+                [self scanNextOriginItem];
+            }
+        }else{
+            [self failWithError:error];
+        }
+    };
+    
     if([nodeQueue count] > 0){
         id nextNode = [nodeQueue objectAtIndex:0];
         if(nextNode == [NSNull null]){
             NSLog(@"%@ scanning put.io folder: %@", [self description], syncInstruction.originFolderName);
-            [putio filesInFolderWithID:syncInstruction.originFolderID];
+            [putio filesInFolderWithID:syncInstruction.originFolderID completion:completion];
         }else{
             PutIOAPIFile *folder = (PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject];
             NSLog(@"%@ scanning put.io folder: %@", [self description], [folder name]);
-            [putio filesInFolderWithID:[folder fileID]];
+            [putio filesInFolderWithID:[folder fileID] completion:completion];
         }
     }else{
         originTree = nil;
@@ -123,60 +150,7 @@
     return relativePath;
 }
 
-#pragma mark - PutIO API Delegate
-
--(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
-{
-    switch (currentOperation) {
-        case SyncRunnerOperationPreflight:{
-            break;
-        }
-        case SyncRunnerOperationOriginScan:{
-            NSTreeNode *currentNode = nil;
-            if([nodeQueue objectAtIndex:0] == [NSNull null]){
-                originTree = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
-                currentNode = originTree;
-            }else{
-                currentNode = [nodeQueue objectAtIndex:0];
-            }
-            for(PutIOAPIFile *file in result[@"files"]){
-                NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
-                [[currentNode mutableChildNodes] addObject:node];
-                if([file isFolder]){
-                    if(syncInstruction.recursive)
-                        [nodeQueue addObject:node];
-                }else{
-                    [self evaulateFileAtNode:node];
-                }
-            }
-            [nodeQueue removeObjectAtIndex:0];
-            [self scanNextOriginItem];
-            break;
-        }
-        default:
-            break;
-    }
-}
-
--(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
-{
-    [self failWithError:error];
-}
-
 #pragma mark - Flow Control
-
--(void)beginOperation:(SyncRunnerOperation)operation
-{
-    currentOperation = operation;
-    if([_delegate respondsToSelector:@selector(syncRunner:willBeginOperation:)])
-        [_delegate syncRunner:self willBeginOperation:currentOperation];
-    NSDictionary *localizedOperationNames = @{
-    @((int)SyncRunnerOperationPreflight) : NSLocalizedString(@"Preparing", @""),
-    @((int)SyncRunnerOperationOriginScan) : NSLocalizedString(@"Looking for items to download", @""),
-    };
-    self.localizedOperationName = localizedOperationNames[@((int)currentOperation)];
-    NSLog(@"%@ beginning operation: %@", [self description], self.localizedOperationName);
-}
 
 -(void)failWithError:(NSError*)error
 {

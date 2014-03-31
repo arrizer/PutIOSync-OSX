@@ -17,7 +17,7 @@
         _statusItemView = [[StatusItemView alloc] initWithStatusItem:statusItem];
         _statusItemView.image = [NSImage imageNamed:@"Status"];
         _statusItemView.alternateImage = [NSImage imageNamed:@"StatusHighlighted"];
-        _statusItemView.action = @selector(togglePanel:);
+        _statusItemView.action = NSSelectorFromString(@"togglePanel:");
     }
     return self;
 }

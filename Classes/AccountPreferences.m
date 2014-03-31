@@ -9,7 +9,7 @@
 - (id)init
 {
     self = [super initWithNibName:@"AccountPreferences" bundle:nil];
-    self.putio = [PutIOAPI apiWithDelegate:self];
+    self.putio = [PutIOAPI api];
     return self;
 }
 
@@ -53,32 +53,6 @@
     [accountSetup beginAccountSetup];
 }
 
-#pragma mark - PutIO API Delegate
-
--(void)api:(PutIOAPI *)api
-didFinishRequest:(PutIOAPIRequest)request
-withResult:(id)result
-{
-    PutIOAPIAccountInfo *accountInfo = (PutIOAPIAccountInfo*)result;
-        
-    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-    [d setObject:[accountInfo eMailAddress] forKey:@"account_email"];
-    [d setObject:[accountInfo username] forKey:@"account_username"];
-    [d setInteger:[accountInfo usedDiskSpace] forKey:@"account_space_used"];
-    [d setInteger:[accountInfo totalDiskSpace] forKey:@"account_space_total"];
-    
-    [activityLabel setHidden:YES];
-    [activitySpinner setHidden:YES];
-    [self updateAccountDetailLabels];
-}
-
--(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
-{
-    [activityLabel setHidden:YES];
-    [activitySpinner setHidden:YES];
-}
-
-
 #pragma mark - Account Setup Delegate
 
 -(void)accountSetupController:(AccountSetupController *)c didFinishSetupWithOAuthAccessToken:(NSString *)token
@@ -120,7 +94,21 @@ withResult:(id)result
         [activitySpinner startAnimation:self];
         [activityLabel setHidden:NO];
         [activitySpinner setHidden:NO];
-        [self.putio accountInfo];
+        [self.putio accountInfoWithCompletion:^(id result, NSError *error, BOOL cancelled) {
+            if(error == nil && !cancelled){
+                PutIOAPIAccountInfo *accountInfo = (PutIOAPIAccountInfo*)result;
+                
+                NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+                [d setObject:[accountInfo eMailAddress] forKey:@"account_email"];
+                [d setObject:[accountInfo username] forKey:@"account_username"];
+                [d setInteger:[accountInfo usedDiskSpace] forKey:@"account_space_used"];
+                [d setInteger:[accountInfo totalDiskSpace] forKey:@"account_space_total"];
+
+                [self updateAccountDetailLabels];
+            }
+            [activityLabel setHidden:YES];
+            [activitySpinner setHidden:YES];
+        }];
     }
 }
 

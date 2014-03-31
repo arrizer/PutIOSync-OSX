@@ -24,7 +24,16 @@ typedef enum{
 static NSString *oAuthAccessToken;
 
 @interface PutIOAPI()
+{
+    PutIOAPIRequest currentRequest;
+    PutIOAPICompletionBlock callback;
+    NSURLConnection *urlConnection;
+    NSURLResponse *urlResponse;
+    NSMutableData *incomingData;
+}
+
 @property (assign) BOOL busy;
+
 @end
 
 @implementation PutIOAPI
@@ -32,20 +41,13 @@ static NSString *oAuthAccessToken;
 
 #pragma mark - Class Methods
 
-+(id)api
++ (id)api
 {
     PutIOAPI *api = [[PutIOAPI alloc] init];
     return api;
 }
 
-+(id)apiWithDelegate:(id<PutIOAPIDelegate>)delegate
-{
-    PutIOAPI *api = [PutIOAPI api];
-    [api setDelegate:delegate];
-    return api;
-}
-
-+(void)setOAuthAccessToken:(NSString*)accessToken
++ (void)setOAuthAccessToken:(NSString*)accessToken
 {
     oAuthAccessToken = accessToken;
     [PutIOAPI setKeychainItemPassword:oAuthAccessToken];
@@ -53,7 +55,7 @@ static NSString *oAuthAccessToken;
 
 static BOOL triedToLoadAccessToken = NO;
 
-+(NSString *)oAuthAccessToken
++ (NSString *)oAuthAccessToken
 {
     if(oAuthAccessToken == nil && !triedToLoadAccessToken){
         oAuthAccessToken = [PutIOAPI keychainItemPassword];
@@ -75,7 +77,7 @@ static BOOL triedToLoadAccessToken = NO;
 
 #pragma mark - OAuth
 
--(NSURL *)oauthAuthenticationURL
+- (NSURL *)oauthAuthenticationURL
 {
     NSString *url = @"https://api.put.io/v2/oauth2/authenticate?";
     NSDictionary *parameters = @{
@@ -87,12 +89,12 @@ static BOOL triedToLoadAccessToken = NO;
     return [NSURL URLWithString:url];
 }
 
--(NSURL *)oauthAuthenticationCallbackURL
+- (NSURL *)oauthAuthenticationCallbackURL
 {
     return [NSURL URLWithString:PUTIO_API_OAUTH_REDIRECTURI];    
 }
 
--(void)obtainOAuthAccessTokenForCode:(NSString *)authCode
+- (void)obtainOAuthAccessTokenForCode:(NSString *)authCode completion:(PutIOAPICompletionBlock)aCallback;
 {
     NSString *url = @"https://api.put.io/v2/oauth2/access_token?";
     NSDictionary *parameters = @{
@@ -104,6 +106,7 @@ static BOOL triedToLoadAccessToken = NO;
     };
     url = [url stringByAppendingString:[PutIOAPI urlParameterStringFromDictionary:parameters]];
     currentRequest = PutIOAPIRequestObtainOAuthToken;
+    callback = aCallback;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     incomingData = nil;
     urlConnection = [NSURLConnection connectionWithRequest:request delegate:self];
@@ -112,15 +115,20 @@ static BOOL triedToLoadAccessToken = NO;
 
 #pragma mark - Perform Requests
 
--(void)performRequestToEndpoint:(NSString *)endpoint
-                         method:(PutIOAPIEndpointMethod)method
-                     parameters:(NSDictionary *)inParameters
+- (void)performRequestToEndpoint:(NSString *)endpoint
+                          method:(PutIOAPIEndpointMethod)method
+                      parameters:(NSDictionary *)inParameters
+                        callback:(PutIOAPICompletionBlock)newCallback
 {
-    if([self isBusy]) [self cancel];
+    if([self isBusy]){
+        [self cancel];
+    }
     if([PutIOAPI oAuthAccessToken] == nil){
         [self failWithInternalError:PutIOAPIInternalErrorNotAuthorized userMessage:nil];
         return;
     }
+    callback = newCallback;
+    
     NSString *requestURLString = PUTIO_API_URL;
     requestURLString = [requestURLString stringByAppendingString:endpoint];
     NSMutableDictionary *parameters;
@@ -141,8 +149,6 @@ static BOOL triedToLoadAccessToken = NO;
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
     //NSLog(@"API request to endpoint: %@\nParameters: %@", endpoint, [[parameters description] stringByReplacingOccurrencesOfString:@"\n" withString:@""]);
-    if([_delegate respondsToSelector:@selector(api:didBeginRequest:)])
-        [_delegate api:self didBeginRequest:currentRequest];
     incomingData = nil;
     urlConnection = [NSURLConnection connectionWithRequest:request delegate:self];
     self.busy = YES;
@@ -163,54 +169,57 @@ static BOOL triedToLoadAccessToken = NO;
 
 -(void)cancel
 {
-    if(![self isBusy]) return;
+    if(![self isBusy]){
+        return;
+    }
     [urlConnection cancel];
     incomingData = nil;
     self.busy = NO;
-    if([_delegate respondsToSelector:@selector(api:didCancelRequest:)])
-        [_delegate api:self didCancelRequest:currentRequest];
+    if(callback != nil){
+        callback(nil, nil, YES);
+    }
 }
 
 #pragma mark - API Methods
 #pragma mark Account Info
 
--(void)accountInfo
+-(void)accountInfoWithCompletion:(PutIOAPICompletionBlock)aCallback
 {
     currentRequest = PutIOAPIRequestAccountInfo;
     NSString *endpoint = @"/account/info";
-    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil];
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil callback:aCallback];
 }
 
 #pragma mark Files
 
--(void)filesInRootFolder
+-(void)filesInRootFolderWithCompletion:(PutIOAPICompletionBlock)aCallback
 {
-    [self filesInFolderWithID:0];
+    [self filesInFolderWithID:0 completion:aCallback];
 }
 
--(void)filesInFolderWithID:(NSInteger)folderID
+-(void)filesInFolderWithID:(NSInteger)folderID completion:(PutIOAPICompletionBlock)aCallback
 {
     currentRequest = PutIOAPIRequestFilesList;
     NSString *endpoint = @"/files/list";
     NSDictionary *parameters = @{@"parent_id" : [@(folderID) stringValue]};
-    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:parameters];
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:parameters callback:aCallback];
 }
 
-- (void)deleteFileWithID:(NSInteger)fileID
+- (void)deleteFileWithID:(NSInteger)fileID completion:(PutIOAPICompletionBlock)aCallback
 {
     currentRequest = PutIOAPIRequestFilesDelete;
     NSString *endpoint = @"/files/delete";
     NSDictionary *parameters = @{@"file_ids" : [@(fileID) stringValue]};
-    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodPOST parameters:parameters];
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodPOST parameters:parameters callback:aCallback];
 }
 
 #pragma mark Transfers
 
-- (void)activeTransfers
+- (void)activeTransfersWithCompletion:(PutIOAPICompletionBlock)aCallback
 {
     currentRequest = PutIOAPIRequestTransfersList;
     NSString *endpoint = @"/transfers/list";
-    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil];
+    [self performRequestToEndpoint:endpoint method:PutIOAPIEndpointMethodGET parameters:nil callback:aCallback];
 }
 
 #pragma mark - Result Handling
@@ -252,8 +261,7 @@ static BOOL triedToLoadAccessToken = NO;
         default:
             break;
     }
-    if(response)
-        [self finishRequestWithResult:response];
+    [self finishRequestWithResult:response];
 }
 
 -(void)handleResponseWithDataResult:(NSData*)result
@@ -264,8 +272,9 @@ static BOOL triedToLoadAccessToken = NO;
 -(void)finishRequestWithResult:(PutIOAPIObject*)object
 {
     self.busy = NO;
-    if([_delegate respondsToSelector:@selector(api:didFinishRequest:withResult:)])
-        [_delegate api:self didFinishRequest:currentRequest withResult:object];
+    if(callback != nil){
+        callback(object, nil, NO);
+    }
 }
 
 #pragma mark - URL Connection Delegate
@@ -279,8 +288,9 @@ didReceiveResponse:(NSURLResponse *)response
 -(void)connection:(NSURLConnection *)connection
    didReceiveData:(NSData *)data
 {
-    if(!incomingData)
+    if(!incomingData){
         incomingData = [NSMutableData data];
+    }
     [incomingData appendData:data];
 }
 
@@ -364,8 +374,9 @@ didReceiveResponse:(NSURLResponse *)response
 {
     self.busy = NO;
     NSLog(@"API Error: %@", [error description]);
-    if([_delegate respondsToSelector:@selector(api:didFailRequest:withError:)])
-        [_delegate api:self didFailRequest:currentRequest withError:error];
+    if(callback != nil){
+        callback(nil, error, NO);
+    }
 }
 
 #pragma mark - Keychain

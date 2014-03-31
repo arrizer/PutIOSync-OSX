@@ -105,11 +105,6 @@ static SyncScheduler* sharedInstance;
 
 #pragma mark - Sync Runner Delegate
 
--(void)syncRunner:(SyncRunner *)runner willBeginOperation:(SyncRunnerOperation)operation
-{
-    
-}
-
 -(void)syncRunner:(SyncRunner *)runner didFailWithError:(NSError *)error
 {
     [self.runningSyncs removeObject:runner];

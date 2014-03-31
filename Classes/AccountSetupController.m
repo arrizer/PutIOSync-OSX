@@ -22,7 +22,7 @@
 -(void)windowDidLoad
 {
     putio = [PutIOAPI api];
-    [putio setDelegate:self];
+    //[putio setDelegate:self];
     [webView setFrameLoadDelegate:self];
     [webView setPolicyDelegate:self];
     [webView setHidden:YES];
@@ -51,7 +51,19 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
         callbackURL = [callbackURL stringByAppendingString:@"?code="];
         NSString *code = [URL stringByReplacingOccurrencesOfString:callbackURL withString:@""];
         NSLog(@"Obtained OAuth auth code: %@", code);
-        [putio obtainOAuthAccessTokenForCode:code];
+        [putio obtainOAuthAccessTokenForCode:code completion:^(id result, NSError *error, BOOL cancelled) {
+            if(error == nil && !cancelled){
+                NSDictionary *rawData = (NSDictionary*)[result rawData];
+                NSString *accessToken = [rawData objectForKey:@"access_token"];
+                NSLog(@"Obtained OAuth access token: %@", accessToken);
+                [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
+            }else if (error != nil){
+                [self.window presentError:error
+                           modalForWindow:self.window
+                                 delegate:self
+                       didPresentSelector:@selector(errorDismissed) contextInfo:nil];
+            }
+        }];
         [listener ignore];
     }else{
         [listener use];
@@ -70,18 +82,21 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
     [spinner stopAnimation:self];
 }
 
--(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
-{
-    NSDictionary *rawData = (NSDictionary*)[result rawData];
-    NSString *accessToken = [rawData objectForKey:@"access_token"];
-    NSLog(@"Obtained OAuth access token: %@", accessToken);
-    [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
-}
-
--(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
-{
-    [self.window presentError:error modalForWindow:self.window delegate:self didPresentSelector:@selector(errorDismissed) contextInfo:nil];
-}
+//-(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
+//{
+//    NSDictionary *rawData = (NSDictionary*)[result rawData];
+//    NSString *accessToken = [rawData objectForKey:@"access_token"];
+//    NSLog(@"Obtained OAuth access token: %@", accessToken);
+//    [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
+//}
+//
+//-(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
+//{
+//    [self.window presentError:error
+//               modalForWindow:self.window
+//                     delegate:self
+//           didPresentSelector:@selector(errorDismissed) contextInfo:nil];
+//}
 
 - (void)errorDismissed
 {

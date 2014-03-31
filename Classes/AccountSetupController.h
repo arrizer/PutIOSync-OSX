@@ -11,7 +11,7 @@
 @end
 
 @interface AccountSetupController : NSWindowController
-<NSWindowDelegate, PutIOAPIDelegate>
+<NSWindowDelegate>
 {
     IBOutlet WebView *webView;
     IBOutlet NSProgressIndicator *spinner;

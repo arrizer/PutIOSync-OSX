@@ -13,49 +13,45 @@ typedef enum{
     PutIOAPIRequestTransfersList
 } PutIOAPIRequest;
 
-@class PutIOAPI;
+typedef void (^PutIOAPICompletionBlock)(id result, NSError *error, BOOL cancelled);
 
-@protocol PutIOAPIDelegate <NSObject>
-@optional
-- (void)api:(PutIOAPI*)api didBeginRequest:(PutIOAPIRequest)request;
-- (void)api:(PutIOAPI*)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result;
-- (void)api:(PutIOAPI*)api didFailRequest:(PutIOAPIRequest)request withError:(NSError*)error;
-- (void)api:(PutIOAPI*)api didCancelRequest:(PutIOAPIRequest)request;
-@end
+//@class PutIOAPI;
+//
+//@protocol PutIOAPIDelegate <NSObject>
+//@optional
+//- (void)api:(PutIOAPI*)api didBeginRequest:(PutIOAPIRequest)request;
+//- (void)api:(PutIOAPI*)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result;
+//- (void)api:(PutIOAPI*)api didFailRequest:(PutIOAPIRequest)request withError:(NSError*)error;
+//- (void)api:(PutIOAPI*)api didCancelRequest:(PutIOAPIRequest)request;
+//@end
 
 @interface PutIOAPI : NSObject
 <NSURLConnectionDataDelegate>
-{
-    PutIOAPIRequest currentRequest;
-    NSURLConnection *urlConnection;
-    NSURLResponse *urlResponse;
-    NSMutableData *incomingData;
-}
 
-+(id)api;
-+(id)apiWithDelegate:(id<PutIOAPIDelegate>)delegate;
-+(void)setOAuthAccessToken:(NSString*)accessToken;
-+(NSString*)oAuthAccessToken;
++ (id)api;
+//+ (id)apiWithDelegate:(id<PutIOAPIDelegate>)delegate;
++ (void)setOAuthAccessToken:(NSString*)accessToken;
++ (NSString*)oAuthAccessToken;
 
 @property (readonly, getter = isBusy) BOOL busy;
-@property (unsafe_unretained) id<PutIOAPIDelegate>delegate;
+//@property (unsafe_unretained) id<PutIOAPIDelegate>delegate;
 
 - (NSURL*)oauthAuthenticationURL;
 - (NSURL*)oauthAuthenticationCallbackURL;
 
 // Authentication
-- (void)obtainOAuthAccessTokenForCode:(NSString*)authCode;
+- (void)obtainOAuthAccessTokenForCode:(NSString*)authCode completion:(PutIOAPICompletionBlock)callback;
 
 // Account Info
-- (void)accountInfo;
+- (void)accountInfoWithCompletion:(PutIOAPICompletionBlock)callback;
 
 // Files
-- (void)filesInRootFolder;
-- (void)filesInFolderWithID:(NSInteger)folderID;
-- (void)deleteFileWithID:(NSInteger)fileID;
+- (void)filesInRootFolderWithCompletion:(PutIOAPICompletionBlock)callback;
+- (void)filesInFolderWithID:(NSInteger)folderID completion:(PutIOAPICompletionBlock)callback;
+- (void)deleteFileWithID:(NSInteger)fileID completion:(PutIOAPICompletionBlock)callback;
 
 // Transfers
-- (void)activeTransfers;
+- (void)activeTransfersWithCompletion:(PutIOAPICompletionBlock)callback;
 
 - (void)cancel;
 

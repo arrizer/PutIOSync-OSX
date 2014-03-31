@@ -5,7 +5,7 @@
 #import "PutIOAPI.h"
 
 @interface AccountPreferences : NSViewController
-<MASPreferencesViewController, AccountSetupControllerDelegate, PutIOAPIDelegate>
+<MASPreferencesViewController, AccountSetupControllerDelegate>
 {
     IBOutlet NSTextField *infoLabel;
     IBOutlet NSTextField *accountEMailAddressLabel;

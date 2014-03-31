@@ -53,6 +53,7 @@
         [destinationLabel setHidden:YES];
     }
     [deleteAfterSyncCheckbox setState:(_editedSyncInstruction.deleteRemoteFilesAfterSync ? NSOnState : NSOffState)];
+    [deleteEmptyFoldersCheckbox setState:(_editedSyncInstruction.deleteRemoteEmptyFolders ? NSOnState : NSOffState)];
     [recursiveCheckbox setState:(_editedSyncInstruction.recursive ? NSOnState : NSOffState)];
     if(_editedSyncInstruction.recursive){
         [flattenCheckbox setState:(_editedSyncInstruction.flattenSubdirectories ? NSOnState : NSOffState)];
@@ -129,6 +130,7 @@
 -(void)optionsChanged:(id)sender
 {
     _editedSyncInstruction.deleteRemoteFilesAfterSync = (deleteAfterSyncCheckbox.state == NSOnState);
+    _editedSyncInstruction.deleteRemoteEmptyFolders = (deleteEmptyFoldersCheckbox.state == NSOnState);
     _editedSyncInstruction.recursive = (recursiveCheckbox.state == NSOnState);
     _editedSyncInstruction.flattenSubdirectories = (flattenCheckbox.state == NSOnState);
     [self updateLabels];

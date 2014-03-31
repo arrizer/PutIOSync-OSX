@@ -42,7 +42,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>f91ff4905b99e80df3fcd82b0c74fd19
 </string>
@@ -136,7 +136,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>3a5b4ace5b5f7650aedfa1281f0691cc
 </string>
@@ -349,7 +349,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>68cc6afdeb11a1a48136df206ec42f15
 </string>
@@ -1125,7 +1125,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>e27cdfb5bd3a407a6a6e33cd3773e6d2
 </string>
@@ -1297,17 +1297,17 @@
 					<dict>
 						<key>backup</key>
 						<dict>
-							<key>4</key>
+							<key>5</key>
 							<dict>
 								<key>class</key>
 								<string>BLWrapperHandle</string>
 								<key>name</key>
-								<string>Classes/SyncInstructionEditor/4/SyncInstructionEditor.xib</string>
+								<string>Classes/SyncInstructionEditor/5/SyncInstructionEditor.xib</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>change date</key>
-					<date>2013-07-01T21:15:45Z</date>
+					<date>2014-03-31T14:20:45Z</date>
 					<key>changed values</key>
 					<array/>
 					<key>class</key>
@@ -1315,9 +1315,9 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
-					<string>1ada6b844b2bfc6470ed3bc34d03ac85
+					<string>7fba17f64f7fde95435cfcfa58483f56
 </string>
 					<key>name</key>
 					<string>SyncInstructionEditor.xib</string>
@@ -1623,6 +1623,31 @@
 							<key>snapshots</key>
 							<dict/>
 						</dict>
+						<dict>
+							<key>change date</key>
+							<date>2001-01-01T00:00:00Z</date>
+							<key>changed values</key>
+							<array/>
+							<key>class</key>
+							<string>BLStringKeyObject</string>
+							<key>comment</key>
+							<string>Class = "NSButtonCell"; title = "Delete empty folders from put.io"; ObjectID = "dV0-z1-QMJ";</string>
+							<key>errors</key>
+							<array/>
+							<key>flags</key>
+							<integer>0</integer>
+							<key>key</key>
+							<string>dV0-z1-QMJ.title</string>
+							<key>localizations</key>
+							<dict>
+								<key>de</key>
+								<string>Leere Ordner auf put.io löschen</string>
+								<key>en</key>
+								<string>Delete empty folders from put.io</string>
+							</dict>
+							<key>snapshots</key>
+							<dict/>
+						</dict>
 					</array>
 					<key>old objects</key>
 					<array>
@@ -1657,9 +1682,9 @@
 					<key>versions</key>
 					<dict>
 						<key>de</key>
-						<string>4</string>
+						<string>5</string>
 						<key>en</key>
-						<string>4</string>
+						<string>5</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1685,7 +1710,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>5cd1c3dccd3d49de9e8f084efe38a15f
 </string>
@@ -2115,7 +2140,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>cc6e4c34f51463d43322d574a5abf5b5
 </string>
@@ -5080,7 +5105,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>9dcced92682f31a364b8959076f0ffda
 </string>
@@ -5245,7 +5270,7 @@
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>0</integer>
+					<integer>2</integer>
 					<key>hash</key>
 					<string>87ea38d9485109b38a677972dcb345a5
 </string>
@@ -6543,7 +6568,7 @@
 				</dict>
 			</array>
 			<key>flags</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>name</key>
 			<string>Classes</string>
 			<key>naming style</key>

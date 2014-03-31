@@ -73,6 +73,12 @@ void *kContextActivePanel = &kContextActivePanel;
     [[SyncScheduler sharedSyncScheduler] scheduleSyncs];
     [[SyncScheduler sharedSyncScheduler] startSyncingAll];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+    
+    // Register URL scheme
+    NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+    [appleEventManager setEventHandler:self
+                           andSelector:@selector(handleGetURLEvent:withReplyEvent:)
+                         forEventClass:kInternetEventClass andEventID:kAEGetURL];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -109,7 +115,9 @@ void *kContextActivePanel = &kContextActivePanel;
     return self.menubarController.statusItemView;
 }
 
-+(void)setupUserDefaults
+#pragma mark - User Defaults
+
++ (void)setupUserDefaults
 {
     NSString *userDefaultsValuesPath;
     NSDictionary *userDefaultsValuesDict;
@@ -122,6 +130,8 @@ void *kContextActivePanel = &kContextActivePanel;
     // set them in the standard user defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:userDefaultsValuesDict];
 }
+
+#pragma mark - User Notifications
 
 static NSDictionary *userNotifications = nil;
 
@@ -141,6 +151,14 @@ static NSDictionary *userNotifications = nil;
         notification.informativeText = message;
         [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
     }
+}
+
+#pragma mark - URL Scheme Handling
+
+- (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+{
+    NSString *url = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+    NSLog(@"Got URL event: %@", url);
 }
 
 #pragma mark - Login Item

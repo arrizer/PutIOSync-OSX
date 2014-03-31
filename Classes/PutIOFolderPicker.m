@@ -10,7 +10,7 @@
 - (id)init
 {
     self = [super initWithWindowNibName:@"PutIOFolderPicker"];
-    putio = [PutIOAPI apiWithDelegate:self];
+    putio = [PutIOAPI api];
     return self;
 }
 
@@ -92,46 +92,43 @@
 
 - (void)fetchNextQueuedItem
 {
+    PutIOAPICompletionBlock completion = ^(id result, NSError *error, BOOL cancelled){
+        if(error == nil && !cancelled){
+            NSArray *files = result[@"files"];
+            id currentNode = [fileQueue objectAtIndex:0];
+            if(currentNode == [NSNull null]){
+                NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
+                folderTree = node;
+                currentNode = node;
+            }
+            for(PutIOAPIFile *file in files){
+                if([file isFolder] && [currentNode isKindOfClass:[NSTreeNode class]]){
+                    NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
+                    [[(NSTreeNode*)currentNode mutableChildNodes] addObject:node];
+                    [fileQueue addObject:node];
+                }
+            }
+            [fileQueue removeObjectAtIndex:0];
+            [self fetchNextQueuedItem];
+        }else if(error != nil){
+            [fileQueue removeAllObjects];
+            [activitySpinner stopAnimation:self];
+        }
+    };
+    
     if([fileQueue count] > 0){
         id nextNode = [fileQueue objectAtIndex:0];
         if(nextNode == [NSNull null]){
-            [putio filesInRootFolder];
+            [putio filesInRootFolderWithCompletion:completion];
         }else{
             PutIOAPIFile *folder = (PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject];
-            [putio filesInFolderWithID:[folder fileID]];
+            [putio filesInFolderWithID:[folder fileID] completion:completion];
         }
     }else{
         [activitySpinner stopAnimation:self];
         NSLog(@"Done updating all put.io folders");
         [outlineView reloadData];
     }
-}
-
--(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
-{
-    NSArray *files = result[@"files"];
-    id currentNode = [fileQueue objectAtIndex:0];
-    if(currentNode == [NSNull null]){
-        NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
-        folderTree = node;
-        currentNode = node;
-    }
-    for(PutIOAPIFile *file in files){
-        if([file isFolder] && [currentNode isKindOfClass:[NSTreeNode class]]){
-            NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
-            [[(NSTreeNode*)currentNode mutableChildNodes] addObject:node];
-            [fileQueue addObject:node];
-        }
-    }
-    [fileQueue removeObjectAtIndex:0];
-    [self fetchNextQueuedItem];
-}
-
--(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
-{
-    [fileQueue removeAllObjects];
-    [activitySpinner stopAnimation:self];
-
 }
 
 @end

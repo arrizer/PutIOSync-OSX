@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.9" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
-        <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SyncInstructionEditor">
             <connections>
-                <action selector="cancel:" destination="277" id="302"/>
-                <action selector="commit:" destination="276" id="303"/>
-                <action selector="optionsChanged:" destination="288" id="308"/>
-                <action selector="optionsChanged:" destination="412" id="414"/>
-                <action selector="optionsChanged:" destination="427" id="429"/>
-                <action selector="pickDestinationFolder:" destination="238" id="301"/>
-                <action selector="pickOriginFolder:" destination="246" id="300"/>
-                <action selector="resetKnownItems:" destination="368" id="393"/>
                 <outlet property="commitButton" destination="276" id="307"/>
                 <outlet property="deleteAfterSyncCheckbox" destination="288" id="309"/>
+                <outlet property="deleteEmptyFoldersCheckbox" destination="Ang-FC-ToL" id="sM6-oT-Qzs"/>
                 <outlet property="destinationLabel" destination="237" id="304"/>
                 <outlet property="flattenCheckbox" destination="427" id="434"/>
                 <outlet property="lastSyncLabel" destination="357" id="391"/>
@@ -32,15 +24,15 @@
         <window title="Synchronisierten Ordner bearbeiten" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="163" y="199" width="462" height="340"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <rect key="contentRect" x="163" y="199" width="462" height="368"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="462" height="270"/>
             <view key="contentView" id="225">
-                <rect key="frame" x="0.0" y="0.0" width="462" height="340"/>
+                <rect key="frame" x="0.0" y="0.0" width="462" height="368"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="226">
-                        <rect key="frame" x="20" y="190" width="203" height="130"/>
+                        <rect key="frame" x="20" y="218" width="203" height="130"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <imageView translatesAutoresizingMaskIntoConstraints="NO" id="245">
@@ -62,12 +54,15 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
-                                <rect key="frame" x="20" y="5" width="163" height="32"/>
+                                <rect key="frame" x="21" y="5" width="163" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Quelle auswählen..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="257">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="pickOriginFolder:" target="-2" id="300"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -81,7 +76,7 @@
                         </constraints>
                     </customView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="227">
-                        <rect key="frame" x="239" y="190" width="203" height="130"/>
+                        <rect key="frame" x="239" y="218" width="203" height="130"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <imageView translatesAutoresizingMaskIntoConstraints="NO" id="239">
@@ -109,6 +104,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="pickDestinationFolder:" target="-2" id="301"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -131,6 +129,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="commit:" target="-2" id="303"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="277">
                         <rect key="frame" x="232" y="13" width="108" height="32"/>
@@ -142,14 +143,31 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="302"/>
+                        </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="288">
-                        <rect key="frame" x="18" y="154" width="375" height="18"/>
+                        <rect key="frame" x="18" y="182" width="375" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Erfolgreich heruntergeladene Dateien auf put.io löschen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="289">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="optionsChanged:" target="-2" id="308"/>
+                        </connections>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Ang-FC-ToL">
+                        <rect key="frame" x="18" y="158" width="222" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Leere Ordner auf put.io löschen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dV0-z1-QMJ">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="optionsChanged:" target="-2" id="tXL-c8-aVF"/>
+                        </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="412">
                         <rect key="frame" x="18" y="134" width="229" height="18"/>
@@ -158,17 +176,23 @@ Gw
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="optionsChanged:" target="-2" id="414"/>
+                        </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="427">
-                        <rect key="frame" x="18" y="114" width="340" height="18"/>
+                        <rect key="frame" x="18" y="110" width="340" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Unterordner vor dem Herunterladen entschachteln" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="428">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="optionsChanged:" target="-2" id="429"/>
+                        </connections>
                     </button>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="320">
-                        <rect key="frame" x="191" y="252" width="80" height="80"/>
+                        <rect key="frame" x="191" y="273" width="80" height="80"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="334"/>
@@ -177,7 +201,7 @@ Gw
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="syncRightArrow" id="321"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="357">
-                        <rect key="frame" x="17" y="80" width="157" height="16"/>
+                        <rect key="frame" x="18" y="81" width="157" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Zuletzt synchronisiert: Nie" id="358">
                             <font key="font" metaFont="cellTitle"/>
@@ -186,12 +210,15 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="368">
-                        <rect key="frame" x="15" y="48" width="208" height="28"/>
+                        <rect key="frame" x="15" y="49" width="208" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Synchronisierte Dateien vergessen" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="369">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="resetKnownItems:" target="-2" id="393"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -204,27 +231,29 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="276" secondAttribute="trailing" constant="20" symbolic="YES" id="286"/>
                     <constraint firstItem="288" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="20" symbolic="YES" id="291"/>
                     <constraint firstItem="288" firstAttribute="top" secondItem="225" secondAttribute="top" constant="170" id="299"/>
-                    <constraint firstItem="320" firstAttribute="top" secondItem="225" secondAttribute="top" constant="8" id="333"/>
+                    <constraint firstItem="320" firstAttribute="top" secondItem="225" secondAttribute="top" constant="15" id="333"/>
                     <constraint firstAttribute="trailing" secondItem="227" secondAttribute="trailing" constant="20" symbolic="YES" id="354"/>
                     <constraint firstItem="320" firstAttribute="centerX" secondItem="225" secondAttribute="centerX" id="355"/>
                     <constraint firstItem="276" firstAttribute="leading" secondItem="277" secondAttribute="trailing" constant="12" symbolic="YES" id="377"/>
                     <constraint firstItem="368" firstAttribute="top" secondItem="357" secondAttribute="bottom" constant="8" symbolic="YES" id="387"/>
-                    <constraint firstItem="412" firstAttribute="top" secondItem="288" secondAttribute="bottom" constant="6" symbolic="YES" id="418"/>
-                    <constraint firstItem="427" firstAttribute="top" secondItem="412" secondAttribute="bottom" constant="6" symbolic="YES" id="433"/>
-                    <constraint firstItem="357" firstAttribute="top" secondItem="427" secondAttribute="bottom" constant="20" id="436"/>
+                    <constraint firstItem="427" firstAttribute="top" secondItem="412" secondAttribute="bottom" constant="10" id="433"/>
+                    <constraint firstItem="357" firstAttribute="top" secondItem="427" secondAttribute="bottom" constant="15" id="436"/>
+                    <constraint firstItem="Ang-FC-ToL" firstAttribute="leading" secondItem="288" secondAttribute="leading" id="2KD-7V-Omi"/>
                     <constraint firstItem="276" firstAttribute="centerY" secondItem="277" secondAttribute="centerY" id="5w5-ev-yCs"/>
+                    <constraint firstItem="Ang-FC-ToL" firstAttribute="top" secondItem="288" secondAttribute="bottom" constant="10" id="Bch-of-FYb"/>
                     <constraint firstItem="276" firstAttribute="width" secondItem="277" secondAttribute="width" id="DVF-1J-tiW"/>
                     <constraint firstItem="357" firstAttribute="leading" secondItem="368" secondAttribute="leading" id="OwY-ZW-FnT"/>
                     <constraint firstItem="246" firstAttribute="width" secondItem="238" secondAttribute="width" id="YB4-Tg-eMi"/>
                     <constraint firstItem="412" firstAttribute="leading" secondItem="288" secondAttribute="leading" id="eBv-hT-VZE"/>
                     <constraint firstItem="427" firstAttribute="leading" secondItem="412" secondAttribute="leading" id="iMK-Mb-W7k"/>
                     <constraint firstItem="357" firstAttribute="leading" secondItem="427" secondAttribute="leading" id="yW3-fC-i3R"/>
+                    <constraint firstItem="412" firstAttribute="top" secondItem="Ang-FC-ToL" secondAttribute="bottom" constant="10" id="ymC-wx-AI6"/>
                 </constraints>
             </view>
         </window>
     </objects>
     <resources>
-        <image name="putioFolder" width="30" height="30"/>
+        <image name="putioFolder" width="64" height="64"/>
         <image name="syncRightArrow" width="90" height="90"/>
         <image name="systemFolder" width="512" height="512"/>
     </resources>

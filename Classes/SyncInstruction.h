@@ -15,6 +15,7 @@
 @property (strong) NSURL *localDestination;
 @property (assign) BOOL localDestinationIsStale;
 @property (assign) BOOL deleteRemoteFilesAfterSync;
+@property (assign) BOOL deleteRemoteEmptyFolders;
 @property (assign) BOOL recursive;
 @property (assign) BOOL flattenSubdirectories;
 @property (strong) NSDate *lastSynced;
