@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>general_launchonlogin</key>
+	<false/>
+	<key>general_syncinterval</key>
+	<integer>2</integer>
+	<key>general_paralleldownloads</key>
+	<integer>5</integer>
+	<key>general_notifications_newfiles</key>
+	<true/>
+	<key>general_notifications_downloadfinished</key>
+	<true/>
+	<key>general_notifications_downloadfailed</key>
+	<false/>
+	<key>general_sounds_newfiles</key>
+	<true/>
+	<key>general_sounds_downloadfinished</key>
+	<true/>
+</dict>
+</plist>
