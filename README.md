@@ -5,6 +5,8 @@
 PutIOSync is a little menubar app for your Mac that allows you to automatically download new files from [put.io](http://put.io) as they arrive in your folders there.
 It can also delete successfully downloaded files from put.io and flatten folder hierarchies, if you want it to. 
 
+[⬇︎ DOWNLOAD](https://github.com/arrizer/PutIOSync-OSX/raw/master/App/PutIOSync.app.zip)
+
 It is a 64-bit ARC Mac app and it runs on OS X 10.6 and later.
 
 ## Features
