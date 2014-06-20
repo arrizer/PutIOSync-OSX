@@ -7,7 +7,7 @@ It can also delete successfully downloaded files from put.io and flatten folder 
 
 [⬇︎ DOWNLOAD](https://github.com/arrizer/PutIOSync-OSX/raw/master/App/PutIOSync.app.zip)
 
-It is a 64-bit ARC Mac app and it runs on OS X 10.6 and later.
+It is a 64-bit ARC Mac app and it runs on OS X 10.7 and later.
 
 ## Features
 - Account setup via OAuth
