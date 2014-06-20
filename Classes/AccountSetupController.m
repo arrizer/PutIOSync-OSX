@@ -1,5 +1,8 @@
 
 #import "AccountSetupController.h"
+#import "PutIOAPIOAuthTokenRequest.h"
+
+#define kAPISecret @"a4gz4pnrnxm2jxchok8v"
 
 @implementation AccountSetupController
 
@@ -15,7 +18,7 @@
 -(void)cancelButtonClicked:(id)sender
 {
     [webView stopLoading:self];
-    [putio cancel];
+    [putio cancelAllRequests];
     [_delegate accountSetupControllerDidCancelSetup:self];
 }
 
@@ -36,7 +39,7 @@
 
 -(void)beginAccountSetup
 {
-    [webView setMainFrameURL:[[putio oauthAuthenticationURL] absoluteString]];
+    webView.mainFrameURL = [putio.oAuthAuthenticationURL absoluteString];
 }
 
 -                 (void)webView:(WebView *)webView
@@ -46,24 +49,23 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
                decisionListener:(id<WebPolicyDecisionListener>)listener
 {
     NSString *URL = [[request URL] absoluteString];
-    NSString *callbackURL = [[putio oauthAuthenticationCallbackURL] absoluteString];
+    NSString *callbackURL = putio.oAuthRedirectURI;
     if([URL hasPrefix:callbackURL]){
         callbackURL = [callbackURL stringByAppendingString:@"?code="];
         NSString *code = [URL stringByReplacingOccurrencesOfString:callbackURL withString:@""];
-        NSLog(@"Obtained OAuth auth code: %@", code);
-        [putio obtainOAuthAccessTokenForCode:code completion:^(id result, NSError *error, BOOL cancelled) {
-            if(error == nil && !cancelled){
-                NSDictionary *rawData = (NSDictionary*)[result rawData];
+        __block PutIOAPIOAuthTokenRequest *request = [PutIOAPIOAuthTokenRequest requestOAuthTokenForCode:code api:putio secret:kAPISecret completion:^{
+            if(request.error == nil && !request.isCancelled){
+                NSDictionary *rawData = (NSDictionary*)[request responseObject];
                 NSString *accessToken = [rawData objectForKey:@"access_token"];
-                NSLog(@"Obtained OAuth access token: %@", accessToken);
                 [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
-            }else if (error != nil){
-                [self.window presentError:error
+            }else if (request.error != nil){
+                [self.window presentError:request.error
                            modalForWindow:self.window
                                  delegate:self
                        didPresentSelector:@selector(errorDismissed) contextInfo:nil];
             }
         }];
+        [putio performRequest:request];
         [listener ignore];
     }else{
         [listener use];
@@ -81,22 +83,6 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
     [webView setHidden:NO];
     [spinner stopAnimation:self];
 }
-
-//-(void)api:(PutIOAPI *)api didFinishRequest:(PutIOAPIRequest)request withResult:(id)result
-//{
-//    NSDictionary *rawData = (NSDictionary*)[result rawData];
-//    NSString *accessToken = [rawData objectForKey:@"access_token"];
-//    NSLog(@"Obtained OAuth access token: %@", accessToken);
-//    [_delegate accountSetupController:self didFinishSetupWithOAuthAccessToken:accessToken];
-//}
-//
-//-(void)api:(PutIOAPI *)api didFailRequest:(PutIOAPIRequest)request withError:(NSError *)error
-//{
-//    [self.window presentError:error
-//               modalForWindow:self.window
-//                     delegate:self
-//           didPresentSelector:@selector(errorDismissed) contextInfo:nil];
-//}
 
 - (void)errorDismissed
 {

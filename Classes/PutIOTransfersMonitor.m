@@ -1,5 +1,6 @@
 
 #import "PutIOTransfersMonitor.h"
+#import "PutIOAPITransfersRequest.h"
 
 @interface PutIOTransfersMonitor()
 {
@@ -46,14 +47,15 @@ static PutIOTransfersMonitor *sharedInstance;
 
 -(void)updateTransfers
 {
-    [api activeTransfersWithCompletion:^(id result, NSError *error, BOOL cancelled) {
-        if(error == nil && !cancelled){
-            activeTransfers = (NSArray*)result;
+    __block PutIOAPITransfersRequest *request = [PutIOAPITransfersRequest requestAllTransfersWithCompletion:^{
+        if(request.error == nil && !request.isCancelled){
+            activeTransfers = request.transfers;
             [[NSNotificationCenter defaultCenter] postNotificationName:PutIOTransfersMonitorUpdatedNotification object:nil];
             // Update again in a few seconds:
             updateTransfersTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTransfers) userInfo:nil repeats:NO];
         }
     }];
+    [api performRequest:request];
 }
 
 -(NSArray *)allActiveTransfers

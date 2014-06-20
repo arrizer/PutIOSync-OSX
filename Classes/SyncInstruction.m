@@ -4,7 +4,14 @@
 
 static NSMutableArray *allSyncInstructions;
 
+@interface SyncInstruction()
+{
+    NSData *localDestinationBookmark;
+}
+@end
+
 @implementation SyncInstruction
+@synthesize localDestination = _localDestination;
 
 + (NSMutableArray*)allSyncInstructions
 {
@@ -51,17 +58,7 @@ static NSMutableArray *allSyncInstructions;
     self.recursive = [decoder decodeBoolForKey:@"recursive"];
     self.lastSynced = [decoder decodeObjectForKey:@"lastSynced"];
     self.knownItems = [decoder decodeObjectForKey:@"knownItems"];
-    NSError *error;
-    BOOL isStale = NO;
-    self.localDestination = [NSURL URLByResolvingBookmarkData:[decoder decodeObjectForKey:@"localDestinationBookmark"]
-                                                     options:NSURLBookmarkResolutionWithoutUI
-                                               relativeToURL:nil
-                                         bookmarkDataIsStale:&isStale
-                                                       error:&error];
-    if(isStale || error != nil){
-        self.localDestinationIsStale = YES;
-        _bookmarkResolveError = error;
-    }
+    localDestinationBookmark = [decoder decodeObjectForKey:@"localDestinationBookmark"];
     return self;
 }
 
@@ -76,10 +73,6 @@ static NSMutableArray *allSyncInstructions;
     [coder encodeBool:self.recursive forKey:@"recursive"];
     [coder encodeObject:self.lastSynced forKey:@"lastSynced"];
     [coder encodeObject:self.knownItems forKey:@"knownItems"];
-    NSData *localDestinationBookmark = [self.localDestination bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile
-                                                       includingResourceValuesForKeys:nil
-                                                                        relativeToURL:nil
-                                                                                error:nil];
     [coder encodeObject:localDestinationBookmark forKey:@"localDestinationBookmark"];
 }
 
@@ -93,6 +86,29 @@ static NSMutableArray *allSyncInstructions;
     else
         automatic = [super automaticallyNotifiesObserversForKey:theKey];
     return automatic;
+}
+
+-(void)setLocalDestination:(NSURL *)localDestination
+{
+    _localDestination = localDestination;
+    localDestinationBookmark = [self.localDestination bookmarkDataWithOptions:NSURLBookmarkCreationSuitableForBookmarkFile
+                                               includingResourceValuesForKeys:nil
+                                                                relativeToURL:nil
+                                                                        error:nil];
+}
+
+-(NSURL *)localDestination
+{
+    if(_localDestination == nil && localDestinationBookmark != nil){
+        NSError *error;
+        BOOL isStale = NO;
+        _localDestination =[NSURL URLByResolvingBookmarkData:localDestinationBookmark
+                                                     options:NSURLBookmarkResolutionWithoutUI
+                                               relativeToURL:nil
+                                         bookmarkDataIsStale:&isStale
+                                                       error:&error];
+    }
+    return _localDestination;
 }
 
 -(NSInteger)originFolderID

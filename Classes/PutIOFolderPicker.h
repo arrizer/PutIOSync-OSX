@@ -1,6 +1,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PutIOAPI.h"
+#import "PutIOAPIFile.h"
 
 @class PutIOFolderPicker;
 @protocol PutIOFolderPickerDelegate <NSObject>
@@ -11,9 +12,7 @@
 @interface PutIOFolderPicker : NSWindowController
 <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-    PutIOAPI *putio;
-    NSMutableArray *fileQueue;
-    NSTreeNode *folderTree;
+    PutIOAPIFile *folderTree;
     
     IBOutlet NSOutlineView *outlineView;
     IBOutlet NSButton *chooseButton;
@@ -22,6 +21,7 @@
 }
 
 @property (unsafe_unretained) id<PutIOFolderPickerDelegate>delegate;
+@property (assign, nonatomic) NSInteger pendingFetches;
 
 - (IBAction)chooseSelectedFolder:(id)sender;
 - (IBAction)cancel:(id)sender;

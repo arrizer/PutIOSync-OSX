@@ -1,6 +1,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PutIOAPI.h"
+#import "PutIOAPIFile.h"
 #import "SyncInstruction.h"
 
 #define PutIODownloadAddedNotification @"PutIODownloadAddedNotification"
@@ -21,18 +22,6 @@ typedef enum{
 
 @interface PutIODownload : NSObject
 <NSURLConnectionDataDelegate, NSCoding>
-{
-    NSString *localPath;
-    NSString *subdirectoryPath;
-    NSString *localFileTemporary;
-    NSURLConnection *connection;
-    NSTimeInterval currentSessionStartTime;
-    NSTimeInterval lastProgressUpdate;
-    NSUInteger receivedBytesSinceLastProgressUpdate;
-    NSUInteger receivedBytesInCurrentSession;
-    NSFileHandle *fileHandle;
-    NSUInteger numberOfRetries;
-}
 
 + (NSArray*)allDownloads;
 + (void)clearDownloadList;
@@ -41,7 +30,10 @@ typedef enum{
 + (void)saveDownloads;
 + (void)complyWithMaximumParallelDownloads;
 
-- (id)initWithPutIOFile:(PutIOAPIFile*)file localPath:(NSString*)path subdirectoryPath:(NSString*)subdirectoryPath originatingSyncInstruction:(SyncInstruction*)syncInstruction;
+- (id)initWithPutIOFile:(PutIOAPIFile*)file
+              localPath:(NSString*)path
+       subdirectoryPath:(NSString*)subdirectoryPath
+originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 @property (readonly,strong) PutIOAPIFile *putioFile;
 @property (readonly) float progress;

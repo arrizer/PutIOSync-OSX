@@ -14,12 +14,13 @@
 		392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221C4163CAB140003352E /* PutIOFolderPicker.m */; };
 		392460F1163EB36500954B64 /* SyncScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F0163EB36500954B64 /* SyncScheduler.m */; };
 		392460F5163EB38600954B64 /* SyncRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F4163EB38600954B64 /* SyncRunner.m */; };
+		392F8F7819513AAE001E8ECF /* NSDictionary+URLQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 392F8F7719513AAE001E8ECF /* NSDictionary+URLQueryString.m */; };
 		39585BAE177FC396004B74B3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 39585BB0177FC396004B74B3 /* Localizable.strings */; };
 		39585BB2177FC592004B74B3 /* AccountPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BB4177FC592004B74B3 /* AccountPreferences.xib */; };
 		39585BBA177FC5DE004B74B3 /* SyncPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BBC177FC5DE004B74B3 /* SyncPreferences.xib */; };
 		39585BBF177FC7F1004B74B3 /* SyncInstructionEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BC1177FC7F1004B74B3 /* SyncInstructionEditor.xib */; };
 		3965359F178231DD00BE21DE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; };
-		396535A0178232BE00BE21DE /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; };
+		396535A0178232BE00BE21DE /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
 		39910AB7164FFB3D00967014 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39910AB6164FFB3D00967014 /* Security.framework */; };
 		3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCC163AC97B0020AE61 /* SyncInstruction.m */; };
@@ -41,6 +42,13 @@
 		39C5B0AA16BD64A1004E8D65 /* TransferCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C5B0A916BD64A1004E8D65 /* TransferCellView.m */; };
 		39C5B0AD16BD682D004E8D65 /* PutIOAPITransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */; };
 		39C5B0B016BD7709004E8D65 /* PutIOTransfersMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C5B0AF16BD7709004E8D65 /* PutIOTransfersMonitor.m */; };
+		39D59CCB19511D670085B362 /* PutIOAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CCA19511D670085B362 /* PutIOAPIRequest.m */; };
+		39D59CCE1951248C0085B362 /* PutIOAPIAccountInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CCD1951248C0085B362 /* PutIOAPIAccountInfoRequest.m */; };
+		39D59CD11951276B0085B362 /* PutIOAPIFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CD01951276B0085B362 /* PutIOAPIFileRequest.m */; };
+		39D59CD41951295E0085B362 /* PutIOAPIFileDeletionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CD31951295E0085B362 /* PutIOAPIFileDeletionRequest.m */; };
+		39D59CD719512A2E0085B362 /* PutIOAPITransfersRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CD619512A2E0085B362 /* PutIOAPITransfersRequest.m */; };
+		39D59CDD19512EA00085B362 /* PutIOAPIKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CDB19512E2B0085B362 /* PutIOAPIKeychainManager.m */; };
+		39D59CE0195130140085B362 /* PutIOAPIOAuthTokenRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D59CDF195130140085B362 /* PutIOAPIOAuthTokenRequest.m */; };
 		39EFBFBB164EA60400B160E0 /* PersistenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39EFBFBA164EA60400B160E0 /* PersistenceManager.m */; };
 		39F8744616342D9000D9026F /* AccountSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F8744516342D9000D9026F /* AccountSetupController.m */; };
 		39F874661634386300D9026F /* GeneralPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F874611634386300D9026F /* GeneralPreferences.m */; };
@@ -57,14 +65,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		39910AC116503D4000967014 /* CopyFiles */ = {
+		39910AC116503D4000967014 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				396535A0178232BE00BE21DE /* Sparkle.framework in CopyFiles */,
+				396535A0178232BE00BE21DE /* Sparkle.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -84,6 +93,8 @@
 		392460F0163EB36500954B64 /* SyncScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncScheduler.m; sourceTree = "<group>"; };
 		392460F3163EB38600954B64 /* SyncRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncRunner.h; sourceTree = "<group>"; };
 		392460F4163EB38600954B64 /* SyncRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRunner.m; sourceTree = "<group>"; };
+		392F8F7619513AAE001E8ECF /* NSDictionary+URLQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+URLQueryString.h"; path = "Classes/NSDictionary+URLQueryString.h"; sourceTree = "<group>"; };
+		392F8F7719513AAE001E8ECF /* NSDictionary+URLQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+URLQueryString.m"; path = "Classes/NSDictionary+URLQueryString.m"; sourceTree = "<group>"; };
 		39585BAB177FBF88004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
 		39585BAF177FC396004B74B3 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		39585BB1177FC39A004B74B3 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -93,6 +104,8 @@
 		39585BBE177FC69D004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
 		39585BC0177FC7F1004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		3965359E178231DD00BE21DE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		398350D3194E736100C4CFC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		398350D4194E736100C4CFC5 /* PutIOKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutIOKitTests.swift; sourceTree = "<group>"; };
 		3986C5BB163857C400F19764 /* SyncPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncPreferences.h; sourceTree = "<group>"; };
 		3986C5BC163857C400F19764 /* SyncPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncPreferences.m; sourceTree = "<group>"; };
 		39910AB6164FFB3D00967014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -132,6 +145,20 @@
 		39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPITransfer.m; path = Classes/PutIOAPITransfer.m; sourceTree = "<group>"; };
 		39C5B0AE16BD7709004E8D65 /* PutIOTransfersMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOTransfersMonitor.h; sourceTree = "<group>"; };
 		39C5B0AF16BD7709004E8D65 /* PutIOTransfersMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIOTransfersMonitor.m; sourceTree = "<group>"; };
+		39D59CC919511D670085B362 /* PutIOAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIRequest.h; path = Classes/PutIOAPIRequest.h; sourceTree = "<group>"; };
+		39D59CCA19511D670085B362 /* PutIOAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIRequest.m; path = Classes/PutIOAPIRequest.m; sourceTree = "<group>"; };
+		39D59CCC1951248C0085B362 /* PutIOAPIAccountInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIAccountInfoRequest.h; path = Classes/PutIOAPIAccountInfoRequest.h; sourceTree = "<group>"; };
+		39D59CCD1951248C0085B362 /* PutIOAPIAccountInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIAccountInfoRequest.m; path = Classes/PutIOAPIAccountInfoRequest.m; sourceTree = "<group>"; };
+		39D59CCF1951276B0085B362 /* PutIOAPIFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIFileRequest.h; path = Classes/PutIOAPIFileRequest.h; sourceTree = "<group>"; };
+		39D59CD01951276B0085B362 /* PutIOAPIFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFileRequest.m; path = Classes/PutIOAPIFileRequest.m; sourceTree = "<group>"; };
+		39D59CD21951295E0085B362 /* PutIOAPIFileDeletionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIFileDeletionRequest.h; path = Classes/PutIOAPIFileDeletionRequest.h; sourceTree = "<group>"; };
+		39D59CD31951295E0085B362 /* PutIOAPIFileDeletionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFileDeletionRequest.m; path = Classes/PutIOAPIFileDeletionRequest.m; sourceTree = "<group>"; };
+		39D59CD519512A2E0085B362 /* PutIOAPITransfersRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPITransfersRequest.h; path = Classes/PutIOAPITransfersRequest.h; sourceTree = "<group>"; };
+		39D59CD619512A2E0085B362 /* PutIOAPITransfersRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPITransfersRequest.m; path = Classes/PutIOAPITransfersRequest.m; sourceTree = "<group>"; };
+		39D59CDA19512E2B0085B362 /* PutIOAPIKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIKeychainManager.h; path = Classes/PutIOAPIKeychainManager.h; sourceTree = "<group>"; };
+		39D59CDB19512E2B0085B362 /* PutIOAPIKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIKeychainManager.m; path = Classes/PutIOAPIKeychainManager.m; sourceTree = "<group>"; };
+		39D59CDE195130140085B362 /* PutIOAPIOAuthTokenRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIOAuthTokenRequest.h; path = Classes/PutIOAPIOAuthTokenRequest.h; sourceTree = "<group>"; };
+		39D59CDF195130140085B362 /* PutIOAPIOAuthTokenRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIOAuthTokenRequest.m; path = Classes/PutIOAPIOAuthTokenRequest.m; sourceTree = "<group>"; };
 		39EFBFB9164EA60400B160E0 /* PersistenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistenceManager.h; path = Classes/PersistenceManager.h; sourceTree = "<group>"; };
 		39EFBFBA164EA60400B160E0 /* PersistenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistenceManager.m; path = Classes/PersistenceManager.m; sourceTree = "<group>"; };
 		39F8744416342D9000D9026F /* AccountSetupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSetupController.h; sourceTree = "<group>"; };
@@ -178,6 +205,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		398350D1194E736100C4CFC5 /* PutIOKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				398350D4194E736100C4CFC5 /* PutIOKitTests.swift */,
+				398350D2194E736100C4CFC5 /* Supporting Files */,
+			);
+			path = PutIOKitTests;
+			sourceTree = "<group>";
+		};
+		398350D2194E736100C4CFC5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				398350D3194E736100C4CFC5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		3993ABC9163AC9380020AE61 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,11 +255,28 @@
 			name = "Menu Item";
 			sourceTree = "<group>";
 		};
-		39F8743E1634279400D9026F /* PutIO API */ = {
+		39D59CD819512A340085B362 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				39A66FBB178213650073DB81 /* PutIOAPI.h */,
-				39A66FBC178213650073DB81 /* PutIOAPI.m */,
+				39D59CC919511D670085B362 /* PutIOAPIRequest.h */,
+				39D59CCA19511D670085B362 /* PutIOAPIRequest.m */,
+				39D59CCC1951248C0085B362 /* PutIOAPIAccountInfoRequest.h */,
+				39D59CCD1951248C0085B362 /* PutIOAPIAccountInfoRequest.m */,
+				39D59CCF1951276B0085B362 /* PutIOAPIFileRequest.h */,
+				39D59CD01951276B0085B362 /* PutIOAPIFileRequest.m */,
+				39D59CD21951295E0085B362 /* PutIOAPIFileDeletionRequest.h */,
+				39D59CD31951295E0085B362 /* PutIOAPIFileDeletionRequest.m */,
+				39D59CD519512A2E0085B362 /* PutIOAPITransfersRequest.h */,
+				39D59CD619512A2E0085B362 /* PutIOAPITransfersRequest.m */,
+				39D59CDE195130140085B362 /* PutIOAPIOAuthTokenRequest.h */,
+				39D59CDF195130140085B362 /* PutIOAPIOAuthTokenRequest.m */,
+			);
+			name = Requests;
+			sourceTree = "<group>";
+		};
+		39D59CD919512A3F0085B362 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
 				39A66FC1178213650073DB81 /* PutIOAPIObject.h */,
 				39A66FC2178213650073DB81 /* PutIOAPIObject.m */,
 				39A66FBD178213650073DB81 /* PutIOAPIAccountInfo.h */,
@@ -224,6 +285,21 @@
 				39A66FC0178213650073DB81 /* PutIOAPIFile.m */,
 				39C5B0AB16BD682D004E8D65 /* PutIOAPITransfer.h */,
 				39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		39F8743E1634279400D9026F /* PutIO API */ = {
+			isa = PBXGroup;
+			children = (
+				39A66FBB178213650073DB81 /* PutIOAPI.h */,
+				39A66FBC178213650073DB81 /* PutIOAPI.m */,
+				39D59CD919512A3F0085B362 /* Objects */,
+				39D59CD819512A340085B362 /* Requests */,
+				39D59CDA19512E2B0085B362 /* PutIOAPIKeychainManager.h */,
+				39D59CDB19512E2B0085B362 /* PutIOAPIKeychainManager.m */,
+				392F8F7619513AAE001E8ECF /* NSDictionary+URLQueryString.h */,
+				392F8F7719513AAE001E8ECF /* NSDictionary+URLQueryString.m */,
 			);
 			name = "PutIO API";
 			sourceTree = "<group>";
@@ -260,6 +336,7 @@
 				39F8743E1634279400D9026F /* PutIO API */,
 				DD4F7C2613C311DF00825C6E /* Controller */,
 				DD4F7C3913C317EC00825C6E /* Views */,
+				398350D1194E736100C4CFC5 /* PutIOKitTests */,
 				DD4F7C0713C30F9F00825C6E /* Frameworks */,
 				DD4F7C0F13C30F9F00825C6E /* Supporting Files */,
 				DD4F7C0513C30F9F00825C6E /* Products */,
@@ -359,7 +436,7 @@
 				DD4F7C0013C30F9F00825C6E /* Sources */,
 				DD4F7C0113C30F9F00825C6E /* Frameworks */,
 				DD4F7C0213C30F9F00825C6E /* Resources */,
-				39910AC116503D4000967014 /* CopyFiles */,
+				39910AC116503D4000967014 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -376,7 +453,7 @@
 		DD4F7BFB13C30F9F00825C6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					DD4F7C0313C30F9F00825C6E = {
 						SystemCapabilities = {
@@ -432,12 +509,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				392F8F7819513AAE001E8ECF /* NSDictionary+URLQueryString.m in Sources */,
+				39D59CD41951295E0085B362 /* PutIOAPIFileDeletionRequest.m in Sources */,
 				DD4F7C1513C30F9F00825C6E /* main.m in Sources */,
 				DD4F7C1C13C30F9F00825C6E /* ApplicationDelegate.m in Sources */,
 				DD4F7C3813C317A500825C6E /* MenubarController.m in Sources */,
 				DD4F7C3C13C3180800825C6E /* StatusItemView.m in Sources */,
+				39D59CE0195130140085B362 /* PutIOAPIOAuthTokenRequest.m in Sources */,
+				39D59CCE1951248C0085B362 /* PutIOAPIAccountInfoRequest.m in Sources */,
 				DD4F7C3F13C318D600825C6E /* PanelController.m in Sources */,
 				DD4F7C4413C31BD200825C6E /* Panel.m in Sources */,
+				39D59CD11951276B0085B362 /* PutIOAPIFileRequest.m in Sources */,
 				DD4F7C4713C3208500825C6E /* BackgroundView.m in Sources */,
 				39A66FC5178213650073DB81 /* PutIOAPIFile.m in Sources */,
 				39F8744616342D9000D9026F /* AccountSetupController.m in Sources */,
@@ -445,11 +527,14 @@
 				39F874661634386300D9026F /* GeneralPreferences.m in Sources */,
 				39A66FC3178213650073DB81 /* PutIOAPI.m in Sources */,
 				39F874681634386300D9026F /* AccountPreferences.m in Sources */,
+				39D59CCB19511D670085B362 /* PutIOAPIRequest.m in Sources */,
 				39C51FC816343FBA006BD1C8 /* MainPanel.m in Sources */,
 				39A66FC6178213650073DB81 /* PutIOAPIObject.m in Sources */,
 				3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */,
 				3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */,
 				3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */,
+				39D59CDD19512EA00085B362 /* PutIOAPIKeychainManager.m in Sources */,
+				39D59CD719512A2E0085B362 /* PutIOAPITransfersRequest.m in Sources */,
 				392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */,
 				39A66FC4178213650073DB81 /* PutIOAPIAccountInfo.m in Sources */,
 				392460F1163EB36500954B64 /* SyncScheduler.m in Sources */,
@@ -556,15 +641,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -592,16 +678,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -628,10 +715,12 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/Frameworks",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PutIOSync-drpidpwwnmgbjtetzpknkhlrbbuz/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";
 				INFOPLIST_FILE = "Classes/PutIOSync-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;
@@ -649,10 +738,12 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/Frameworks",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PutIOSync-drpidpwwnmgbjtetzpknkhlrbbuz/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";
 				INFOPLIST_FILE = "Classes/PutIOSync-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;

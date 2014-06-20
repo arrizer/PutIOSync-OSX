@@ -69,7 +69,7 @@ static SyncScheduler* sharedInstance;
 
 -(void)startSyncingAll
 {
-    if([PutIOAPI oAuthAccessToken] == nil)
+    if(![[PutIOAPI api] isAuthenticated])
         return;
     if([self.runningSyncs count] > 0)
         return;

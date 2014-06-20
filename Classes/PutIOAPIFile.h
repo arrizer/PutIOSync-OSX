@@ -18,5 +18,6 @@
 @property (assign) BOOL mp4VersionAvailable;
 @property (readonly) BOOL isFolder;
 @property (readonly) BOOL isRootFolder;
+@property (strong) NSArray *subfolders;
 
 @end

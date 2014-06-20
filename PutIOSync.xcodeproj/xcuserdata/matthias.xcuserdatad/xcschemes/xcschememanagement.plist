@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>PutIOKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>PutIOSync.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>39010C3116BE053E00846535</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>398350C2194E736000C4CFC5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>398350CC194E736100C4CFC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

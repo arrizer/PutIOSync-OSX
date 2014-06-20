@@ -35,7 +35,7 @@
 -(void)viewWillAppear
 {
     [tableView reloadData];
-    [addButton setEnabled:([PutIOAPI oAuthAccessToken] != nil)];
+    [addButton setEnabled:[[PutIOAPI api] isAuthenticated]];
 }
 
 #pragma mark - Actions
@@ -81,7 +81,7 @@
 
 - (void)presentSyncInstrucionEditorFor:(NSInteger)row
 {
-    if([PutIOAPI oAuthAccessToken] == nil)
+    if(![[PutIOAPI api] isAuthenticated])
         return;
     if(!syncInstructionEditor){
         syncInstructionEditor = [[SyncInstructionEditor alloc] init];

@@ -68,9 +68,10 @@ NSString* unitStringFromSeconds(NSTimeInterval interval)
     NSString *result = @"";
     for(int i = 3; i >= 0; i--){
         int value = (int)floor(interval / multipliers[i]);
-        if(i < 3 && i > 0)
-            value %= (int)multipliers[i];
         if(value > 0){
+            if(i < 3 && i > 0){
+                value %= (int)multipliers[i];
+            }
             result = [result stringByAppendingFormat:@"%i %@ ", value, (value == 1 ? unitsSingular[i] : unitsPlural[i])];
             if(i == 1)
                 break;

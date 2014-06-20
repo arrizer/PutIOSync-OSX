@@ -12,7 +12,9 @@
 			<key>change date</key>
 			<date>2001-01-01T00:00:00Z</date>
 			<key>changed values</key>
-			<array/>
+			<array>
+				<string>&lt;reference&gt;</string>
+			</array>
 			<key>class</key>
 			<string>BLBundleObject</string>
 			<key>errors</key>
@@ -118,17 +120,17 @@
 					<dict>
 						<key>backup</key>
 						<dict>
-							<key>2</key>
+							<key>3</key>
 							<dict>
 								<key>class</key>
 								<string>BLWrapperHandle</string>
 								<key>name</key>
-								<string>Classes/SyncPreferences/2/SyncPreferences.xib</string>
+								<string>Classes/SyncPreferences/3/SyncPreferences.xib</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>change date</key>
-					<date>2013-07-01T20:20:31Z</date>
+					<date>2013-07-21T14:11:24Z</date>
 					<key>changed values</key>
 					<array/>
 					<key>class</key>
@@ -138,7 +140,7 @@
 					<key>flags</key>
 					<integer>2</integer>
 					<key>hash</key>
-					<string>3a5b4ace5b5f7650aedfa1281f0691cc
+					<string>dc282b317a6aac5916db2ebdc87da6d8
 </string>
 					<key>name</key>
 					<string>SyncPreferences.xib</string>
@@ -321,9 +323,9 @@
 					<key>versions</key>
 					<dict>
 						<key>de</key>
-						<string>2</string>
+						<string>3</string>
 						<key>en</key>
-						<string>2</string>
+						<string>3</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1692,27 +1694,36 @@
 					<dict>
 						<key>backup</key>
 						<dict>
-							<key>1</key>
+							<key>2</key>
 							<dict>
 								<key>class</key>
 								<string>BLWrapperHandle</string>
 								<key>name</key>
-								<string>Classes/MainPanel/1/MainPanel.xib</string>
+								<string>Classes/MainPanel/2/MainPanel.xib</string>
+							</dict>
+							<key>3</key>
+							<dict>
+								<key>class</key>
+								<string>BLWrapperHandle</string>
+								<key>name</key>
+								<string>Classes/MainPanel/3/MainPanel.xib</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>change date</key>
-					<date>2013-07-01T19:55:39Z</date>
+					<date>2014-06-18T00:10:59Z</date>
 					<key>changed values</key>
-					<array/>
+					<array>
+						<string>&lt;reference&gt;</string>
+					</array>
 					<key>class</key>
 					<string>BLNibFileObject</string>
 					<key>errors</key>
 					<array/>
 					<key>flags</key>
-					<integer>2</integer>
+					<integer>3</integer>
 					<key>hash</key>
-					<string>5cd1c3dccd3d49de9e8f084efe38a15f
+					<string>da84f090931ff3686c1f36b2029a55ed
 </string>
 					<key>name</key>
 					<string>MainPanel.xib</string>
@@ -1722,7 +1733,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1747,7 +1760,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1770,7 +1785,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1793,7 +1810,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1806,6 +1825,8 @@
 							<string>329.title</string>
 							<key>localizations</key>
 							<dict>
+								<key>de</key>
+								<string>Dateiname</string>
 								<key>en</key>
 								<string>Filename</string>
 							</dict>
@@ -1816,7 +1837,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1839,7 +1862,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1862,7 +1887,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1887,7 +1914,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1912,7 +1941,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1937,7 +1968,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1962,7 +1995,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -1987,7 +2022,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2012,7 +2049,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2035,7 +2074,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2060,7 +2101,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2085,7 +2128,9 @@
 							<key>change date</key>
 							<date>2001-01-01T00:00:00Z</date>
 							<key>changed values</key>
-							<array/>
+							<array>
+								<string>&lt;reference&gt;</string>
+							</array>
 							<key>class</key>
 							<string>BLStringKeyObject</string>
 							<key>comment</key>
@@ -2112,9 +2157,9 @@
 					<key>versions</key>
 					<dict>
 						<key>de</key>
-						<string>1</string>
+						<string>2</string>
 						<key>en</key>
-						<string>1</string>
+						<string>3</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5087,17 +5132,17 @@
 					<dict>
 						<key>backup</key>
 						<dict>
-							<key>1</key>
+							<key>4</key>
 							<dict>
 								<key>class</key>
 								<string>BLWrapperHandle</string>
 								<key>name</key>
-								<string>Classes/PutIOFolderPicker/1/PutIOFolderPicker.xib</string>
+								<string>Classes/PutIOFolderPicker/4/PutIOFolderPicker.xib</string>
 							</dict>
 						</dict>
 					</dict>
 					<key>change date</key>
-					<date>2013-07-01T19:34:13Z</date>
+					<date>2014-06-18T00:11:46Z</date>
 					<key>changed values</key>
 					<array/>
 					<key>class</key>
@@ -5107,7 +5152,7 @@
 					<key>flags</key>
 					<integer>2</integer>
 					<key>hash</key>
-					<string>9dcced92682f31a364b8959076f0ffda
+					<string>b8fdb5b5275d3cd65b60103d515f05d8
 </string>
 					<key>name</key>
 					<string>PutIOFolderPicker.xib</string>
@@ -5242,9 +5287,9 @@
 					<key>versions</key>
 					<dict>
 						<key>de</key>
-						<string>1</string>
+						<string>4</string>
 						<key>en</key>
-						<string>1</string>
+						<string>4</string>
 					</dict>
 				</dict>
 				<dict>

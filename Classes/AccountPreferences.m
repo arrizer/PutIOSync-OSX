@@ -3,6 +3,8 @@
 #import "AccountPreferences.h"
 #import "SyncScheduler.h"
 #import "PutIODownload.h"
+#import "PutIOAPIKeychainManager.h"
+#import "PutIOAPIAccountInfoRequest.h"
 
 @implementation AccountPreferences
 
@@ -69,7 +71,7 @@
     [[SyncInstruction allSyncInstructions] removeAllObjects];
     [SyncInstruction saveAllSyncInstructions];
     
-    [PutIOAPI setOAuthAccessToken:token];
+    [PutIOAPIKeychainManager setKeychainItemPassword:token];
     
     // Reset username/email, we need to retrieve those from put.io
     NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
@@ -88,16 +90,15 @@
 
 - (void)fetchAccountDetails
 {
-    BOOL accountSetUp = ([PutIOAPI oAuthAccessToken] != nil);
+    BOOL accountSetUp = [[PutIOAPI api] isAuthenticated];
     if(accountSetUp){
         [spaceLabel setHidden:YES];
         [activitySpinner startAnimation:self];
         [activityLabel setHidden:NO];
         [activitySpinner setHidden:NO];
-        [self.putio accountInfoWithCompletion:^(id result, NSError *error, BOOL cancelled) {
-            if(error == nil && !cancelled){
-                PutIOAPIAccountInfo *accountInfo = (PutIOAPIAccountInfo*)result;
-                
+        __block PutIOAPIAccountInfoRequest *request = [PutIOAPIAccountInfoRequest requestWithCompletion:^{
+            if(request.error == nil && !request.isCancelled){
+                PutIOAPIAccountInfo *accountInfo = request.accountInfo;
                 NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
                 [d setObject:[accountInfo eMailAddress] forKey:@"account_email"];
                 [d setObject:[accountInfo username] forKey:@"account_username"];
@@ -109,13 +110,14 @@
             [activityLabel setHidden:YES];
             [activitySpinner setHidden:YES];
         }];
+        [self.putio performRequest:request];
     }
 }
 
 - (void)updateAccountDetailLabels
 {
     NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-    BOOL accountSetUp = ([PutIOAPI oAuthAccessToken] != nil);
+    BOOL accountSetUp = [[PutIOAPI api] isAuthenticated];
 
     
     if(accountSetUp){

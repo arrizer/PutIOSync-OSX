@@ -2,10 +2,24 @@
 #import "PutIODownload.h"
 #import "PersistenceManager.h"
 #import "ApplicationDelegate.h"
+#import "PutIOAPIFileDeletionRequest.h"
 
 #define PUTIO_API_DOWNLOAD_ENDPOINT @"https://api.put.io/v2/files/%ld/download?oauth_token=%@"
 
 @interface PutIODownload()
+{
+    NSString *localPath;
+    NSString *subdirectoryPath;
+    NSString *localFileTemporary;
+    NSURLConnection *connection;
+    NSTimeInterval currentSessionStartTime;
+    NSTimeInterval lastProgressUpdate;
+    NSUInteger receivedBytesSinceLastProgressUpdate;
+    NSUInteger receivedBytesInCurrentSession;
+    NSFileHandle *fileHandle;
+    NSUInteger numberOfRetries;
+}
+
 @property (strong) PutIOAPIFile *putioFile;
 @property (assign) float progress;
 @property (assign) BOOL progressIsKnown;
@@ -86,11 +100,6 @@ static NSInteger numberOfRunningDownloads = 0;
 
 + (NSInteger)numberOfRunningDownloads
 {
-//    NSInteger count = 0;
-//    for(PutIODownload *download in allDownloads)
-//        if(download.status == PutIODownloadStatusDownloading)
-//            count++;
-//    return count;
     return numberOfRunningDownloads;
 }
 
@@ -200,7 +209,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     if(connection != nil || self.status == PutIODownloadStatusFinished || self.status == PutIODownloadStatusCancelled)
         return;
-    if([PutIOAPI oAuthAccessToken] == nil)
+    if(![[PutIOAPI api] isAuthenticated])
         return;
     
     [self changeStatus:PutIODownloadStatusPending];
@@ -221,10 +230,10 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     receivedBytesInCurrentSession = 0;
     self.localFile = nil;
     
-    NSString *requestURLString = [NSString stringWithFormat:PUTIO_API_DOWNLOAD_ENDPOINT, [self.putioFile fileID], [PutIOAPI oAuthAccessToken]];
+    NSString *requestURLString = [NSString stringWithFormat:PUTIO_API_DOWNLOAD_ENDPOINT, [self.putioFile fileID], [[PutIOAPI api]oAuthAccessToken]];
     NSURL *requestURL = [NSURL URLWithString:requestURLString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL
-                                                           cachePolicy:NSURLCacheStorageNotAllowed
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:60.0f];
     
     if([self canResume]){
@@ -239,7 +248,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         localFileTemporary = nil;
         NSLog(@"%@ starting download from beginning", self);
     }
-    //NSLog(@"Request headers: %@", [request allHTTPHeaderFields]);
+    
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     [self changeStatus:PutIODownloadStatusDownloading];
 }
@@ -406,7 +415,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     receivedBytesSinceLastProgressUpdate += [data length];
     if(([NSDate timeIntervalSinceReferenceDate] - lastProgressUpdate) > 0.2f){
         [self updateProgress];
-        receivedBytesSinceLastProgressUpdate = 0;
+        
     }
 }
 
@@ -454,8 +463,11 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSLog(@"%@: Download finished", self);
     if(self.originatingSyncInstruction != nil){
         [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
-        if(self.originatingSyncInstruction.deleteRemoteFilesAfterSync)
-            [[PutIOAPI api] deleteFileWithID:self.putioFile.fileID completion:nil];
+        if(self.originatingSyncInstruction.deleteRemoteFilesAfterSync){
+            PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
+                                                                                                 completion:nil];
+            [[PutIOAPI api] performRequest:request];
+        }
     }
 }
 
@@ -480,6 +492,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.progressIsKnown = YES;
     }
     lastProgressUpdate = now;
+    receivedBytesSinceLastProgressUpdate = 0;
 }
 
 #pragma mark - Error handling

@@ -1,22 +1,33 @@
 
 #import "PutIOFolderPicker.h"
+#import "PutIOAPIFileRequest.h"
 
 @interface PutIOFolderPicker ()
 
 @end
 
 @implementation PutIOFolderPicker
+@synthesize pendingFetches = _pendingFetches;
 
 - (id)init
 {
     self = [super initWithWindowNibName:@"PutIOFolderPicker"];
-    putio = [PutIOAPI api];
     return self;
 }
 
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+}
+
+-(void)setPendingFetches:(NSInteger)pendingFetches
+{
+    _pendingFetches = pendingFetches;
+    if(pendingFetches > 0){
+        [activitySpinner startAnimation:self];
+    }else{
+        [activitySpinner stopAnimation:self];
+    }
 }
 
 #pragma mark - Actions
@@ -41,34 +52,51 @@
 
 #pragma mark - Outline View Delegate
 
+-(PutIOAPIFile*)folderForOutlineItem:(id)item
+{
+    if(item == nil){
+        return folderTree;
+    }else{
+        return (PutIOAPIFile*)item;
+    }
+}
+
 -(BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-    if(item == nil && folderTree == nil)
+    if(folderTree == nil)
         return NO;
-    if(item == nil)
-        item = folderTree;
-    return ([[(NSTreeNode*)item mutableChildNodes] count] > 0);
+    PutIOAPIFile *folder = [self folderForOutlineItem:item];
+    if(folder.subfolders == nil){
+        return YES;
+    }else{
+        return folder.subfolders.count > 0;
+    }
 }
 
 -(NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-    if(item == nil && folderTree == nil)
+    if(folderTree == nil)
+        return NO;
+    PutIOAPIFile *folder = [self folderForOutlineItem:item];
+    if(folder.subfolders == nil){
+        if(folder != folderTree){
+            [self fetchSubfoldersOfNode:item];
+        }
         return 0;
-    if(item == nil)
-        item = folderTree;
-    return [[(NSTreeNode*)item mutableChildNodes] count];
+    }else{
+        return folder.subfolders.count;
+    }
 }
 
 -(id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-    if(item == nil)
-        item = folderTree;
-    return [[(NSTreeNode*)item mutableChildNodes] objectAtIndex:index];
+    PutIOAPIFile *folder = [self folderForOutlineItem:item];
+    return folder.subfolders[index];
 }
 
 -(id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-    return [(NSTreeNode*)item representedObject];
+    return [self folderForOutlineItem:item];
 }
 
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification
@@ -80,55 +108,45 @@
 
 - (void)updateFolders
 {
-    [putio cancel];
     folderTree = nil;
     [outlineView reloadData];
     [chooseButton setEnabled:NO];
-    fileQueue = [NSMutableArray array];
-    [fileQueue addObject:[NSNull null]];
-    [activitySpinner startAnimation:self];
-    [self fetchNextQueuedItem];
+    [self fetchSubfoldersOfNode:nil];
 }
 
-- (void)fetchNextQueuedItem
+- (void)fetchSubfoldersOfNode:(PutIOAPIFile*)parent
 {
-    PutIOAPICompletionBlock completion = ^(id result, NSError *error, BOOL cancelled){
-        if(error == nil && !cancelled){
-            NSArray *files = result[@"files"];
-            id currentNode = [fileQueue objectAtIndex:0];
-            if(currentNode == [NSNull null]){
-                NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
-                folderTree = node;
-                currentNode = node;
+    NSInteger folderID = 0;
+    if(parent != nil){
+        folderID = parent.fileID;
+    }
+    __block PutIOAPIFileRequest *request = [PutIOAPIFileRequest requestFilesInFolderWithID:folderID completion:^{
+        self.pendingFetches--;
+        if(request.error == nil && !request.isCancelled){
+            PutIOAPIFile *node = parent;
+            if(node == nil){
+                folderTree = request.parentFolder;
+                node = folderTree;
             }
-            for(PutIOAPIFile *file in files){
-                if([file isFolder] && [currentNode isKindOfClass:[NSTreeNode class]]){
-                    NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
-                    [[(NSTreeNode*)currentNode mutableChildNodes] addObject:node];
-                    [fileQueue addObject:node];
+            NSMutableArray *subfolders = [NSMutableArray array];
+            for(PutIOAPIFile *file in request.files){
+                if([file isFolder]){
+                    [subfolders addObject:file];
                 }
             }
-            [fileQueue removeObjectAtIndex:0];
-            [self fetchNextQueuedItem];
-        }else if(error != nil){
-            [fileQueue removeAllObjects];
+            node.subfolders = subfolders;
+            [outlineView reloadData];
+        }else if(request.error != nil){
             [activitySpinner stopAnimation:self];
+            [outlineView reloadData];
         }
-    };
+    }];
     
-    if([fileQueue count] > 0){
-        id nextNode = [fileQueue objectAtIndex:0];
-        if(nextNode == [NSNull null]){
-            [putio filesInRootFolderWithCompletion:completion];
-        }else{
-            PutIOAPIFile *folder = (PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject];
-            [putio filesInFolderWithID:[folder fileID] completion:completion];
-        }
-    }else{
-        [activitySpinner stopAnimation:self];
-        NSLog(@"Done updating all put.io folders");
-        [outlineView reloadData];
-    }
+    PutIOAPI *api = [PutIOAPI api];
+    [api performRequest:request];
+    self.pendingFetches++;
+
+
 }
 
 @end

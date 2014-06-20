@@ -1,6 +1,8 @@
 
 #import "SyncRunner.h"
 #import "PutIODownload.h"
+#import "PutIOAPIFileRequest.h"
+#import "PutIOAPIFileDeletionRequest.h"
 
 @interface SyncRunner()
 @property (strong) NSString *localizedOperationName;
@@ -41,7 +43,7 @@
 
 - (void)cancel
 {
-    [putio cancel];
+    [putio cancelAllRequests];
     if([_delegate respondsToSelector:@selector(syncRunnerDidCancel:)])
         [_delegate syncRunnerDidCancel:self];
 }
@@ -51,7 +53,7 @@
 -(void)deepScanOrigin
 {
 //    [self beginOperation:SyncRunnerOperationOriginScan];
-    [putio cancel];
+    [putio cancelAllRequests];
     originTree = nil;
     nodeQueue = [NSMutableArray array];
     [nodeQueue addObject:[NSNull null]];
@@ -60,51 +62,51 @@
 
 -(void)scanNextOriginItem
 {
-    PutIOAPICompletionBlock completion = ^(id result, NSError *error, BOOL cancelled){
-        if(error == nil && !cancelled){
-            NSTreeNode *currentNode = nil;
-            if([nodeQueue objectAtIndex:0] == [NSNull null]){
-                originTree = [[NSTreeNode alloc] initWithRepresentedObject:result[@"parent"]];
-                currentNode = originTree;
-            }else{
-                currentNode = [nodeQueue objectAtIndex:0];
-            }
-            for(PutIOAPIFile *file in result[@"files"]){
-                NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
-                [[currentNode mutableChildNodes] addObject:node];
-                if([file isFolder]){
-                    if(syncInstruction.recursive)
-                        [nodeQueue addObject:node];
-                }else{
-                    [self evaulateFileAtNode:node];
-                }
-            }
-            [nodeQueue removeObjectAtIndex:0];
-            
-            PutIOAPIFile *folder = result[@"parent"];
-            if(syncInstruction.deleteRemoteEmptyFolders && folder.fileID != syncInstruction.originFolderID && [result[@"files"] count] == 0){
-                NSLog(@"Deleting empty folder");
-                [putio deleteFileWithID:folder.fileID completion:^(id result, NSError *error, BOOL cancelled) {
-                    [self scanNextOriginItem];
-                }];
-            }else{
-                [self scanNextOriginItem];
-            }
-        }else{
-            [self failWithError:error];
-        }
-    };
-    
     if([nodeQueue count] > 0){
         id nextNode = [nodeQueue objectAtIndex:0];
+        NSInteger folderID;
         if(nextNode == [NSNull null]){
-            NSLog(@"%@ scanning put.io folder: %@", [self description], syncInstruction.originFolderName);
-            [putio filesInFolderWithID:syncInstruction.originFolderID completion:completion];
+            folderID = syncInstruction.originFolderID;
         }else{
-            PutIOAPIFile *folder = (PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject];
-            NSLog(@"%@ scanning put.io folder: %@", [self description], [folder name]);
-            [putio filesInFolderWithID:[folder fileID] completion:completion];
+            folderID = ((PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject]).fileID;
         }
+        
+        __block PutIOAPIFileRequest *request = [PutIOAPIFileRequest requestFilesInFolderWithID:folderID completion:^{
+            if(request.error == nil && !request.isCancelled){
+                NSTreeNode *currentNode = nil;
+                if([nodeQueue objectAtIndex:0] == [NSNull null]){
+                    originTree = [[NSTreeNode alloc] initWithRepresentedObject:request.parentFolder];
+                    currentNode = originTree;
+                }else{
+                    currentNode = [nodeQueue objectAtIndex:0];
+                }
+                for(PutIOAPIFile *file in request.files){
+                    NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
+                    [[currentNode mutableChildNodes] addObject:node];
+                    if([file isFolder]){
+                        if(syncInstruction.recursive)
+                            [nodeQueue addObject:node];
+                    }else{
+                        [self evaulateFileAtNode:node];
+                    }
+                }
+                [nodeQueue removeObjectAtIndex:0];
+                
+                PutIOAPIFile *folder = request.parentFolder;
+                if(syncInstruction.deleteRemoteEmptyFolders && folder.fileID != syncInstruction.originFolderID && [request.files count] == 0){
+                    NSLog(@"Deleting empty folder");
+                    PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:0 completion:^{
+                            [self scanNextOriginItem];
+                    }];
+                    [putio performRequest:deleteRequest];
+                }else{
+                    [self scanNextOriginItem];
+                }
+            }else{
+                [self failWithError:request.error];
+            }
+        }];
+        [putio performRequest:request];
     }else{
         originTree = nil;
         nodeQueue = nil;
@@ -125,12 +127,15 @@
     if(![PutIODownload downloadExistsForFile:file]){
         //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
         NSString *localPath = [syncInstruction.localDestination relativePath];
-        PutIODownload *download = [[PutIODownload alloc] initWithPutIOFile:file
-                                                                 localPath:localPath
-                                                          subdirectoryPath:relativePath 
-                                                originatingSyncInstruction:syncInstruction];
-        [download startDownload];
-        foundFiles++;
+        if(localPath != nil){
+            PutIODownload *download = [[PutIODownload alloc] initWithPutIOFile:file
+                                                                     localPath:localPath
+                                                              subdirectoryPath:relativePath 
+                                                    originatingSyncInstruction:syncInstruction];
+            
+            [download startDownload];
+            foundFiles++;
+        }
     }
     //[syncInstruction addKnownItemWithID:[file fileID]];
 }
