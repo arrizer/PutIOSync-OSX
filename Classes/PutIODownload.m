@@ -47,7 +47,7 @@ static NSInteger numberOfRunningDownloads = 0;
 {
     if(!allDownloads){
         // Load the existing downloads from disk
-        allDownloads = [PersistenceManager retrievePersistentObjectForKey:@"downloads"];
+        //allDownloads = [PersistenceManager retrievePersistentObjectForKey:@"downloads"];
         if(allDownloads == nil)
             allDownloads = [NSMutableArray array];
         else{
@@ -95,7 +95,7 @@ static NSInteger numberOfRunningDownloads = 0;
 
 + (void)saveDownloads
 {
-    [PersistenceManager storePersistentObject:allDownloads forKey:@"downloads"];
+    //[PersistenceManager storePersistentObject:allDownloads forKey:@"downloads"];
 }
 
 + (NSInteger)numberOfRunningDownloads
@@ -168,9 +168,9 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.estimatedRemainingTime = [decoder decodeIntegerForKey:@"estimatedRemainingTime"];
         self.estimatedRemainingTimeIsKnown = [decoder decodeBoolForKey:@"estimatedRemainingTimeIsKnown"];
         NSInteger uniqueID = [decoder decodeIntegerForKey:@"originatingSyncInstruction.uniqueID"];
-        for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions])
-            if(instruction.uniqueID == uniqueID)
-                self.originatingSyncInstruction = instruction;
+//        for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions])
+//            if(instruction.uniqueID == uniqueID)
+//                self.originatingSyncInstruction = instruction;
         self.totalSize = [decoder decodeIntegerForKey:@"totalSize"];
         self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
         localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
@@ -195,7 +195,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [coder encodeBool:self.progressIsKnown forKey:@"progressIsKnown"];
     [coder encodeInteger:self.estimatedRemainingTime forKey:@"estimatedRemainingTime"];
     [coder encodeBool:self.estimatedRemainingTimeIsKnown forKey:@"estimatedRemainingTimeIsKnown"];
-    [coder encodeInteger:self.originatingSyncInstruction.uniqueID forKey:@"originatingSyncInstruction.uniqueID"];
+//  [coder encodeInteger:self.originatingSyncInstruction.uniqueID forKey:@"originatingSyncInstruction.uniqueID"];
     [coder encodeInteger:self.totalSize forKey:@"totalSize"];
     [coder encodeInteger:self.receivedSize forKey:@"receivedSize"];
     [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
@@ -463,7 +463,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSLog(@"%@: Download finished", self);
     if(self.originatingSyncInstruction != nil){
         [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
-        if(self.originatingSyncInstruction.deleteRemoteFilesAfterSync){
+        if([self.originatingSyncInstruction.deleteRemoteFilesAfterSync boolValue]){
             PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
                                                                                                  completion:nil];
             [[PutIOAPI api] performRequest:request];

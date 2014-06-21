@@ -68,9 +68,9 @@
         [download cancelDownload];
     
     // Nuke all sync instructions (since we change the put.io account)
-    [[SyncInstruction allSyncInstructions] removeAllObjects];
-    [SyncInstruction saveAllSyncInstructions];
-    
+    for(SyncInstruction *syncInstruction in [SyncInstruction allSyncInstructions]){
+        [syncInstruction.managedObjectContext deleteObject:syncInstruction];
+    }
     [PutIOAPIKeychainManager setKeychainItemPassword:token];
     
     // Reset username/email, we need to retrieve those from put.io

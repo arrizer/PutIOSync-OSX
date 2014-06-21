@@ -66,7 +66,7 @@
         id nextNode = [nodeQueue objectAtIndex:0];
         NSInteger folderID;
         if(nextNode == [NSNull null]){
-            folderID = syncInstruction.originFolderID;
+            folderID = [syncInstruction.originFolderID integerValue];
         }else{
             folderID = ((PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject]).fileID;
         }
@@ -84,7 +84,7 @@
                     NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
                     [[currentNode mutableChildNodes] addObject:node];
                     if([file isFolder]){
-                        if(syncInstruction.recursive)
+                        if([syncInstruction.recursive boolValue])
                             [nodeQueue addObject:node];
                     }else{
                         [self evaulateFileAtNode:node];
@@ -93,7 +93,7 @@
                 [nodeQueue removeObjectAtIndex:0];
                 
                 PutIOAPIFile *folder = request.parentFolder;
-                if(syncInstruction.deleteRemoteEmptyFolders && folder.fileID != syncInstruction.originFolderID && [request.files count] == 0){
+                if([syncInstruction.deleteRemoteEmptyFolders boolValue] && folder.fileID != [syncInstruction.originFolderID integerValue] && [request.files count] == 0){
                     NSLog(@"Deleting empty folder");
                     PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:0 completion:^{
                             [self scanNextOriginItem];
@@ -120,7 +120,7 @@
     if([syncInstruction itemWithIDIsKnown:[file fileID]])
         return;
     NSString *relativePath = nil;
-    if(!syncInstruction.flattenSubdirectories)
+    if(![syncInstruction.flattenSubdirectories boolValue])
         relativePath = [self relativePathOfFileAtNode:node];
     //NSString *filename = [file name];
 
@@ -167,7 +167,7 @@
 {
     NSLog(@"%@ sync run finished", [self description]);
     syncInstruction.lastSynced = [NSDate date];
-    [SyncInstruction saveAllSyncInstructions];
+    [syncInstruction.managedObjectContext save:nil];
 //    if([downloadQueue count] > 0)
 //        if([_delegate respondsToSelector:@selector(syncRunner:foundFilesForDownload:)])
 //            [_delegate syncRunner:self foundFilesForDownload:downloadQueue];

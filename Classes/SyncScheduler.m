@@ -92,7 +92,7 @@ static SyncScheduler* sharedInstance;
 -(void)cancelSyncForInstruction:(SyncInstruction*)instruction
 {
     for(SyncRunner *runner in self.runningSyncs)
-        if([runner.syncInstruction uniqueID] == instruction.uniqueID)
+        if([runner.syncInstruction.objectID.URIRepresentation isEqual:instruction.objectID.URIRepresentation])
             [runner cancel];
 }
 

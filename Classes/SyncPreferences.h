@@ -4,7 +4,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SyncPreferences : NSViewController
-<MASPreferencesViewController, NSTableViewDataSource, NSTableViewDelegate, SyncInstructionEditorDelegate>
+<MASPreferencesViewController, NSTableViewDelegate>
 {
     SyncInstructionEditor *syncInstructionEditor;
     NSInteger editedSyncInstructionIndex;
@@ -15,9 +15,9 @@
 }
 
 @property (strong) NSMutableArray *syncInstrucions;
+@property (readonly) NSManagedObjectContext *context;
 
 -(IBAction)addSyncInstruction:(id)sender;
 -(IBAction)editSyncInstruction:(id)sender;
--(IBAction)removeSelectedSyncInstructions:(id)sender;
 
 @end

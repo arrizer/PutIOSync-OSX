@@ -1,31 +1,35 @@
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface SyncInstruction : NSObject
-<NSCoding, NSCopying>
-{
-    NSInteger _originFolderID;
-}
 
-+ (NSMutableArray*)allSyncInstructions;
-+ (void)saveAllSyncInstructions;
+@interface SyncInstruction : NSManagedObject
 
-@property (assign) NSInteger originFolderID;
-@property (strong) NSString *originFolderName;
+@property (nonatomic, retain) NSNumber *originFolderID;
+@property (nonatomic, retain) NSString *originFolderName;
+@property (nonatomic, retain) NSData *localDestinationBookmark;
+@property (nonatomic, retain) NSNumber *deleteRemoteFilesAfterSync;
+@property (nonatomic, retain) NSNumber *deleteRemoteEmptyFolders;
+@property (nonatomic, retain) NSNumber *recursive;
+@property (nonatomic, retain) NSNumber *flattenSubdirectories;
+@property (nonatomic, retain) NSDate *lastSynced;
+@property (nonatomic, retain) NSSet *knownItems;
+
 @property (strong) NSURL *localDestination;
-@property (assign) BOOL localDestinationIsStale;
-@property (assign) BOOL deleteRemoteFilesAfterSync;
-@property (assign) BOOL deleteRemoteEmptyFolders;
-@property (assign) BOOL recursive;
-@property (assign) BOOL flattenSubdirectories;
-@property (strong) NSDate *lastSynced;
 
-@property (strong) NSMutableArray *knownItems;
-@property (readonly) NSError *bookmarkResolveError;
-@property (readonly) NSInteger uniqueID;
++ (NSArray*)allSyncInstructions;
 
 - (void)addKnownItemWithID:(NSInteger)itemID;
 - (BOOL)itemWithIDIsKnown:(NSInteger)itemID;
 - (void)resetKnownItems;
+
+@end
+
+@interface SyncInstruction (CoreDataGeneratedAccessors)
+
+- (void)addKnownItemsObject:(NSManagedObject *)value;
+- (void)removeKnownItemsObject:(NSManagedObject *)value;
+- (void)addKnownItems:(NSSet *)values;
+- (void)removeKnownItems:(NSSet *)values;
 
 @end

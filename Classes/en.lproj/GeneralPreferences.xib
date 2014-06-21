@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="nonLocalizable" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralPreferences">
             <connections>
-                <action selector="autocheckForUpdatesChanged:" destination="382" id="442"/>
-                <action selector="checkForUpdatesNow:" destination="387" id="440"/>
-                <action selector="launchOnLoginToggled:" destination="199" id="506"/>
-                <action selector="maxParallelDownloadsChanged:" destination="226" id="509"/>
                 <outlet property="autocheckForUpdatesCheckbox" destination="382" id="507"/>
                 <outlet property="lastUpdateLabel" destination="407" id="441"/>
                 <outlet property="launchOnLoginCheckbox" destination="199" id="508"/>
@@ -25,8 +20,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="176">
-                    <rect key="frame" x="149" y="306" width="54" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="148" y="306" width="54" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Startup:" id="177">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -34,8 +28,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="211">
-                    <rect key="frame" x="166" y="255" width="37" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="163" y="255" width="39" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sync:" id="212">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -43,8 +36,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="266">
-                    <rect key="frame" x="115" y="216" width="88" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="117" y="216" width="85" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Notifications:" id="267">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,8 +44,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="374">
-                    <rect key="frame" x="85" y="87" width="118" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="83" y="87" width="119" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Software Updates:" id="375">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -61,8 +52,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="407">
-                    <rect key="frame" x="205" y="63" width="120" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="63" width="122" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Last checked: Never" id="408">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -70,8 +60,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="329">
-                    <rect key="frame" x="149" y="142" width="54" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="147" y="142" width="55" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sounds:" id="331">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -79,19 +68,18 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="199">
-                    <rect key="frame" x="206" y="305" width="108" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="305" width="105" height="18"/>
                     <buttonCell key="cell" type="check" title="Start on login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="200">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
+                        <action selector="launchOnLoginToggled:" target="-2" id="506"/>
                         <binding destination="205" name="value" keyPath="values.general_launchonlogin" id="208"/>
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="226">
-                    <rect key="frame" x="206" y="275" width="94" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="275" width="91" height="26"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="227">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -108,12 +96,12 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <action selector="maxParallelDownloadsChanged:" target="-2" id="509"/>
                         <binding destination="205" name="selectedIndex" keyPath="values.general_paralleldownloads" id="503"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
-                    <rect key="frame" x="78" y="281" width="125" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="77" y="281" width="125" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Parallel downloads:" id="456">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -121,8 +109,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="447">
-                    <rect key="frame" x="206" y="249" width="142" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="249" width="139" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="every minute" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455" id="448">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -142,8 +129,7 @@
                     </connections>
                 </popUpButton>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="291">
-                    <rect key="frame" x="206" y="215" width="120" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="215" width="118" height="18"/>
                     <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="292">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -153,8 +139,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="323">
-                    <rect key="frame" x="206" y="195" width="139" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="195" width="136" height="18"/>
                     <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="324">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -164,8 +149,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="351">
-                    <rect key="frame" x="206" y="175" width="124" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="175" width="122" height="18"/>
                     <buttonCell key="cell" type="check" title="Download failed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="352">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -175,8 +159,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="338">
-                    <rect key="frame" x="206" y="141" width="120" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="141" width="118" height="18"/>
                     <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="341">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -186,8 +169,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="339">
-                    <rect key="frame" x="206" y="121" width="139" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="121" width="136" height="18"/>
                     <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="340">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -197,23 +179,25 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="382">
-                    <rect key="frame" x="206" y="86" width="149" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <rect key="frame" x="206" y="86" width="147" height="18"/>
                     <buttonCell key="cell" type="check" title="Check automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="383">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
+                        <action selector="autocheckForUpdatesChanged:" target="-2" id="442"/>
                         <binding destination="205" name="value" keyPath="values.general_autocheckupdates" id="439"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="387">
                     <rect key="frame" x="203" y="31" width="95" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Check now..." bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="388">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="checkForUpdatesNow:" target="-2" id="440"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>
@@ -259,21 +243,4 @@
         </customView>
         <userDefaultsController id="205"/>
     </objects>
-    <classes>
-        <class className="GeneralPreferences" superclassName="NSViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GeneralPreferences.h"/>
-            <relationships>
-                <relationship kind="action" name="autocheckForUpdatesChanged:"/>
-                <relationship kind="action" name="checkForUpdatesNow:"/>
-                <relationship kind="action" name="launchOnLoginToggled:"/>
-                <relationship kind="action" name="maxParallelDownloadsChanged:"/>
-                <relationship kind="outlet" name="autocheckForUpdatesCheckbox" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="lastUpdateLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="launchOnLoginCheckbox" candidateClass="NSButton"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
 </document>

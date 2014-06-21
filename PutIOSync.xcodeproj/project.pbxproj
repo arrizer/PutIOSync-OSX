@@ -11,6 +11,10 @@
 		3903FA6E177FAD7C00EC6ABB /* PutIOFolderPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3903FA70177FAD7C00EC6ABB /* PutIOFolderPicker.xib */; };
 		3903FA7C177FAF4E00EC6ABB /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3903FA7E177FAF4E00EC6ABB /* GeneralPreferences.xib */; };
 		391A9F3316E388E2003BDE51 /* PanelRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 391A9F3216E388E2003BDE51 /* PanelRowView.m */; };
+		391DD7D219551145003CCF55 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD4F7C0C13C30F9F00825C6E /* CoreData.framework */; };
+		391DD7D5195512A0003CCF55 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 391DD7D3195512A0003CCF55 /* Model.xcdatamodeld */; };
+		391DD7D81955152E003CCF55 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 391DD7D71955152E003CCF55 /* SyncInstruction.m */; };
+		391DD7DB1955152F003CCF55 /* KnownItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 391DD7DA1955152F003CCF55 /* KnownItem.m */; };
 		392221C6163CAB140003352E /* PutIOFolderPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 392221C4163CAB140003352E /* PutIOFolderPicker.m */; };
 		392460F1163EB36500954B64 /* SyncScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F0163EB36500954B64 /* SyncScheduler.m */; };
 		392460F5163EB38600954B64 /* SyncRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 392460F4163EB38600954B64 /* SyncRunner.m */; };
@@ -23,7 +27,6 @@
 		396535A0178232BE00BE21DE /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
 		39910AB7164FFB3D00967014 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39910AB6164FFB3D00967014 /* Security.framework */; };
-		3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCC163AC97B0020AE61 /* SyncInstruction.m */; };
 		3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */; };
 		39A66FBA178213010073DB81 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FB9178213010073DB81 /* Utilities.m */; };
 		39A66FC3178213650073DB81 /* PutIOAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FBC178213650073DB81 /* PutIOAPI.m */; };
@@ -87,6 +90,11 @@
 		3903FA7D177FAF4E00EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
 		391A9F3116E388E2003BDE51 /* PanelRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelRowView.h; sourceTree = "<group>"; };
 		391A9F3216E388E2003BDE51 /* PanelRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelRowView.m; sourceTree = "<group>"; };
+		391DD7D4195512A0003CCF55 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		391DD7D61955152E003CCF55 /* SyncInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncInstruction.h; path = Classes/SyncInstruction.h; sourceTree = "<group>"; };
+		391DD7D71955152E003CCF55 /* SyncInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncInstruction.m; path = Classes/SyncInstruction.m; sourceTree = "<group>"; };
+		391DD7D91955152F003CCF55 /* KnownItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnownItem.h; path = Classes/KnownItem.h; sourceTree = "<group>"; };
+		391DD7DA1955152F003CCF55 /* KnownItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnownItem.m; path = Classes/KnownItem.m; sourceTree = "<group>"; };
 		392221C3163CAB140003352E /* PutIOFolderPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIOFolderPicker.h; sourceTree = "<group>"; };
 		392221C4163CAB140003352E /* PutIOFolderPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIOFolderPicker.m; sourceTree = "<group>"; };
 		392460EF163EB36500954B64 /* SyncScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncScheduler.h; sourceTree = "<group>"; };
@@ -111,8 +119,6 @@
 		39910AB6164FFB3D00967014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		39910ABE16502B5300967014 /* PutIODownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutIODownload.h; sourceTree = "<group>"; };
 		39937B2918E9B03D00105963 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
-		3993ABCB163AC97B0020AE61 /* SyncInstruction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncInstruction.h; path = Classes/SyncInstruction.h; sourceTree = "<group>"; };
-		3993ABCC163AC97B0020AE61 /* SyncInstruction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncInstruction.m; path = Classes/SyncInstruction.m; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
 		39A66FB8178213010073DB81 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				391DD7D219551145003CCF55 /* CoreData.framework in Frameworks */,
 				39910AB7164FFB3D00967014 /* Security.framework in Frameworks */,
 				39C51FCD16345B81006BD1C8 /* WebKit.framework in Frameworks */,
 				DD4F7C0913C30F9F00825C6E /* Cocoa.framework in Frameworks */,
@@ -225,10 +232,13 @@
 		3993ABC9163AC9380020AE61 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3993ABCB163AC97B0020AE61 /* SyncInstruction.h */,
-				3993ABCC163AC97B0020AE61 /* SyncInstruction.m */,
+				391DD7D3195512A0003CCF55 /* Model.xcdatamodeld */,
 				39EFBFB9164EA60400B160E0 /* PersistenceManager.h */,
 				39EFBFBA164EA60400B160E0 /* PersistenceManager.m */,
+				391DD7D91955152F003CCF55 /* KnownItem.h */,
+				391DD7DA1955152F003CCF55 /* KnownItem.m */,
+				391DD7D61955152E003CCF55 /* SyncInstruction.h */,
+				391DD7D71955152E003CCF55 /* SyncInstruction.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -274,7 +284,7 @@
 			name = Requests;
 			sourceTree = "<group>";
 		};
-		39D59CD919512A3F0085B362 /* Objects */ = {
+		39D59CD919512A3F0085B362 /* Response Objects */ = {
 			isa = PBXGroup;
 			children = (
 				39A66FC1178213650073DB81 /* PutIOAPIObject.h */,
@@ -286,7 +296,7 @@
 				39C5B0AB16BD682D004E8D65 /* PutIOAPITransfer.h */,
 				39C5B0AC16BD682D004E8D65 /* PutIOAPITransfer.m */,
 			);
-			name = Objects;
+			name = "Response Objects";
 			sourceTree = "<group>";
 		};
 		39F8743E1634279400D9026F /* PutIO API */ = {
@@ -294,7 +304,7 @@
 			children = (
 				39A66FBB178213650073DB81 /* PutIOAPI.h */,
 				39A66FBC178213650073DB81 /* PutIOAPI.m */,
-				39D59CD919512A3F0085B362 /* Objects */,
+				39D59CD919512A3F0085B362 /* Response Objects */,
 				39D59CD819512A340085B362 /* Requests */,
 				39D59CDA19512E2B0085B362 /* PutIOAPIKeychainManager.h */,
 				39D59CDB19512E2B0085B362 /* PutIOAPIKeychainManager.m */,
@@ -520,6 +530,9 @@
 				DD4F7C3F13C318D600825C6E /* PanelController.m in Sources */,
 				DD4F7C4413C31BD200825C6E /* Panel.m in Sources */,
 				39D59CD11951276B0085B362 /* PutIOAPIFileRequest.m in Sources */,
+				391DD7DB1955152F003CCF55 /* KnownItem.m in Sources */,
+				391DD7D81955152E003CCF55 /* SyncInstruction.m in Sources */,
+				391DD7D5195512A0003CCF55 /* Model.xcdatamodeld in Sources */,
 				DD4F7C4713C3208500825C6E /* BackgroundView.m in Sources */,
 				39A66FC5178213650073DB81 /* PutIOAPIFile.m in Sources */,
 				39F8744616342D9000D9026F /* AccountSetupController.m in Sources */,
@@ -531,7 +544,6 @@
 				39C51FC816343FBA006BD1C8 /* MainPanel.m in Sources */,
 				39A66FC6178213650073DB81 /* PutIOAPIObject.m in Sources */,
 				3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */,
-				3993ABCD163AC97B0020AE61 /* SyncInstruction.m in Sources */,
 				3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */,
 				39D59CDD19512EA00085B362 /* PutIOAPIKeychainManager.m in Sources */,
 				39D59CD719512A2E0085B362 /* PutIOAPITransfersRequest.m in Sources */,
@@ -772,6 +784,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		391DD7D3195512A0003CCF55 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				391DD7D4195512A0003CCF55 /* Model.xcdatamodel */,
+			);
+			currentVersion = 391DD7D4195512A0003CCF55 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DD4F7BFB13C30F9F00825C6E /* Project object */;
 }

@@ -1,11 +1,33 @@
 
 #import "SyncInstructionEditor.h"
 
+@interface SyncInstructionEditor()
+{
+    SyncInstruction *_originalSyncInstruction;
+    SyncInstruction *_editedSyncInstruction;
+    PutIOFolderPicker *folderPicker;
+    NSManagedObjectContext *context;
+    
+    IBOutlet NSTextField *originLabel;
+    IBOutlet NSTextField *destinationLabel;
+    IBOutlet NSTextField *lastSyncLabel;
+    IBOutlet NSButton *commitButton;
+    IBOutlet NSButton *deleteAfterSyncCheckbox;
+    IBOutlet NSButton *deleteEmptyFoldersCheckbox;
+    IBOutlet NSButton *recursiveCheckbox;
+    IBOutlet NSButton *flattenCheckbox;
+    IBOutlet NSButton *resetKnownItemsButton;
+}
+
+@end
+
 @implementation SyncInstructionEditor
 
 - (id)init
 {
     self = [super initWithWindowNibName:NSStringFromClass([self class])];
+    context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    context.parentContext = [[PersistenceManager manager] context];
     return self;
 }
 
@@ -14,10 +36,11 @@
     _originalSyncInstruction = syncInstruction;
     if(_originalSyncInstruction == nil){
         // New sync instruction
-        _editedSyncInstruction = [[SyncInstruction alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SyncInstruction" inManagedObjectContext:context];
+        _editedSyncInstruction = [[SyncInstruction alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
     }else{
         // Make a copy in case the user cancels the editing process
-        _editedSyncInstruction = [_originalSyncInstruction copy];
+        _editedSyncInstruction = (SyncInstruction*)[context existingObjectWithID:[syncInstruction objectID] error:nil];
     }
     [self updateLabels];
 }
@@ -52,11 +75,11 @@
     }else{
         [destinationLabel setHidden:YES];
     }
-    [deleteAfterSyncCheckbox setState:(_editedSyncInstruction.deleteRemoteFilesAfterSync ? NSOnState : NSOffState)];
-    [deleteEmptyFoldersCheckbox setState:(_editedSyncInstruction.deleteRemoteEmptyFolders ? NSOnState : NSOffState)];
-    [recursiveCheckbox setState:(_editedSyncInstruction.recursive ? NSOnState : NSOffState)];
-    if(_editedSyncInstruction.recursive){
-        [flattenCheckbox setState:(_editedSyncInstruction.flattenSubdirectories ? NSOnState : NSOffState)];
+    [deleteAfterSyncCheckbox setState:([_editedSyncInstruction.deleteRemoteFilesAfterSync boolValue] ? NSOnState : NSOffState)];
+    [deleteEmptyFoldersCheckbox setState:([_editedSyncInstruction.deleteRemoteEmptyFolders boolValue] ? NSOnState : NSOffState)];
+    [recursiveCheckbox setState:([_editedSyncInstruction.recursive boolValue] ? NSOnState : NSOffState)];
+    if([_editedSyncInstruction.recursive boolValue]){
+        [flattenCheckbox setState:([_editedSyncInstruction.flattenSubdirectories boolValue] ? NSOnState : NSOffState)];
         [flattenCheckbox setEnabled:YES];
     }else{
         [flattenCheckbox setState:NSOffState];
@@ -97,8 +120,8 @@
 -(void)folderPicker:(PutIOFolderPicker *)picker didPickFolder:(PutIOAPIFile *)folder
 {
     [NSApp endSheet:folderPicker.window];
-    if(folder.fileID != _originalSyncInstruction.originFolderID){
-        _editedSyncInstruction.originFolderID = folder.fileID;
+    if(folder.fileID != [_originalSyncInstruction.originFolderID integerValue]){
+        _editedSyncInstruction.originFolderID = @(folder.fileID);
         _editedSyncInstruction.originFolderName = folder.name;
     }
     [self updateLabels];
@@ -129,10 +152,10 @@
 
 -(void)optionsChanged:(id)sender
 {
-    _editedSyncInstruction.deleteRemoteFilesAfterSync = (deleteAfterSyncCheckbox.state == NSOnState);
-    _editedSyncInstruction.deleteRemoteEmptyFolders = (deleteEmptyFoldersCheckbox.state == NSOnState);
-    _editedSyncInstruction.recursive = (recursiveCheckbox.state == NSOnState);
-    _editedSyncInstruction.flattenSubdirectories = (flattenCheckbox.state == NSOnState);
+    _editedSyncInstruction.deleteRemoteFilesAfterSync = @(deleteAfterSyncCheckbox.state == NSOnState);
+    _editedSyncInstruction.deleteRemoteEmptyFolders = @(deleteEmptyFoldersCheckbox.state == NSOnState);
+    _editedSyncInstruction.recursive = @(recursiveCheckbox.state == NSOnState);
+    _editedSyncInstruction.flattenSubdirectories = @(flattenCheckbox.state == NSOnState);
     [self updateLabels];
 }
 
@@ -166,19 +189,24 @@
         _editedSyncInstruction.knownItems = _originalSyncInstruction.knownItems;
         _editedSyncInstruction.lastSynced = _originalSyncInstruction.lastSynced;
     }
-    _originalSyncInstruction = _editedSyncInstruction;
+    [context performBlock:^{
+        [context save:nil];
+        [context.parentContext performBlock:^{
+            [context.parentContext save:nil];
+        }];
+    }];
+    
     _editedSyncInstruction = nil;
     [self.window close];
-    if([_delegate respondsToSelector:@selector(syncInstructionEditorFinishedEditing:)])
-        [_delegate syncInstructionEditorFinishedEditing:self];
+    [NSApp endSheet:self.window];
 }
 
 -(IBAction)cancel:(id)sender
 {
+    [context reset];
     _editedSyncInstruction = nil;
     [self.window close];
-    if([_delegate respondsToSelector:@selector(syncInstructionEditorCancelled:)])
-        [_delegate syncInstructionEditorCancelled:self];
+    [NSApp endSheet:self.window];
 }
 
 @end

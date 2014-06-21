@@ -20,17 +20,17 @@ static NSString *oAuthAccessToken;
 
 #pragma mark - Class Methods
 
-static NSString *accessToken = nil;
-
-+ (instancetype)api
++(instancetype)api
 {
-    if(accessToken == nil){
-        accessToken = [PutIOAPIKeychainManager keychainItemPassword];
-    }
-    return [[self alloc] initWithBaseURL:[NSURL URLWithString:kDefaultBaseURL]
-                        oAuthAccessToken:accessToken
-                           oAuthClientID:kDefaultClientID
-                        oAuthRedirectURI:kDefaultRedirectURI];
+    static PutIOAPI *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[PutIOAPI alloc] initWithBaseURL:[NSURL URLWithString:kDefaultBaseURL]
+                                          oAuthAccessToken:[PutIOAPIKeychainManager keychainItemPassword]
+                                             oAuthClientID:kDefaultClientID
+                                          oAuthRedirectURI:kDefaultRedirectURI];
+    });
+    return sharedInstance;
 }
 
 #pragma mark - Initializers
@@ -47,6 +47,7 @@ static NSString *accessToken = nil;
         _oAuthClientID = clientID;
         _oAuthRedirectURI = redirectURI;
         queue = [[NSOperationQueue alloc] init];
+        queue.maxConcurrentOperationCount = 1;
     }
     return self;
 }

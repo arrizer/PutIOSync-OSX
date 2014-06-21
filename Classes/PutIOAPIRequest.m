@@ -50,7 +50,7 @@
         parameters = [self.parameters mutableCopy];
     }
     parameters[@"oauth_token"] = self.api.oAuthAccessToken;
-    NSString *parameterString = self.queryString;
+    NSString *parameterString = [parameters URLQueryString];
     if(self.method == PutIOAPIMethodGET){
         requestURLString = [requestURLString stringByAppendingFormat:@"?%@", parameterString];
     }
@@ -61,9 +61,8 @@
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
-    NSLog(@"API request to endpoint: %@\nParameters: %@", self.endpoint, [[self.parameters description] stringByReplacingOccurrencesOfString:@"\n" withString:@""]);
+    NSLog(@"<API> %@\nParameters: %@", requestURL, [self.parameters description]);
 
-    
     NSError *networkError;
     NSURLResponse *response;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&networkError];
@@ -74,7 +73,9 @@
         [self parseResponse:data];
     }
     dispatch_sync(dispatch_get_main_queue(), ^{
-        self.completion();
+        if(self.completion != nil){
+            self.completion();
+        }
     });
 }
 

@@ -34,8 +34,15 @@
 
 -(void)viewWillAppear
 {
-    [tableView reloadData];
+    [super viewWillAppear];
     [addButton setEnabled:[[PutIOAPI api] isAuthenticated]];
+}
+
+#pragma mark - Accessors
+
+-(NSManagedObjectContext *)context
+{
+    return [PersistenceManager manager].context;
 }
 
 #pragma mark - Actions
@@ -51,32 +58,6 @@
     [self presentSyncInstrucionEditorFor:row];
 }
 
--(void)removeSelectedSyncInstructions:(id)sender
-{
-    NSIndexSet *indexesToDelete = [tableView selectedRowIndexes];
-    [tableView removeRowsAtIndexes:indexesToDelete withAnimation:NSTableViewAnimationSlideUp];
-    [[SyncInstruction allSyncInstructions] removeObjectsAtIndexes:indexesToDelete];
-    [SyncInstruction saveAllSyncInstructions];
-}
-
-#pragma mark - TableView Delegate
-
--(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-    return [[SyncInstruction allSyncInstructions] count];
-}
-
--(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    SyncInstruction *syncInstruction = [SyncInstruction allSyncInstructions][row];
-    return syncInstruction;
-}
-
--(void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-    removeButton.enabled = ([tableView selectedRow] != -1);
-}
-
 #pragma mark - Edit Sync Instruction
 
 - (void)presentSyncInstrucionEditorFor:(NSInteger)row
@@ -85,7 +66,6 @@
         return;
     if(!syncInstructionEditor){
         syncInstructionEditor = [[SyncInstructionEditor alloc] init];
-        syncInstructionEditor.delegate = self;
     }
     editedSyncInstructionIndex = row;
     if(row == -1)
@@ -97,33 +77,6 @@
         modalDelegate:nil
        didEndSelector:nil
           contextInfo:nil];
-}
-
--(void)syncInstructionEditorFinishedEditing:(SyncInstructionEditor *)editor
-{
-    [NSApp endSheet:syncInstructionEditor.window];
-    SyncInstruction *editedItem = editor.syncInstruction;
-    if(editedSyncInstructionIndex == -1){
-        [[SyncInstruction allSyncInstructions] addObject:editedItem];
-    }else{
-        SyncInstruction *oldItem = [SyncInstruction allSyncInstructions][editedSyncInstructionIndex];
-        // Cancel running syncs for the edited instruction, since the behaviour might have changed
-        [[SyncScheduler sharedSyncScheduler] cancelSyncForInstruction:oldItem];
-        
-        // Unlink running downloads from the edited sync instruction
-        for(PutIODownload *download in [PutIODownload allDownloads])
-            if([download originatingSyncInstruction] == oldItem)
-                [download unlinkFromOriginatingSyncInstruction];
-        
-        [[SyncInstruction allSyncInstructions] replaceObjectAtIndex:editedSyncInstructionIndex withObject:editedItem];
-    }
-    [tableView reloadData];
-    [SyncInstruction saveAllSyncInstructions];
-}
-
--(void)syncInstructionEditorCancelled:(SyncInstructionEditor *)editor
-{
-    [NSApp endSheet:syncInstructionEditor.window];
 }
 
 @end

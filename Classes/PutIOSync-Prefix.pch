@@ -1,9 +1,8 @@
-//
-// Prefix header for all source files of the 'Popup' target in the 'Popup' project
-//
 
 #ifdef __OBJC__
 
 #import <Cocoa/Cocoa.h>
+#import <CoreData/CoreData.h>
+#import "PersistenceManager.h"
 
 #endif

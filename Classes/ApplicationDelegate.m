@@ -8,6 +8,7 @@
 #import "SyncInstruction.h"
 #import "SyncScheduler.h"
 #import "PutIOAPI.h"
+#import "PersistenceManager.h"
 
 @implementation ApplicationDelegate
 
@@ -71,7 +72,9 @@ void *kContextActivePanel = &kContextActivePanel;
     self.menubarController = [[MenubarController alloc] init];
     [PutIODownload allDownloads];
     [[SyncScheduler sharedSyncScheduler] scheduleSyncs];
-    [[SyncScheduler sharedSyncScheduler] startSyncingAll];
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"general_syncinterval"] != 5){
+        [[SyncScheduler sharedSyncScheduler] startSyncingAll];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
     
     // Register URL scheme
@@ -86,7 +89,7 @@ void *kContextActivePanel = &kContextActivePanel;
     [PutIODownload pauseAndSaveAllDownloads];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.menubarController = nil;
-    return NSTerminateNow;
+    return [[PersistenceManager manager] applicationShouldTerminate:sender];
 }
 
 #pragma mark - Actions
