@@ -6,6 +6,17 @@
 #import "Download.h"
 
 @interface SyncRunner()
+{
+    SyncInstruction *syncInstruction;
+    PutIOAPI *putio;
+    BOOL busy;
+    
+    NSTreeNode *originTree;
+    NSString *destinationPath;
+    NSUInteger foundFiles;
+    NSUInteger pendingRequests;
+}
+
 @property (strong) NSString *localizedOperationName;
 @end
 
@@ -56,63 +67,56 @@
 //    [self beginOperation:SyncRunnerOperationOriginScan];
     [putio cancelAllRequests];
     originTree = nil;
-    nodeQueue = [NSMutableArray array];
-    [nodeQueue addObject:[NSNull null]];
-    [self scanNextOriginItem];
+    [self scanNode:nil];
 }
 
--(void)scanNextOriginItem
+-(void)scanNode:(NSTreeNode*)node
 {
-    if([nodeQueue count] > 0){
-        id nextNode = [nodeQueue objectAtIndex:0];
-        NSInteger folderID;
-        if(nextNode == [NSNull null]){
-            folderID = [syncInstruction.originFolderID integerValue];
-        }else{
-            folderID = ((PutIOAPIFile*)[(NSTreeNode*)nextNode representedObject]).fileID;
-        }
-        
-        __block PutIOAPIFileRequest *request = [PutIOAPIFileRequest requestFilesInFolderWithID:folderID completion:^{
-            if(request.error == nil && !request.isCancelled){
-                NSTreeNode *currentNode = nil;
-                if([nodeQueue objectAtIndex:0] == [NSNull null]){
-                    originTree = [[NSTreeNode alloc] initWithRepresentedObject:request.parentFolder];
-                    currentNode = originTree;
-                }else{
-                    currentNode = [nodeQueue objectAtIndex:0];
-                }
-                for(PutIOAPIFile *file in request.files){
-                    NSTreeNode *node = [[NSTreeNode alloc] initWithRepresentedObject:file];
-                    [[currentNode mutableChildNodes] addObject:node];
-                    if([file isFolder]){
-                        if([syncInstruction.recursive boolValue])
-                            [nodeQueue addObject:node];
-                    }else{
-                        [self evaulateFileAtNode:node];
-                    }
-                }
-                [nodeQueue removeObjectAtIndex:0];
-                
-                PutIOAPIFile *folder = request.parentFolder;
-                if([syncInstruction.deleteRemoteEmptyFolders boolValue] && folder.fileID != [syncInstruction.originFolderID integerValue] && [request.files count] == 0){
-                    NSLog(@"Deleting empty folder");
-                    PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:0 completion:^{
-                            [self scanNextOriginItem];
-                    }];
-                    [putio performRequest:deleteRequest];
-                }else{
-                    [self scanNextOriginItem];
-                }
-            }else{
-                [self failWithError:request.error];
-            }
-        }];
-        [putio performRequest:request];
+    NSInteger folderID;
+    if(node == nil){
+        folderID = [syncInstruction.originFolderID integerValue];
     }else{
-        originTree = nil;
-        nodeQueue = nil;
-        [self finish];
+        folderID = ((PutIOAPIFile*)[(NSTreeNode*)node representedObject]).fileID;
     }
+    
+    __block PutIOAPIFileRequest *request = [PutIOAPIFileRequest requestFilesInFolderWithID:folderID completion:^{
+        pendingRequests--;
+        if(request.error == nil && !request.isCancelled){
+            NSTreeNode *currentNode = nil;
+            if(node == nil){
+                originTree = [[NSTreeNode alloc] initWithRepresentedObject:request.parentFolder];
+                currentNode = originTree;
+            }else{
+                currentNode = node;
+            }
+            for(PutIOAPIFile *file in request.files){
+                NSTreeNode *childNode = [[NSTreeNode alloc] initWithRepresentedObject:file];
+                [[currentNode mutableChildNodes] addObject:childNode];
+                if([file isFolder]){
+                    if([syncInstruction.recursive boolValue]){
+                        [self scanNode:childNode];
+                    }
+                }else{
+                    [self evaulateFileAtNode:childNode];
+                }
+            }
+            
+            PutIOAPIFile *folder = request.parentFolder;
+            if([syncInstruction.deleteRemoteEmptyFolders boolValue] && folder.fileID != [syncInstruction.originFolderID integerValue] && [request.files count] == 0){
+                NSLog(@"Deleting empty folder");
+                PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:folder.fileID completion:nil];
+                [putio performRequest:deleteRequest];
+            }
+        }else{
+            [self failWithError:request.error];
+        }
+        if(pendingRequests == 0){
+            originTree = nil;
+            [self finish];
+        }
+    }];
+    pendingRequests++;
+    [putio performRequest:request];
 }
 
 -(void)evaulateFileAtNode:(NSTreeNode*)node
