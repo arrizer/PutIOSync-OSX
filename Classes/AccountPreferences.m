@@ -2,9 +2,10 @@
 #import "Utilities.h"
 #import "AccountPreferences.h"
 #import "SyncScheduler.h"
-#import "PutIODownload.h"
 #import "PutIOAPIKeychainManager.h"
 #import "PutIOAPIAccountInfoRequest.h"
+#import "PutIODownloadManager.h"
+#import "Download.h"
 
 @implementation AccountPreferences
 
@@ -64,8 +65,9 @@
     
     // Abort all running syncs and downloads
     [[SyncScheduler sharedSyncScheduler] cancelAllSyncsInProgress];
-    for(PutIODownload* download in [PutIODownload allDownloads])
+    for(Download* download in [[PutIODownloadManager manager] allDownloads]){
         [download cancelDownload];
+    }
     
     // Nuke all sync instructions (since we change the put.io account)
     for(SyncInstruction *syncInstruction in [SyncInstruction allSyncInstructions]){

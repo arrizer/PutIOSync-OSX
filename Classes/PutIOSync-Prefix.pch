@@ -3,6 +3,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreData/CoreData.h>
-#import "PersistenceManager.h"
+#import "Persistency.h"
 
 #endif

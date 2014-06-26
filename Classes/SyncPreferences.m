@@ -1,7 +1,6 @@
 
 #import "SyncPreferences.h"
 #import "SyncScheduler.h"
-#import "PutIODownload.h"
 
 @interface SyncPreferences ()
 
@@ -42,7 +41,7 @@
 
 -(NSManagedObjectContext *)context
 {
-    return [PersistenceManager manager].context;
+    return [Persistency manager].context;
 }
 
 #pragma mark - Actions

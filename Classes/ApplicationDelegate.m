@@ -4,11 +4,11 @@
 #import "GeneralPreferences.h"
 #import "AccountPreferences.h"
 #import "SyncPreferences.h"
-#import "PutIODownload.h"
+#import "PutIODownloadManager.h"
 #import "SyncInstruction.h"
 #import "SyncScheduler.h"
 #import "PutIOAPI.h"
-#import "PersistenceManager.h"
+#import "Persistency.h"
 
 @implementation ApplicationDelegate
 
@@ -70,7 +70,7 @@ void *kContextActivePanel = &kContextActivePanel;
     [ApplicationDelegate setupUserDefaults];
     // Install icon into the menu bar
     self.menubarController = [[MenubarController alloc] init];
-    [PutIODownload allDownloads];
+    [[PutIODownloadManager manager] loadDownloads];
     [[SyncScheduler sharedSyncScheduler] scheduleSyncs];
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"general_syncinterval"] != 5){
         [[SyncScheduler sharedSyncScheduler] startSyncingAll];
@@ -86,10 +86,10 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    [PutIODownload pauseAndSaveAllDownloads];
+    [[PutIODownloadManager manager] pauseAndSaveAllDownloads];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.menubarController = nil;
-    return [[PersistenceManager manager] applicationShouldTerminate:sender];
+    return [[Persistency manager] applicationShouldTerminate:sender];
 }
 
 #pragma mark - Actions

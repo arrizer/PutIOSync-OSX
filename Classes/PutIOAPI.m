@@ -84,4 +84,11 @@ static NSString *oAuthAccessToken;
     [queue cancelAllOperations];
 }
 
+-(NSURL *)downloadURLForFileWithID:(NSInteger)fileID
+{
+    NSString *requestURLString = [self.baseURL absoluteString];
+    requestURLString = [requestURLString stringByAppendingFormat:@"/files/%ld/download?oauth_token=%@", fileID, self.oAuthAccessToken];
+    return [NSURL URLWithString:requestURLString];
+}
+
 @end

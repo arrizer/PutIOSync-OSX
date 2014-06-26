@@ -27,7 +27,7 @@
 {
     self = [super initWithWindowNibName:NSStringFromClass([self class])];
     context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    context.parentContext = [[PersistenceManager manager] context];
+    context.parentContext = [[Persistency manager] context];
     return self;
 }
 

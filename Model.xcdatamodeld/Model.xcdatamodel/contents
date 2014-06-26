@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.12" systemVersion="14A238x" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6172.12" systemVersion="14A261i" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Download" representedClassName="Download" syncable="YES">
+        <attribute name="estimatedRemainingTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="estimatedRemainingTimeIsKnown" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="localFile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localFileTemporary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="progressIsKnown" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="putIOFileArchive" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="receivedSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="shouldResumeOnAppLaunch" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="subdirectoryPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="originatingSyncInstruction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyncInstruction" inverseName="downloads" inverseEntity="SyncInstruction" syncable="YES"/>
+    </entity>
     <entity name="KnownItem" representedClassName="KnownItem" syncable="YES">
         <attribute name="itemID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="syncInstruction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SyncInstruction" inverseName="knownItems" inverseEntity="SyncInstruction" syncable="YES"/>
@@ -13,11 +29,14 @@
         <attribute name="originFolderID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="originFolderName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recursive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="downloads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Download" inverseName="originatingSyncInstruction" inverseEntity="Download" syncable="YES"/>
         <relationship name="knownItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="KnownItem" inverseName="syncInstruction" inverseEntity="KnownItem" syncable="YES"/>
     </entity>
+    <fetchRequest name="AllDownloads" entity="Download"/>
     <fetchRequest name="AllSyncInstructions" entity="SyncInstruction"/>
     <elements>
-        <element name="SyncInstruction" positionX="-2538" positionY="-630" width="128" height="178"/>
         <element name="KnownItem" positionX="-2340" positionY="-576" width="128" height="73"/>
+        <element name="SyncInstruction" positionX="-2574" positionY="-630" width="164" height="193"/>
+        <element name="Download" positionX="-2781" positionY="-697" width="128" height="253"/>
     </elements>
 </model>

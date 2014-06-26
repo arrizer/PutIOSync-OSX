@@ -1,6 +1,6 @@
 
 #import <Cocoa/Cocoa.h>
-#import "PutIODownload.h"
+#import "Download.h"
 
 @interface DownloadCellView : NSTableCellView
 <NSURLConnectionDataDelegate>
@@ -10,12 +10,12 @@
     IBOutlet NSLayoutConstraint *statusLabelConstraint;
     IBOutlet NSLayoutConstraint *textLabelConstraint;
     IBOutlet NSButton *pauseResumeButton;
-    PutIODownload *_download;
+    Download *_download;
     NSURLConnection *iconLoader;
     NSMutableData *iconImageData;
 }
 
-@property (strong) PutIODownload *download;
+@property (strong) Download *download;
 
 - (IBAction)pauseOrResumeDownload:(id)sender;
 

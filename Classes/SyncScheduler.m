@@ -1,6 +1,6 @@
 
 #import "SyncScheduler.h"
-#import "PutIODownload.h"
+#import "PutIODownloadManager.h"
 #import "ApplicationDelegate.h"
 
 @implementation SyncScheduler

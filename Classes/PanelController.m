@@ -1,20 +1,20 @@
+
 #import "PanelController.h"
 #import "BackgroundView.h"
 #import "StatusItemView.h"
 #import "MenubarController.h"
 
-#define OPEN_DURATION .1
+#define OPEN_DURATION .2
 #define CLOSE_DURATION .2
+#define ANIMATION_OFFSET 20
 
 #define POPUP_HEIGHT 122
 #define PANEL_WIDTH 280
 #define MENU_ANIMATION_DURATION .1
 
-#pragma mark -
-
 @implementation PanelController
 
-#pragma mark -
+#pragma mark - Initializers
 
 - (id)initWithDelegate:(id<PanelControllerDelegate>)delegate
 {
@@ -25,13 +25,6 @@
     }
     return self;
 }
-
-- (void)dealloc
-{
-    
-}
-
-#pragma mark -
 
 - (void)awakeFromNib
 {
@@ -45,7 +38,7 @@
     [panel setBackgroundColor:[NSColor clearColor]];
 }
 
-#pragma mark - Public accessors
+#pragma mark - Accessors
 
 - (void)setHasActivePanel:(BOOL)flag
 {
@@ -81,6 +74,11 @@
 
 - (void)windowDidResize:(NSNotification *)notification
 {
+    [self updateArrowX];
+}
+
+- (void)updateArrowX
+{
     NSWindow *panel = [self window];
     NSRect statusRect = [self statusRectForWindow:panel];
     NSRect panelRect = [panel frame];
@@ -106,18 +104,14 @@
     NSRect statusRect = NSZeroRect;
     
     StatusItemView *statusItemView = nil;
-    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)])
-    {
+    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)]){
         statusItemView = [self.delegate statusItemViewForPanelController:self];
     }
     
-    if (statusItemView)
-    {
+    if(statusItemView){
         statusRect = statusItemView.globalRect;
         statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
-    }
-    else
-    {
+    }else{
         statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
         statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
         statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
@@ -141,24 +135,21 @@
     
     [NSApp activateIgnoringOtherApps:NO];
     [panel setAlphaValue:0];
-    [panel setFrame:statusRect display:YES];
+    
+    NSRect fromRect = NSMakeRect(panelRect.origin.x, panelRect.origin.y - ANIMATION_OFFSET, panelRect.size.width, panelRect.size.height);
+    [panel setFrame:fromRect display:YES];
+    [self updateArrowX];
     [panel makeKeyAndOrderFront:nil];
     
     NSTimeInterval openDuration = OPEN_DURATION;
     
     NSEvent *currentEvent = [NSApp currentEvent];
-    if ([currentEvent type] == NSLeftMouseDown)
-    {
+    if ([currentEvent type] == NSLeftMouseDown){
         NSUInteger clearFlags = ([currentEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
         BOOL shiftPressed = (clearFlags == NSShiftKeyMask);
         BOOL shiftOptionPressed = (clearFlags == (NSShiftKeyMask | NSAlternateKeyMask));
-        if (shiftPressed || shiftOptionPressed)
-        {
+        if (shiftPressed || shiftOptionPressed){
             openDuration *= 10;
-            
-            if (shiftOptionPressed)
-                NSLog(@"Icon is at %@\n\tMenu is on screen %@\n\tWill be animated to %@",
-                      NSStringFromRect(statusRect), NSStringFromRect(screenRect), NSStringFromRect(panelRect));
         }
     }
     
@@ -167,8 +158,6 @@
     [[panel animator] setFrame:panelRect display:YES];
     [[panel animator] setAlphaValue:1];
     [NSAnimationContext endGrouping];
-//    [self.window setFrame:panelRect display:YES];
-//    [self.window setAlphaValue:1.0f];
 }
 
 - (void)closePanel
@@ -179,7 +168,6 @@
     [NSAnimationContext endGrouping];
     
     dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{
-        
         [self.window orderOut:nil];
     });
 }

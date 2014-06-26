@@ -22,7 +22,7 @@
     [_download removeObserver:self forKeyPath:@"progress"];
 }
 
--(void)setDownload:(PutIODownload *)download
+-(void)setDownload:(Download *)download
 {
     [self stopObservingDownload];
     _download = download;
@@ -33,7 +33,7 @@
     [self startObservingDownload];
 }
 
--(PutIODownload *)download
+-(Download *)download
 {
     return _download;
 }
@@ -58,7 +58,7 @@
 
 -(void)updateStatus
 {
-    PutIODownload *download = _download;
+    Download *download = _download;
     [progressBar setHidden:!(download.status == PutIODownloadStatusDownloading)];
     [statusLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 0 : -8)];
     [textLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 3 : 12)];

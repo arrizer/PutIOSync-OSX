@@ -1,7 +1,7 @@
 
 #import "SyncInstruction.h"
 #import "KnownItem.h"
-#import "PersistenceManager.h"
+#import "Persistency.h"
 
 @implementation SyncInstruction
 
@@ -27,8 +27,8 @@
 
 + (NSArray *)allSyncInstructions
 {
-    NSFetchRequest *request = [[PersistenceManager manager].model fetchRequestTemplateForName:@"AllSyncInstructions"];
-    NSArray *objects = [[PersistenceManager manager].context executeFetchRequest:request error:nil];
+    NSFetchRequest *request = [[Persistency manager].model fetchRequestTemplateForName:@"AllSyncInstructions"];
+    NSArray *objects = [[Persistency manager].context executeFetchRequest:request error:nil];
     return objects;
 }
 
@@ -64,7 +64,7 @@
 
 -(void)addKnownItemWithID:(NSInteger)itemID
 {
-    KnownItem *item = [[KnownItem alloc] initWithEntity:[[PersistenceManager manager] entityNamed:@"KnownItem"]
+    KnownItem *item = [[KnownItem alloc] initWithEntity:[[Persistency manager] entityNamed:@"KnownItem"]
        insertIntoManagedObjectContext:self.managedObjectContext];
     item.itemID = @(itemID);
     [self addKnownItemsObject:item];

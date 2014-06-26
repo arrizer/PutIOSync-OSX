@@ -1,12 +1,10 @@
 
-#import "PutIODownload.h"
-#import "PersistenceManager.h"
-#import "ApplicationDelegate.h"
+#import "Download.h"
+#import "PutIODownloadManager.h"
 #import "PutIOAPIFileDeletionRequest.h"
+#import "ApplicationDelegate.h"
 
-#define PUTIO_API_DOWNLOAD_ENDPOINT @"https://api.put.io/v2/files/%ld/download?oauth_token=%@"
-
-@interface PutIODownload()
+@interface Download()
 {
     NSString *localPath;
     NSString *subdirectoryPath;
@@ -19,106 +17,29 @@
     NSFileHandle *fileHandle;
     NSUInteger numberOfRetries;
 }
-
-@property (strong) PutIOAPIFile *putioFile;
-@property (assign) float progress;
-@property (assign) BOOL progressIsKnown;
-@property (assign) PutIODownloadStatus status;
-@property (strong) NSString *localizedStatus;
-@property (assign) NSTimeInterval estimatedRemainingTime;
-@property (assign) BOOL estimatedRemainingTimeIsKnown;
-@property (assign) NSUInteger totalSize;
-@property (assign) NSUInteger receivedSize;
-@property (assign) NSUInteger bytesPerSecond;
-@property (unsafe_unretained) SyncInstruction *originatingSyncInstruction;
-@property (strong) NSError *downloadError;
-@property (strong) NSString *localFile;
-@property (assign) BOOL shouldResumeOnAppLaunch;
 @end
 
-@implementation PutIODownload
+@implementation Download
 
-#pragma mark - Manage Download List
+@dynamic putIOFileArchive;
+@dynamic localFile;
+@dynamic localPath;
+@dynamic subdirectoryPath;
+@dynamic progress;
+@dynamic progressIsKnown;
+@dynamic estimatedRemainingTime;
+@dynamic estimatedRemainingTimeIsKnown;
+@dynamic totalSize;
+@dynamic receivedSize;
+@dynamic localFileTemporary;
+@dynamic status;
+@dynamic shouldResumeOnAppLaunch;
+@dynamic originatingSyncInstruction;
 
-static NSMutableArray* allDownloads;
-static NSInteger numberOfRunningDownloads = 0;
-
-+ (NSArray*)allDownloads
-{
-    if(!allDownloads){
-        // Load the existing downloads from disk
-        //allDownloads = [PersistenceManager retrievePersistentObjectForKey:@"downloads"];
-        if(allDownloads == nil)
-            allDownloads = [NSMutableArray array];
-        else{
-            for(PutIODownload *download in allDownloads)
-                if(download.shouldResumeOnAppLaunch){
-                    download.shouldResumeOnAppLaunch = NO;
-                    [download startDownload];
-                }
-        }
-    }
-    return allDownloads;
-}
-
-+ (void)clearDownloadList
-{
-    for(PutIODownload *download in [allDownloads copy]){
-        if(download.status != PutIODownloadStatusDownloading && download.status != PutIODownloadStatusPending){
-            [download cancelDownload];
-            [allDownloads removeObject:download];
-        }
-    }
-}
-
-+ (BOOL)downloadExistsForFile:(PutIOAPIFile *)file
-{
-    for(PutIODownload *download in allDownloads)
-        if([download.putioFile fileID] == file.fileID)
-            return YES;
-    return NO;
-}
-
-+(void)pauseAndSaveAllDownloads
-{
-    // Call this before the application terminates
-    for(PutIODownload *download in allDownloads)
-        [download stopWaitingForOtherDownloads];
-    for(PutIODownload *download in allDownloads){
-        if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
-            [download pauseDownload];
-            download.shouldResumeOnAppLaunch = YES;
-        }
-    }
-    [PutIODownload saveDownloads];
-}
-
-+ (void)saveDownloads
-{
-    //[PersistenceManager storePersistentObject:allDownloads forKey:@"downloads"];
-}
-
-+ (NSInteger)numberOfRunningDownloads
-{
-    return numberOfRunningDownloads;
-}
-
-+ (void)complyWithMaximumParallelDownloads
-{
-    NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
-    while([PutIODownload numberOfRunningDownloads] > maxParallelDownloads){
-        for(PutIODownload *download in allDownloads)
-            if(download.status == PutIODownloadStatusDownloading){
-                [download pauseDownload];
-                [download startDownload];
-                break;
-            }
-    }
-    for(PutIODownload *download in allDownloads){
-        if(download.status == PutIODownloadStatusPending)
-            [download startDownload];
-    }
-}
+@synthesize downloadError = _downloadError;
+@synthesize bytesPerSecond = _bytesPerSecond;
+@synthesize putioFile = _putioFile;
+@synthesize localizedStatus = _localizedStatus;
 
 #pragma mark - Init
 
@@ -127,7 +48,7 @@ static NSInteger numberOfRunningDownloads = 0;
        subdirectoryPath:(NSString*)subPath
 originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
-    self = [super init];
+    self = [self initWithEntity:[[Persistency manager] entityNamed:@"Download"] insertIntoManagedObjectContext:[Persistency manager].context];
     if (self) {
         self.putioFile = file;
         localPath = path;
@@ -142,10 +63,16 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.shouldResumeOnAppLaunch = NO;
         numberOfRetries = 0;
         [self changeStatus:PutIODownloadStatusPending];
-        [allDownloads addObject:self];
         [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
     }
     return self;
+}
+
+-(void)awakeFromFetch
+{
+    [self changeStatus:self.status andDeliverNotification:NO];
+    numberOfRetries = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
 }
 
 -(void)dealloc
@@ -153,54 +80,65 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [self stopWaitingForOtherDownloads];
 }
 
-#pragma mark - Coding
+//#pragma mark - Coding
+//
+//-(id)initWithCoder:(NSCoder *)decoder
+//{
+//    self = [super init];
+//    if(self){
+//        self.putioFile = [decoder decodeObjectForKey:@"putioFile"];
+//        self.localFile = [decoder decodeObjectForKey:@"localFile"];
+//        localPath = [decoder decodeObjectForKey:@"localPath"];
+//        subdirectoryPath = [decoder decodeObjectForKey:@"subdirectoryPath"];
+//        self.progress = [decoder decodeFloatForKey:@"progress"];
+//        self.progressIsKnown = [decoder decodeBoolForKey:@"progressIsKnown"];
+//        self.estimatedRemainingTime = [decoder decodeIntegerForKey:@"estimatedRemainingTime"];
+//        self.estimatedRemainingTimeIsKnown = [decoder decodeBoolForKey:@"estimatedRemainingTimeIsKnown"];
+//        //      NSInteger uniqueID = [decoder decodeIntegerForKey:@"originatingSyncInstruction.uniqueID"];
+//        //        for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions])
+//        //            if(instruction.uniqueID == uniqueID)
+//        //                self.originatingSyncInstruction = instruction;
+//        self.totalSize = [decoder decodeIntegerForKey:@"totalSize"];
+//        self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
+//        localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
+//        self.shouldResumeOnAppLaunch = [decoder decodeBoolForKey:@"shouldResumeOnAppLaunch"];
+//        self.status = [decoder decodeIntForKey:@"status"];
+//
+//    }
+//    return self;
+//}
+//
+//-(void)encodeWithCoder:(NSCoder *)coder
+//{
+//    [coder encodeObject:self.putioFile forKey:@"putioFile"];
+//    [coder encodeObject:self.localFile forKey:@"localFile"];
+//    [coder encodeObject:localPath forKey:@"localPath"];
+//    [coder encodeObject:subdirectoryPath forKey:@"subdirectoryPath"];
+//    [coder encodeFloat:self.progress forKey:@"progress"];
+//    [coder encodeBool:self.progressIsKnown forKey:@"progressIsKnown"];
+//    [coder encodeInteger:self.estimatedRemainingTime forKey:@"estimatedRemainingTime"];
+//    [coder encodeBool:self.estimatedRemainingTimeIsKnown forKey:@"estimatedRemainingTimeIsKnown"];
+//    //  [coder encodeInteger:self.originatingSyncInstruction.uniqueID forKey:@"originatingSyncInstruction.uniqueID"];
+//    [coder encodeInteger:self.totalSize forKey:@"totalSize"];
+//    [coder encodeInteger:self.receivedSize forKey:@"receivedSize"];
+//    [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
+//    [coder encodeInt:(int)self.status forKey:@"status"];
+//    [coder encodeBool:self.shouldResumeOnAppLaunch forKey:@"shouldResumeOnAppLaunch"];
+//}
 
--(id)initWithCoder:(NSCoder *)decoder
+#pragma mark - Accessors
+
+-(void)setPutioFile:(PutIOAPIFile *)putioFile
 {
-    self = [super init];
-    if(self){
-        self.putioFile = [decoder decodeObjectForKey:@"putioFile"];
-        self.localFile = [decoder decodeObjectForKey:@"localFile"];
-        localPath = [decoder decodeObjectForKey:@"localPath"];
-        subdirectoryPath = [decoder decodeObjectForKey:@"subdirectoryPath"];
-        self.progress = [decoder decodeFloatForKey:@"progress"];
-        self.progressIsKnown = [decoder decodeBoolForKey:@"progressIsKnown"];
-        self.estimatedRemainingTime = [decoder decodeIntegerForKey:@"estimatedRemainingTime"];
-        self.estimatedRemainingTimeIsKnown = [decoder decodeBoolForKey:@"estimatedRemainingTimeIsKnown"];
-        NSInteger uniqueID = [decoder decodeIntegerForKey:@"originatingSyncInstruction.uniqueID"];
-//        for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions])
-//            if(instruction.uniqueID == uniqueID)
-//                self.originatingSyncInstruction = instruction;
-        self.totalSize = [decoder decodeIntegerForKey:@"totalSize"];
-        self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
-        localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
-        self.shouldResumeOnAppLaunch = [decoder decodeBoolForKey:@"shouldResumeOnAppLaunch"];
-        self.status = [decoder decodeIntForKey:@"status"];
-        [self changeStatus:self.status andDeliverNotification:NO];
-        numberOfRetries = 0;
-
-        [allDownloads addObject:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
-    }
-    return self;
+    self.putIOFileArchive = [NSKeyedArchiver archivedDataWithRootObject:putioFile];
 }
 
--(void)encodeWithCoder:(NSCoder *)coder
+-(PutIOAPIFile *)putioFile
 {
-    [coder encodeObject:self.putioFile forKey:@"putioFile"];
-    [coder encodeObject:self.localFile forKey:@"localFile"];
-    [coder encodeObject:localPath forKey:@"localPath"];
-    [coder encodeObject:subdirectoryPath forKey:@"subdirectoryPath"];
-    [coder encodeFloat:self.progress forKey:@"progress"];
-    [coder encodeBool:self.progressIsKnown forKey:@"progressIsKnown"];
-    [coder encodeInteger:self.estimatedRemainingTime forKey:@"estimatedRemainingTime"];
-    [coder encodeBool:self.estimatedRemainingTimeIsKnown forKey:@"estimatedRemainingTimeIsKnown"];
-//  [coder encodeInteger:self.originatingSyncInstruction.uniqueID forKey:@"originatingSyncInstruction.uniqueID"];
-    [coder encodeInteger:self.totalSize forKey:@"totalSize"];
-    [coder encodeInteger:self.receivedSize forKey:@"receivedSize"];
-    [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
-    [coder encodeInt:(int)self.status forKey:@"status"];
-    [coder encodeBool:self.shouldResumeOnAppLaunch forKey:@"shouldResumeOnAppLaunch"];
+    if(_putioFile == nil){
+        _putioFile = [NSKeyedUnarchiver unarchiveObjectWithData:self.putIOFileArchive];
+    }
+    return _putioFile;
 }
 
 #pragma mark - Controlling the download
@@ -216,7 +154,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [self stopWaitingForOtherDownloads];
     
     NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
-    if(maxParallelDownloads != 0 && [PutIODownload numberOfRunningDownloads] >= maxParallelDownloads){
+    if(maxParallelDownloads != 0 && [[PutIODownloadManager manager] numberOfRunningDownloads] >= maxParallelDownloads){
         // The maximum number of downloads is already runnung, wait for another
         [self startWaitingForOtherDownloads];
         return;
@@ -230,16 +168,15 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     receivedBytesInCurrentSession = 0;
     self.localFile = nil;
     
-    NSString *requestURLString = [NSString stringWithFormat:PUTIO_API_DOWNLOAD_ENDPOINT, [self.putioFile fileID], [[PutIOAPI api]oAuthAccessToken]];
-    NSURL *requestURL = [NSURL URLWithString:requestURLString];
+    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:[self.putioFile fileID]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:60.0f];
     
     if([self canResume]){
         // Resume the download
-        [request setValue:[NSString stringWithFormat:@"bytes=%li-", self.receivedSize] forHTTPHeaderField:@"Range"];
-        NSLog(@"%@ resuming download from byte %li", self, self.receivedSize);
+        [request setValue:[NSString stringWithFormat:@"bytes=%lli-", self.receivedSize] forHTTPHeaderField:@"Range"];
+        NSLog(@"%@ resuming download from byte %lli", self, self.receivedSize);
     }else{
         [self deleteTemporaryDataFile];
         // Download from beginning
@@ -266,8 +203,9 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 - (void)cancelDownload
 {
-    if(connection)
+    if(connection){
         [self cancelConnection];
+    }
     [self deleteTemporaryDataFile];
     [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusCancelled];
@@ -372,7 +310,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         // File size == HTTP Content-Length == PutIO API file size == Received size => it worked!
         return YES;
     }else{
-        NSLog(@"%@ downloaded file has not expected size:\nBytes received = %li\nContent-length = %li\nPutIO file size = %li\nActual file size = %lli", self, self.receivedSize, self.totalSize, self.putioFile.size, [attributes fileSize]);
+        NSLog(@"%@ downloaded file has not expected size:\nBytes received = %lli\nContent-length = %lli\nPutIO file size = %li\nActual file size = %lli", self, self.receivedSize, self.totalSize, self.putioFile.size, [attributes fileSize]);
         //[self failWithError:nil];
         [self startDownload];
     }
@@ -428,7 +366,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     }
     
     BOOL shouldRetry = (c == NSURLErrorTimedOut
-                     || c == NSURLErrorCannotConnectToHost);
+                        || c == NSURLErrorCannotConnectToHost);
     
     if(shouldRetry && numberOfRetries < 5){
         // PutIO servers are wonky, so retry a few times
@@ -500,7 +438,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(void)failWithLocalizedErrorDescription:(NSString*)errorDescription
 {
     NSError *error = [NSError errorWithDomain:@"putiodownload"
-                                         code:1 
+                                         code:1
                                      userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
     [self failWithError:error];
 }
@@ -525,24 +463,21 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(void)changeStatus:(PutIODownloadStatus)newStatus andDeliverNotification:(BOOL)deliverNotification
 {
     NSDictionary *localizedStatusDescriptions = @{
-        @((int)PutIODownloadStatusPending) : NSLocalizedString(@"Pending", nil),
-        @((int)PutIODownloadStatusDownloading) : NSLocalizedString(@"Downloading", nil),
-        @((int)PutIODownloadStatusPaused) : NSLocalizedString(@"Paused", nil),
-        @((int)PutIODownloadStatusFinished) : NSLocalizedString(@"Finished", nil),
-        @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
-        @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
-    };
+                                                  @((int)PutIODownloadStatusPending) : NSLocalizedString(@"Pending", nil),
+                                                  @((int)PutIODownloadStatusDownloading) : NSLocalizedString(@"Downloading", nil),
+                                                  @((int)PutIODownloadStatusPaused) : NSLocalizedString(@"Paused", nil),
+                                                  @((int)PutIODownloadStatusFinished) : NSLocalizedString(@"Finished", nil),
+                                                  @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
+                                                  @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
+                                                  };
     NSDictionary *notificationNames = @{
-        @((int)PutIODownloadStatusDownloading) : PutIODownloadStartedNotification,
-        @((int)PutIODownloadStatusPaused) : PutIODownloadPausedNotification,
-        @((int)PutIODownloadStatusFinished) : PutIODownloadFinishedNotification,
-        @((int)PutIODownloadStatusCancelled) : PutIODownloadCancelledNotification,
-        @((int)PutIODownloadStatusFailed) : PutIODownloadFailedNotification
-    };
-    if(newStatus == PutIODownloadStatusDownloading)
-        numberOfRunningDownloads++;
-    else if(self.status == PutIODownloadStatusDownloading)
-        numberOfRunningDownloads--;
+                                        @((int)PutIODownloadStatusDownloading) : PutIODownloadStartedNotification,
+                                        @((int)PutIODownloadStatusPaused) : PutIODownloadPausedNotification,
+                                        @((int)PutIODownloadStatusFinished) : PutIODownloadFinishedNotification,
+                                        @((int)PutIODownloadStatusCancelled) : PutIODownloadCancelledNotification,
+                                        @((int)PutIODownloadStatusFailed) : PutIODownloadFailedNotification
+                                        };
+
     self.localizedStatus = localizedStatusDescriptions[@((int)newStatus)];
     self.status = newStatus;
     NSString *notificationName = notificationNames[@((int)newStatus)];
@@ -550,7 +485,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
     if(deliverNotification)
         [self deliverUserNotification];
-    [PutIODownload saveDownloads];
 }
 
 #pragma mark - User Notifications
@@ -604,7 +538,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     if(self.status == PutIODownloadStatusPending){
         NSInteger maxParallelDownloads = [[NSUserDefaults standardUserDefaults] integerForKey:@"general_paralleldownloads"];
-        if(maxParallelDownloads == 0 || [PutIODownload numberOfRunningDownloads] < maxParallelDownloads){
+        if(maxParallelDownloads == 0 || [[PutIODownloadManager manager] numberOfRunningDownloads] < maxParallelDownloads){
             [self startDownload];
         }
     }

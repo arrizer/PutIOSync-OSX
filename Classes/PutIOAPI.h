@@ -15,7 +15,7 @@
 @property (readonly) BOOL isAuthenticated;
 
 - (instancetype)initWithBaseURL:(NSURL*)baseURL oAuthAccessToken:(NSString*)oAuthAccessToken oAuthClientID:(NSString*)clientID oAuthRedirectURI:(NSString*)redirectURI;
-
+- (NSURL*)downloadURLForFileWithID:(NSInteger)fileID;
 - (void)performRequest:(PutIOAPIRequest*)request;
 - (void)cancelAllRequests;
 

@@ -1,9 +1,7 @@
 
-#import "PersistenceManager.h"
+#import "Persistency.h"
 
-#define APPSUPPORT_SUBDIRECTORY @"/PutIOSync"
-
-@implementation PersistenceManager
+@implementation Persistency
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize model = _model;
@@ -11,10 +9,10 @@
 
 +(instancetype)manager
 {
-    static PersistenceManager *sharedInstance = nil;
+    static Persistency *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[PersistenceManager alloc] init];
+        sharedInstance = [[Persistency alloc] init];
     });
     return sharedInstance;
 }
@@ -89,7 +87,7 @@
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (!coordinator) {
+    if(!coordinator){
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
         [dict setValue:@"There was an error building up the data file." forKey:NSLocalizedFailureReasonErrorKey];
@@ -116,23 +114,21 @@
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    if (!_context) {
+    if(!_context){
         return NSTerminateNow;
     }
-    if (![self.context commitEditing]){
+    if(![self.context commitEditing]){
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
         return NSTerminateCancel;
     }
-    if (![self.context hasChanges]){
+    if(![self.context hasChanges]){
         return NSTerminateNow;
     }
     
     NSError *error = nil;
-    if (![self.context save:&error]) {
-        
-        // Customize this code block to include application-specific recovery steps.
+    if(![self.context save:&error]){
         BOOL result = [sender presentError:error];
-        if (result) {
+        if(result){
             return NSTerminateCancel;
         }
         
@@ -161,57 +157,4 @@
     return [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
 }
 
-//+(NSString*)persistentStorageLocationCreateIfNecessary:(BOOL)shoudCreate
-//{
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    NSURL *appSupport = [fm URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask][0];
-//    NSString *path = [[appSupport relativePath] stringByAppendingString:APPSUPPORT_SUBDIRECTORY];
-//    if(![fm fileExistsAtPath:path]){
-//        if(shoudCreate){
-//            NSError *error;
-//            if(![fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]){
-//                NSLog(@"Unable to create subfolder in Application Support: %@", error);
-//                return nil;
-//            }
-//        }else{
-//            return nil;
-//        }
-//    }
-//    return path;
-//}
-//
-//+(void)storePersistentObject:(id<NSCoding>)object
-//                      forKey:(NSString *)key
-//{
-//    if(object == nil)
-//        return;
-//    NSString *path = [PersistenceManager persistentStorageLocationCreateIfNecessary:YES];
-//    if(path){
-//        path = [path stringByAppendingFormat:@"/%@.plist", key];
-//        if([NSKeyedArchiver archiveRootObject:object toFile:path]){
-//            //NSLog(@"Archived persistent object for key: %@", key);
-//        }else{
-//            NSLog(@"Unable to archive persistent object for key: %@", key);            
-//        }
-//    }
-//}
-//
-//+(id)retrievePersistentObjectForKey:(NSString *)key
-//{
-//    NSString *path = [PersistenceManager persistentStorageLocationCreateIfNecessary:NO];
-//    if(path){
-//        path = [path stringByAppendingFormat:@"/%@.plist", key];
-//        if([[NSFileManager defaultManager] fileExistsAtPath:path]){
-//            id object = nil;
-//            @try {
-//                object = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-//            }
-//            @catch (NSException *exception) {
-//                NSLog(@"Unable to unarchive persistent object for key %@: %@", key, exception);
-//            }
-//            return object;
-//        }
-//    }
-//    return nil;
-//}
 @end

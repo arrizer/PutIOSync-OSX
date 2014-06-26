@@ -1,8 +1,8 @@
 
 #import <Foundation/Foundation.h>
 #import "PutIOAPI.h"
-#import "PutIOAPIFile.h"
 #import "SyncInstruction.h"
+#import "PutIOAPIFile.h"
 
 #define PutIODownloadAddedNotification @"PutIODownloadAddedNotification"
 #define PutIODownloadFinishedNotification @"PutIODownloadFinishedNotification"
@@ -22,13 +22,6 @@ typedef enum{
 
 @interface PutIODownload : NSObject
 <NSURLConnectionDataDelegate, NSCoding>
-
-+ (NSArray*)allDownloads;
-+ (void)clearDownloadList;
-+ (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
-+ (void)pauseAndSaveAllDownloads;
-+ (void)saveDownloads;
-+ (void)complyWithMaximumParallelDownloads;
 
 - (id)initWithPutIOFile:(PutIOAPIFile*)file
               localPath:(NSString*)path

@@ -1,7 +1,7 @@
 
 #import "GeneralPreferences.h"
 #import "ApplicationDelegate.h"
-#import "PutIODownload.h"
+#import "PutIODownloadManager.h"
 
 @implementation GeneralPreferences
 
@@ -72,7 +72,7 @@
 
 -(IBAction)maxParallelDownloadsChanged:(id)sender
 {
-    [PutIODownload complyWithMaximumParallelDownloads];
+    [[PutIODownloadManager manager] complyWithMaximumParallelDownloads];
 }
 
 @end

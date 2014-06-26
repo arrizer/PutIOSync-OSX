@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PersistenceManager : NSObject
+@interface Persistency : NSObject
 
 +(instancetype)manager;
 

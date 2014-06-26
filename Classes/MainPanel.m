@@ -2,7 +2,7 @@
 #import "MainPanel.h"
 #import "ApplicationDelegate.h"
 #import "SyncScheduler.h"
-#import "PutIODownload.h"
+#import "PutIODownloadManager.h"
 #import "DownloadCellView.h"
 #import "PutIOTransfersMonitor.h"
 #import "TransferCellView.h"
@@ -120,20 +120,20 @@
 
 - (IBAction)pauseAllDownloads:(id)sender
 {
-    for(PutIODownload *download in [PutIODownload allDownloads])
+    for(Download *download in [[PutIODownloadManager manager] allDownloads])
         [download pauseDownload];
 }
 
 - (IBAction)resumeAllDownloads:(id)sender
 {
-    for(PutIODownload *download in [PutIODownload allDownloads])
+    for(Download *download in [[PutIODownloadManager manager] allDownloads])
         [download startDownload];
 }
 
 -(IBAction)clearDownloads:(id)sender
 {
     if(listMode == MainPanelListModeDownloads){
-        [PutIODownload clearDownloadList];
+        [[PutIODownloadManager manager] clearDownloadList];
         [self reloadTableData];
     }else if(listMode == MainPanelListModeTransfers){
         
@@ -155,8 +155,8 @@
 {
     NSInteger row = [tableView clickedRow];
     NSTableCellView *cell = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
-    if([cell.objectValue isKindOfClass:[PutIODownload class]]){
-        PutIODownload *download = (PutIODownload*)cell.objectValue;
+    if([cell.objectValue isKindOfClass:[Download class]]){
+        Download *download = (Download*)cell.objectValue;
         if(download.status == PutIODownloadStatusFinished){
             [[NSWorkspace sharedWorkspace] openFile:download.localFile];
         }
@@ -168,7 +168,7 @@
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     if(listMode == MainPanelListModeDownloads){
-        return ([[[SyncScheduler sharedSyncScheduler] runningSyncs] count] + [[PutIODownload allDownloads] count]);
+        return ([[[SyncScheduler sharedSyncScheduler] runningSyncs] count] + [[[PutIODownloadManager manager] allDownloads] count]);
     }else if(listMode == MainPanelListModeTransfers){
         return ([[[PutIOTransfersMonitor monitor] allActiveTransfers] count]);
     }
@@ -186,7 +186,7 @@
         }else{
             row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
             DownloadCellView *cell = [tableView makeViewWithIdentifier:@"downloadCell" owner:self];
-            PutIODownload *download = [PutIODownload allDownloads][row];
+            Download *download = [[PutIODownloadManager manager] allDownloads][row];
             [cell setDownload:download];
             return cell;
         }
@@ -210,7 +210,7 @@
             return runner;
         }else{
             row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
-            PutIODownload *download = [PutIODownload allDownloads][row];
+            Download *download = [[PutIODownloadManager manager] allDownloads][row];
             return download;
         }
     }else if(listMode == MainPanelListModeTransfers){

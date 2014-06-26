@@ -1,8 +1,9 @@
 
 #import "SyncRunner.h"
-#import "PutIODownload.h"
+#import "PutIODownloadManager.h"
 #import "PutIOAPIFileRequest.h"
 #import "PutIOAPIFileDeletionRequest.h"
+#import "Download.h"
 
 @interface SyncRunner()
 @property (strong) NSString *localizedOperationName;
@@ -124,15 +125,15 @@
         relativePath = [self relativePathOfFileAtNode:node];
     //NSString *filename = [file name];
 
-    if(![PutIODownload downloadExistsForFile:file]){
+    if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
         //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
         NSString *localPath = [syncInstruction.localDestination relativePath];
         if(localPath != nil){
-            PutIODownload *download = [[PutIODownload alloc] initWithPutIOFile:file
-                                                                     localPath:localPath
-                                                              subdirectoryPath:relativePath 
-                                                    originatingSyncInstruction:syncInstruction];
-            
+            Download *download = [[Download alloc] initWithPutIOFile:file
+                                                           localPath:localPath
+                                                    subdirectoryPath:relativePath
+                                          originatingSyncInstruction:syncInstruction];
+            [[PutIODownloadManager manager] addDownload:download];
             [download startDownload];
             foundFiles++;
         }
