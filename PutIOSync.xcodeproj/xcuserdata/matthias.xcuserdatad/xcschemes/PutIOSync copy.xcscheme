@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "398350C2194E736000C4CFC5"
-               BuildableName = "PutIOKit.framework"
-               BlueprintName = "PutIOKit"
+               BlueprintIdentifier = "399C9500195BE4A2003E773D"
+               BuildableName = "PutIOSync.app"
+               BlueprintName = "PutIOSync copy"
                ReferencedContainer = "container:PutIOSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,17 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "398350CC194E736100C4CFC5"
-               BuildableName = "PutIOKitTests.xctest"
-               BlueprintName = "PutIOKitTests"
-               ReferencedContainer = "container:PutIOSync.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "399C9500195BE4A2003E773D"
+            BuildableName = "PutIOSync.app"
+            BlueprintName = "PutIOSync copy"
+            ReferencedContainer = "container:PutIOSync.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -49,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "399C9500195BE4A2003E773D"
+            BuildableName = "PutIOSync.app"
+            BlueprintName = "PutIOSync copy"
+            ReferencedContainer = "container:PutIOSync.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -58,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "399C9500195BE4A2003E773D"
+            BuildableName = "PutIOSync.app"
+            BlueprintName = "PutIOSync copy"
+            ReferencedContainer = "container:PutIOSync.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
