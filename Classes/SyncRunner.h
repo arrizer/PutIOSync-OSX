@@ -11,16 +11,6 @@
 @end
 
 @interface SyncRunner : NSObject
-{
-    SyncInstruction *syncInstruction;
-    PutIOAPI *putio;
-    BOOL busy;
-    
-    NSMutableArray *nodeQueue;
-    NSTreeNode *originTree;
-    NSString *destinationPath;
-    NSUInteger foundFiles;
-}
 
 @property (unsafe_unretained) id<SyncRunnerDelegate> delegate;
 @property (readonly) BOOL isBusy;

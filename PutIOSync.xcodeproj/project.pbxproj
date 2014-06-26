@@ -125,6 +125,7 @@
 		39937B2918E9B03D00105963 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
+		399C9545195BE4A3003E773D /* PutIOSync copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PutIOSync copy-Info.plist"; path = "/Users/matthias/Documents/Projects/PutIOSync/PutIOSync copy-Info.plist"; sourceTree = "<absolute>"; };
 		39A66FB8178213010073DB81 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		39A66FB9178213010073DB81 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		39A66FBB178213650073DB81 /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = Classes/PutIOAPI.h; sourceTree = "<group>"; };
@@ -355,6 +356,7 @@
 				DD4F7C0713C30F9F00825C6E /* Frameworks */,
 				DD4F7C0F13C30F9F00825C6E /* Supporting Files */,
 				DD4F7C0513C30F9F00825C6E /* Products */,
+				399C9545195BE4A3003E773D /* PutIOSync copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -443,6 +445,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		399C9546195BE52B003E773D /* Release */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 399C9547195BE52B003E773D /* Build configuration list for PBXLegacyTarget "Release" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/local/bin/sparklerelease;
+			buildWorkingDirectory = /Users/matthias/Documents/Projects/PutIOSync/Release;
+			dependencies = (
+			);
+			name = Release;
+			passBuildSettingsInEnvironment = 1;
+			productName = Release;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		DD4F7C0313C30F9F00825C6E /* PutIOSync */ = {
 			isa = PBXNativeTarget;
@@ -450,7 +469,7 @@
 			buildPhases = (
 				DD4F7C0013C30F9F00825C6E /* Sources */,
 				DD4F7C0113C30F9F00825C6E /* Frameworks */,
-				399C94F2195BD1F3003E773D /* ShellScript */,
+				399C94F2195BD1F3003E773D /* Increase Build Number */,
 				DD4F7C0213C30F9F00825C6E /* Resources */,
 				39910AC116503D4000967014 /* Copy Files */,
 			);
@@ -471,6 +490,9 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
+					399C9546195BE52B003E773D = {
+						CreatedOnToolsVersion = 6.0;
+					};
 					DD4F7C0313C30F9F00825C6E = {
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -494,6 +516,7 @@
 			projectRoot = "";
 			targets = (
 				DD4F7C0313C30F9F00825C6E /* PutIOSync */,
+				399C9546195BE52B003E773D /* Release */,
 			);
 		};
 /* End PBXProject section */
@@ -521,13 +544,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		399C94F2195BD1F3003E773D /* ShellScript */ = {
+		399C94F2195BD1F3003E773D /* Increase Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Increase Build Number";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,6 +696,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		399C9548195BE52B003E773D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				METAL_ENABLE_DEBUG_INFO = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		399C9549195BE52B003E773D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				METAL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		DD4F7C2013C30F9F00825C6E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -790,6 +860,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		399C9547195BE52B003E773D /* Build configuration list for PBXLegacyTarget "Release" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				399C9548195BE52B003E773D /* Debug */,
+				399C9549195BE52B003E773D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		DD4F7BFE13C30F9F00825C6E /* Build configuration list for PBXProject "PutIOSync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
