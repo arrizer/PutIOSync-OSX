@@ -10,10 +10,11 @@
     NSString *subdirectoryPath;
     NSString *localFileTemporary;
     NSURLConnection *connection;
+    NSTimer *progressUpdateTimer;
     NSTimeInterval currentSessionStartTime;
     NSTimeInterval lastProgressUpdate;
-    NSUInteger receivedBytesSinceLastProgressUpdate;
     NSUInteger receivedBytesInCurrentSession;
+    NSUInteger receivedBytesSinceLastProgressUpdate;
     NSFileHandle *fileHandle;
     NSUInteger numberOfRetries;
 }
@@ -164,9 +165,13 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     self.bytesPerSecond = 0;
     self.progressIsKnown = NO;
     currentSessionStartTime = 0.0f;
-    receivedBytesSinceLastProgressUpdate = 0;
     receivedBytesInCurrentSession = 0;
     self.localFile = nil;
+    receivedBytesSinceLastProgressUpdate = 0;
+    progressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.2f
+                                                           target:self
+                                                         selector:@selector(updateProgress)
+                                                         userInfo:nil repeats:YES];
     
     NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:[self.putioFile fileID]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL
@@ -351,10 +356,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     
     // Don't update the progress too often
     receivedBytesSinceLastProgressUpdate += [data length];
-    if(([NSDate timeIntervalSinceReferenceDate] - lastProgressUpdate) > 0.2f){
-        [self updateProgress];
-        
-    }
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
