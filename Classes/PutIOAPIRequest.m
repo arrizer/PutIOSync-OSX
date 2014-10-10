@@ -36,11 +36,6 @@
 
 -(void)main
 {
-    if(!self.api.isAuthenticated){
-        [self failWithInternalError:PutIOAPIInternalErrorNotAuthorized userMessage:nil];
-        return;
-    }
-    
     NSString *requestURLString = [self.api.baseURL absoluteString];
     requestURLString = [requestURLString stringByAppendingPathComponent:self.endpoint];
     NSMutableDictionary *parameters;
@@ -49,7 +44,12 @@
     }else{
         parameters = [self.parameters mutableCopy];
     }
-    parameters[@"oauth_token"] = self.api.oAuthAccessToken;
+    
+    // only add the oauth token if we are logged in
+    if (self.api.oAuthAccessToken) {
+        parameters[@"oauth_token"] = self.api.oAuthAccessToken;
+    }
+    
     NSString *parameterString = [parameters URLQueryString];
     if(self.method == PutIOAPIMethodGET){
         requestURLString = [requestURLString stringByAppendingFormat:@"?%@", parameterString];

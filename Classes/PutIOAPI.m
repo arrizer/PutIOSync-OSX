@@ -8,8 +8,6 @@
 #define kDefaultClientID @"197"
 #define kDefaultRedirectURI @"https://matthiasschwab.de/putiosync/callback.html"
 
-static NSString *oAuthAccessToken;
-
 @interface PutIOAPI()
 {
     NSOperationQueue *queue;

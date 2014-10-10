@@ -74,6 +74,7 @@
         [syncInstruction.managedObjectContext deleteObject:syncInstruction];
     }
     [PutIOAPIKeychainManager setKeychainItemPassword:token];
+    [[PutIOAPI api] setOAuthAccessToken:token];
     
     // Reset username/email, we need to retrieve those from put.io
     NSUserDefaults *d = [NSUserDefaults standardUserDefaults];

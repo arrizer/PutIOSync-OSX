@@ -11,7 +11,7 @@
 @property (readonly) NSString *oAuthClientID;
 @property (readonly) NSString *oAuthClientSecret;
 @property (readonly) NSString *oAuthRedirectURI;
-@property (readonly) NSString *oAuthAccessToken;
+@property (strong) NSString *oAuthAccessToken;
 @property (readonly) BOOL isAuthenticated;
 
 - (instancetype)initWithBaseURL:(NSURL*)baseURL oAuthAccessToken:(NSString*)oAuthAccessToken oAuthClientID:(NSString*)clientID oAuthRedirectURI:(NSString*)redirectURI;
