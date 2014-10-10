@@ -2,17 +2,34 @@
 #include <stdio.h>
 #import "Utilities.h"
 
-static BOOL leopardOrGreater(){
-    static BOOL alreadyComputedOS = NO;
-    static BOOL leopardOrGreater = NO;
-    if (!alreadyComputedOS) {
-        SInt32 majorVersion, minorVersion;
-        Gestalt(gestaltSystemVersionMajor, &majorVersion);
-        Gestalt(gestaltSystemVersionMinor, &minorVersion);
-        leopardOrGreater = ((majorVersion == 10 && minorVersion >= 5) || majorVersion > 10);
-        alreadyComputedOS = YES;
+static BOOL _alreadyComputedOS = NO;
+static BOOL _leopardOrGreater = NO;
+static BOOL _yosemiteOrGreater = NO;
+
+static void computeOS()
+{
+    SInt32 majorVersion, minorVersion;
+    Gestalt(gestaltSystemVersionMajor, &majorVersion);
+    Gestalt(gestaltSystemVersionMinor, &minorVersion);
+    _leopardOrGreater = ((majorVersion == 10 && minorVersion >= 5) || majorVersion > 10);
+    _yosemiteOrGreater = ((majorVersion == 10 && minorVersion >= 10) || majorVersion > 10);
+    _alreadyComputedOS = YES;
+}
+
+BOOL leopardOrGreater(void)
+{
+    if (!_alreadyComputedOS) {
+        computeOS();
     }
-    return leopardOrGreater;
+    return _leopardOrGreater;
+}
+
+BOOL yosemiteOrGreater(void)
+{
+    if (!_alreadyComputedOS) {
+        computeOS();
+    }
+    return _yosemiteOrGreater;
 }
 
 NSString* unitStringFromBytes(double bytes)
