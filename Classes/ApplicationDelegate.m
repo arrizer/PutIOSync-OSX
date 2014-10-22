@@ -86,7 +86,6 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    [[PutIODownloadManager manager] pauseAndSaveAllDownloads];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.menubarController = nil;
     return [[Persistency manager] applicationShouldTerminate:sender];

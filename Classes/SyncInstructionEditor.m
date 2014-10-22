@@ -183,12 +183,6 @@
 
 -(IBAction)commit:(id)sender
 {
-    if(_originalSyncInstruction){
-        // Update the last sync time and known items since they might have changed since
-        // we made a copy of the sync instruction being edited
-        _editedSyncInstruction.knownItems = _originalSyncInstruction.knownItems;
-        _editedSyncInstruction.lastSynced = _originalSyncInstruction.lastSynced;
-    }
     [context performBlock:^{
         [context save:nil];
         [context.parentContext performBlock:^{

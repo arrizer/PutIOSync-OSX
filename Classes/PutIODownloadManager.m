@@ -70,19 +70,19 @@
     return NO;
 }
 
-- (void)pauseAndSaveAllDownloads
-{
-    // Call this before the application terminates
-    for(Download *download in allDownloads)
-        [download stopWaitingForOtherDownloads];
-    for(Download *download in allDownloads){
-        if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
-            [download pauseDownload];
-            download.shouldResumeOnAppLaunch = YES;
-        }
-    }
-    [[Persistency manager].context save:nil];
-}
+//- (void)pauseAndSaveAllDownloads
+//{
+//    // Call this before the application terminates
+//    for(Download *download in allDownloads)
+//        [download stopWaitingForOtherDownloads];
+//    for(Download *download in allDownloads){
+//        if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
+//            [download pauseDownload];
+//            download.shouldResumeOnAppLaunch = YES;
+//        }
+//    }
+//    [[Persistency manager].context save:nil];
+//}
 
 - (void)saveDownloads
 {

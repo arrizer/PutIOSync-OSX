@@ -15,6 +15,7 @@
 {
     IBOutlet WebView *webView;
     IBOutlet NSProgressIndicator *spinner;
+    BOOL loggingOut;
     PutIOAPI *putio;
 }
 

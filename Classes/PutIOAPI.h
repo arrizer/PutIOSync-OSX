@@ -8,6 +8,7 @@
 
 @property (readonly) NSURL *baseURL;
 @property (readonly) NSURL *oAuthAuthenticationURL;
+@property (readonly) NSURL *oAuthLogoutURL;
 @property (readonly) NSString *oAuthClientID;
 @property (readonly) NSString *oAuthClientSecret;
 @property (readonly) NSString *oAuthRedirectURI;

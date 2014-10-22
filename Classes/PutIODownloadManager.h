@@ -12,7 +12,6 @@
 - (NSArray*)allDownloads;
 - (void)clearDownloadList;
 - (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
-- (void)pauseAndSaveAllDownloads;
 - (void)saveDownloads;
 - (void)complyWithMaximumParallelDownloads;
 

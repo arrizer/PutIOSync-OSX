@@ -33,7 +33,7 @@
 
 -(void)viewWillAppear
 {
-    [super viewWillAppear];
+    //[super viewWillAppear];
     [addButton setEnabled:[[PutIOAPI api] isAuthenticated]];
 }
 

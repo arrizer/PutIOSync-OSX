@@ -1,11 +1,11 @@
 
-#import "Utilities.h"
 #import "AccountPreferences.h"
 #import "SyncScheduler.h"
 #import "PutIOAPIKeychainManager.h"
 #import "PutIOAPIAccountInfoRequest.h"
 #import "PutIODownloadManager.h"
 #import "Download.h"
+#import "BytesFormatter.h"
 
 @implementation AccountPreferences
 
@@ -106,7 +106,6 @@
                 [d setObject:[accountInfo username] forKey:@"account_username"];
                 [d setInteger:[accountInfo usedDiskSpace] forKey:@"account_space_used"];
                 [d setInteger:[accountInfo totalDiskSpace] forKey:@"account_space_total"];
-
                 [self updateAccountDetailLabels];
             }
             [activityLabel setHidden:YES];
@@ -139,8 +138,9 @@
             [accountEMailAddressLabel setStringValue:accountEMailAddress];
         }
         if(accountUsedSpace > 0 || accountTotalSpace > 0){
-            NSString *accountUsedSpaceString = unitStringFromBytes(accountUsedSpace);
-            NSString *accountTotalSpaceString = unitStringFromBytes(accountTotalSpace);
+            BytesFormatter *formatter = [[BytesFormatter alloc] init];
+            NSString *accountUsedSpaceString = [formatter stringFromBytes:accountUsedSpace];
+            NSString *accountTotalSpaceString = [formatter stringFromBytes:accountTotalSpace];
             [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Used space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString]];
             [spaceLabel setHidden:NO];
         }

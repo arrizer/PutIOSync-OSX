@@ -23,6 +23,8 @@
 		39585BB2177FC592004B74B3 /* AccountPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BB4177FC592004B74B3 /* AccountPreferences.xib */; };
 		39585BBA177FC5DE004B74B3 /* SyncPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BBC177FC5DE004B74B3 /* SyncPreferences.xib */; };
 		39585BBF177FC7F1004B74B3 /* SyncInstructionEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39585BC1177FC7F1004B74B3 /* SyncInstructionEditor.xib */; };
+		395F319A195D11BA00829AE4 /* BytesFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 395F3199195D11BA00829AE4 /* BytesFormatter.m */; };
+		395F319D195D133A00829AE4 /* TimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 395F319C195D133A00829AE4 /* TimeIntervalFormatter.m */; };
 		3965359F178231DD00BE21DE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; };
 		396535A0178232BE00BE21DE /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 3965359E178231DD00BE21DE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3986C5BE163857C400F19764 /* SyncPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3986C5BC163857C400F19764 /* SyncPreferences.m */; };
@@ -30,7 +32,6 @@
 		3992D392195A55680063758C /* PutIODownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3992D391195A55680063758C /* PutIODownloadManager.m */; };
 		3992D395195A59880063758C /* Download.m in Sources */ = {isa = PBXBuildFile; fileRef = 3992D394195A59880063758C /* Download.m */; };
 		3993ABD1163AD36A0020AE61 /* SyncInstructionEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */; };
-		39A66FBA178213010073DB81 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FB9178213010073DB81 /* Utilities.m */; };
 		39A66FC3178213650073DB81 /* PutIOAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FBC178213650073DB81 /* PutIOAPI.m */; };
 		39A66FC4178213650073DB81 /* PutIOAPIAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FBE178213650073DB81 /* PutIOAPIAccountInfo.m */; };
 		39A66FC5178213650073DB81 /* PutIOAPIFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FC0178213650073DB81 /* PutIOAPIFile.m */; };
@@ -113,6 +114,10 @@
 		39585BBE177FC69D004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
 		39585BC0177FC7F1004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		39587321195CED830049CFCB /* PutIOSync-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PutIOSync-Info.plist"; sourceTree = SOURCE_ROOT; };
+		395F3198195D11BA00829AE4 /* BytesFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BytesFormatter.h; sourceTree = "<group>"; };
+		395F3199195D11BA00829AE4 /* BytesFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BytesFormatter.m; sourceTree = "<group>"; };
+		395F319B195D133A00829AE4 /* TimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeIntervalFormatter.h; sourceTree = "<group>"; };
+		395F319C195D133A00829AE4 /* TimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeIntervalFormatter.m; sourceTree = "<group>"; };
 		3965359E178231DD00BE21DE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		398350D3194E736100C4CFC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		398350D4194E736100C4CFC5 /* PutIOKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutIOKitTests.swift; sourceTree = "<group>"; };
@@ -126,8 +131,6 @@
 		39937B2918E9B03D00105963 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
-		39A66FB8178213010073DB81 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		39A66FB9178213010073DB81 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		39A66FBB178213650073DB81 /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = Classes/PutIOAPI.h; sourceTree = "<group>"; };
 		39A66FBC178213650073DB81 /* PutIOAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPI.m; path = Classes/PutIOAPI.m; sourceTree = "<group>"; };
 		39A66FBD178213650073DB81 /* PutIOAPIAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIAccountInfo.h; path = Classes/PutIOAPIAccountInfo.h; sourceTree = "<group>"; };
@@ -349,7 +352,7 @@
 				39A66FCF178214C20073DB81 /* Media.xcassets */,
 				3993ABC9163AC9380020AE61 /* Model */,
 				39F8743E1634279400D9026F /* PutIO API */,
-				DD4F7C2613C311DF00825C6E /* Controller */,
+				DD4F7C2613C311DF00825C6E /* Classes */,
 				DD4F7C3913C317EC00825C6E /* Views */,
 				398350D1194E736100C4CFC5 /* PutIOKitTests */,
 				DD4F7C0713C30F9F00825C6E /* Frameworks */,
@@ -386,8 +389,6 @@
 			children = (
 				39587321195CED830049CFCB /* PutIOSync-Info.plist */,
 				39C51FCA16344ED0006BD1C8 /* UserDefaults.plist */,
-				39A66FB8178213010073DB81 /* Utilities.h */,
-				39A66FB9178213010073DB81 /* Utilities.m */,
 				39585BB0177FC396004B74B3 /* Localizable.strings */,
 				DD4F7C1613C30F9F00825C6E /* PutIOSync-Prefix.pch */,
 				DD4F7C1413C30F9F00825C6E /* main.m */,
@@ -396,7 +397,7 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		DD4F7C2613C311DF00825C6E /* Controller */ = {
+		DD4F7C2613C311DF00825C6E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				39C51FC9163440A1006BD1C8 /* Menu Item */,
@@ -416,8 +417,11 @@
 				3992D391195A55680063758C /* PutIODownloadManager.m */,
 				39C5B0AE16BD7709004E8D65 /* PutIOTransfersMonitor.h */,
 				39C5B0AF16BD7709004E8D65 /* PutIOTransfersMonitor.m */,
+				395F3198195D11BA00829AE4 /* BytesFormatter.h */,
+				395F3199195D11BA00829AE4 /* BytesFormatter.m */,
+				395F319B195D133A00829AE4 /* TimeIntervalFormatter.h */,
+				395F319C195D133A00829AE4 /* TimeIntervalFormatter.m */,
 			);
-			name = Controller;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -567,6 +571,7 @@
 				39D59CD41951295E0085B362 /* PutIOAPIFileDeletionRequest.m in Sources */,
 				DD4F7C1513C30F9F00825C6E /* main.m in Sources */,
 				DD4F7C1C13C30F9F00825C6E /* ApplicationDelegate.m in Sources */,
+				395F319A195D11BA00829AE4 /* BytesFormatter.m in Sources */,
 				DD4F7C3813C317A500825C6E /* MenubarController.m in Sources */,
 				DD4F7C3C13C3180800825C6E /* StatusItemView.m in Sources */,
 				39D59CE0195130140085B362 /* PutIOAPIOAuthTokenRequest.m in Sources */,
@@ -597,7 +602,7 @@
 				392460F5163EB38600954B64 /* SyncRunner.m in Sources */,
 				3992D395195A59880063758C /* Download.m in Sources */,
 				39A86DE01643F32D004CAAEE /* DownloadCellView.m in Sources */,
-				39A66FBA178213010073DB81 /* Utilities.m in Sources */,
+				395F319D195D133A00829AE4 /* TimeIntervalFormatter.m in Sources */,
 				39EFBFBB164EA60400B160E0 /* Persistency.m in Sources */,
 				39C5B0AA16BD64A1004E8D65 /* TransferCellView.m in Sources */,
 				39C5B0AD16BD682D004E8D65 /* PutIOAPITransfer.m in Sources */,

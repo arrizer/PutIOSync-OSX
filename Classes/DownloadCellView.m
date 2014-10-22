@@ -1,6 +1,10 @@
 
-#import "Utilities.h"
 #import "DownloadCellView.h"
+#import "BytesFormatter.h"
+#import "TimeIntervalFormatter.h"
+
+static BytesFormatter *bytesFormatter;
+static TimeIntervalFormatter *timeIntervalFormatter;
 
 @implementation DownloadCellView
 
@@ -58,6 +62,13 @@
 
 -(void)updateStatus
 {
+    if(bytesFormatter == nil){
+        bytesFormatter = [[BytesFormatter alloc] init];
+    }
+    if(timeIntervalFormatter == nil){
+        timeIntervalFormatter = [[TimeIntervalFormatter alloc] init];
+    }
+    
     Download *download = _download;
     [progressBar setHidden:!(download.status == PutIODownloadStatusDownloading)];
     [statusLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 0 : -8)];
@@ -75,19 +86,19 @@
     }
 
     NSString *statusString = download.localizedStatus;
-    NSString *sizeReceivedString = unitStringFromBytes(download.receivedSize);
-    NSString *sizeTotalString = unitStringFromBytes(download.totalSize);
+    NSString *sizeReceivedString = [bytesFormatter stringFromBytes:download.receivedSize];
+    NSString *sizeTotalString = [bytesFormatter stringFromBytes:download.totalSize];
     NSString *sizesString = [NSString stringWithFormat:@"%@ of %@", sizeReceivedString, sizeTotalString];
     
     if(download.status == PutIODownloadStatusDownloading && download.progressIsKnown){
         statusString = sizesString;
-        if(download.bytesPerSecond > 0){
-            NSString *speedString = unitStringFromBytes(download.bytesPerSecond);
-            statusString = [statusString stringByAppendingFormat:@" (%@/s)", speedString];
-        }
+//        if(download.bytesPerSecond > 0){
+//            NSString *speedString = [bytesFormatter stringFromBytes:download.bytesPerSecond];
+//            statusString = [statusString stringByAppendingFormat:@" (%@/s)", speedString];
+//        }
         statusString = [statusString stringByAppendingString:@" - "];
         if(download.estimatedRemainingTimeIsKnown){
-            statusString = [statusString stringByAppendingFormat:@"%@remaining", unitStringFromSeconds(download.estimatedRemainingTime)];
+            statusString = [statusString stringByAppendingFormat:@"%@remaining", [timeIntervalFormatter stringFromTimeInterval:download.estimatedRemainingTime]];
         }else{
             statusString = [statusString stringByAppendingString:NSLocalizedString(@"Estimating remaining time", nil)];
         }

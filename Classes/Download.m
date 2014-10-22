@@ -73,7 +73,11 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     [self changeStatus:self.status andDeliverNotification:NO];
     numberOfRetries = 0;
+    self.estimatedRemainingTimeIsKnown = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:PutIODownloadAddedNotification object:nil];
+    if(self.status == PutIODownloadStatusDownloading){
+        [self startDownload];
+    }
 }
 
 -(void)dealloc
@@ -168,7 +172,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     receivedBytesInCurrentSession = 0;
     self.localFile = nil;
     receivedBytesSinceLastProgressUpdate = 0;
-    progressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.2f
+    progressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3f
                                                            target:self
                                                          selector:@selector(updateProgress)
                                                          userInfo:nil repeats:YES];
@@ -200,6 +204,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [self stopWaitingForOtherDownloads];
     if(connection){
         [self cancelConnection];
+        [progressUpdateTimer invalidate];
         self.receivedSize += receivedBytesSinceLastProgressUpdate;
     }
     //NSLog(@"%@ paused download after receiving %li bytes", self, self.receivedSize);
@@ -416,13 +421,13 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     NSUInteger length = receivedBytesSinceLastProgressUpdate;
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
-    if(currentSessionStartTime == 0.0f)
+    if(currentSessionStartTime == 0.0f){
         currentSessionStartTime = now;
-    else{
+    }else{
         self.bytesPerSecond = (int)round((double)length / (now - lastProgressUpdate));
         NSUInteger averageBytesPerSecond = (int)round((double)receivedBytesInCurrentSession / (now - currentSessionStartTime));
         self.estimatedRemainingTime = ((double)(self.totalSize - self.receivedSize) / (double)averageBytesPerSecond);
-        self.estimatedRemainingTimeIsKnown = (now - currentSessionStartTime) >= 5.0f;
+        self.estimatedRemainingTimeIsKnown = (now - currentSessionStartTime) >= 5.0f && receivedBytesInCurrentSession > 1024;
     }
     self.receivedSize += length;
     receivedBytesInCurrentSession += length;

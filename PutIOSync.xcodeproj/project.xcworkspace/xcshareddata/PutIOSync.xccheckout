@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>67B88819-BEAB-45CA-BE15-EB0693F40652</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PutIOSync</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CF454EF7418BC0DF98CA9BB41D9E118076E9B58E</key>
+		<string>https://github.com/arrizer/PutIOSync-OSX.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PutIOSync.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CF454EF7418BC0DF98CA9BB41D9E118076E9B58E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/arrizer/PutIOSync-OSX.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CF454EF7418BC0DF98CA9BB41D9E118076E9B58E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CF454EF7418BC0DF98CA9BB41D9E118076E9B58E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PutIOSync</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,11 +1,22 @@
 
 #import "TransferCellView.h"
-#import "Utilities.h"
+#import "BytesFormatter.h"
+#import "TimeIntervalFormatter.h"
+
+static BytesFormatter *bytesFormatter;
+static TimeIntervalFormatter *timeIntervalFormatter;
 
 @implementation TransferCellView
 
 -(void)setObjectValue:(id)objectValue
 {
+    if(bytesFormatter == nil){
+        bytesFormatter = [[BytesFormatter alloc] init];
+    }
+    if(timeIntervalFormatter == nil){
+        timeIntervalFormatter = [[TimeIntervalFormatter alloc] init];
+    }
+    
     [super setObjectValue:objectValue];
     PutIOAPITransfer *transfer = (PutIOAPITransfer*)objectValue;
     
@@ -18,22 +29,22 @@
             break;
         }
         case PutIOAPITransferStatusDownloading:{
-            status = [status stringByAppendingFormat:@"%@ of %@", unitStringFromBytes(transfer.sizeDownloaded), unitStringFromBytes(transfer.size)];
-            status = [status stringByAppendingFormat:@" (%@/s)", unitStringFromBytes(transfer.downloadSpeed)];
+            status = [status stringByAppendingFormat:@"%@ of %@", [bytesFormatter stringFromBytes:transfer.sizeDownloaded], [bytesFormatter stringFromBytes:transfer.size]];
+            status = [status stringByAppendingFormat:@" (%@/s)", [bytesFormatter stringFromBytes:transfer.downloadSpeed]];
             if(transfer.estimatedTimeRemaining > 0.0f)
-                status = [status stringByAppendingFormat:@" - %@remaining", unitStringFromSeconds(transfer.estimatedTimeRemaining)];
+                status = [status stringByAppendingFormat:@" - %@remaining", [timeIntervalFormatter stringFromTimeInterval:transfer.estimatedTimeRemaining]];
             break;
         }
         case PutIOAPITransferStatusCompleted:{
             status = NSLocalizedString(@"Finished", nil);
-            status = [status stringByAppendingFormat:@" - %@", unitStringFromBytes(transfer.size)];
+            status = [status stringByAppendingFormat:@" - %@", [bytesFormatter stringFromBytes:transfer.size]];
             icon.image = [NSImage imageNamed:@"transfer_finished"];
             break;
         }
         case PutIOAPITransferStatusSeeding:{
             status = [NSString stringWithFormat:NSLocalizedString(@"Finished, seeding to %i peers - ", nil), transfer.seedingToPeersCount];
-            status = [status stringByAppendingFormat:@"%@", unitStringFromBytes(transfer.sizeUploaded)];
-            status = [status stringByAppendingFormat:@" (%@/s)", unitStringFromBytes(transfer.uploadSpeed)];
+            status = [status stringByAppendingFormat:@"%@", [bytesFormatter stringFromBytes:transfer.sizeUploaded]];
+            status = [status stringByAppendingFormat:@" (%@/s)", [bytesFormatter stringFromBytes:transfer.uploadSpeed]];
             status = [status stringByAppendingFormat:@" - Ratio: %.2f", transfer.torrentRatio];
             icon.image = [NSImage imageNamed:@"transfer_finished"];
             break;

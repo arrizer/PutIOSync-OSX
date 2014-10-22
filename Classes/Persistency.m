@@ -50,7 +50,7 @@
     NSError *error = nil;
     
     NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
-    if (!properties) {
+    if(!properties){
         BOOL ok = NO;
         if ([error code] == NSFileReadNoSuchFileError) {
             ok = [fileManager createDirectoryAtPath:[applicationFilesDirectory path] withIntermediateDirectories:YES attributes:nil error:&error];
@@ -59,7 +59,7 @@
             [[NSApplication sharedApplication] presentError:error];
             return nil;
         }
-    } else {
+    }else{
         if (![properties[NSURLIsDirectoryKey] boolValue]) {
             NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]];
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -91,7 +91,7 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
         [dict setValue:@"There was an error building up the data file." forKey:NSLocalizedFailureReasonErrorKey];
-        NSError *error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
+        NSError *error = [NSError errorWithDomain:@"de.matthiasschwab.putiosync" code:9999 userInfo:dict];
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }

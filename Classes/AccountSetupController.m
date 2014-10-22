@@ -39,6 +39,13 @@
 
 -(void)beginAccountSetup
 {
+    loggingOut = YES;
+    webView.mainFrameURL = [putio.oAuthLogoutURL absoluteString];
+    
+}
+
+-(void)beginAuthentication
+{
     webView.mainFrameURL = [putio.oAuthAuthenticationURL absoluteString];
 }
 
@@ -82,6 +89,10 @@ decidePolicyForNavigationAction:(NSDictionary *)actionInformation
 {
     [webView setHidden:NO];
     [spinner stopAnimation:self];
+    if(loggingOut){
+        loggingOut = NO;
+        [self beginAuthentication];
+    }
 }
 
 - (void)errorDismissed
