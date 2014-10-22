@@ -25,6 +25,7 @@
         self.parameters = parameters;
         self.completion = completionBlock;
         self.parseAPIResponse = YES;
+        self.doesNotRequireAuthentication = NO;
     }
     return self;
 }
@@ -36,7 +37,7 @@
 
 -(void)main
 {
-    if(!self.api.isAuthenticated){
+    if(!self.api.isAuthenticated && !self.doesNotRequireAuthentication){
         [self failWithInternalError:PutIOAPIInternalErrorNotAuthorized userMessage:nil];
         return;
     }
@@ -49,7 +50,9 @@
     }else{
         parameters = [self.parameters mutableCopy];
     }
-    parameters[@"oauth_token"] = self.api.oAuthAccessToken;
+    if(!self.doesNotRequireAuthentication){
+        parameters[@"oauth_token"] = self.api.oAuthAccessToken;
+    }
     NSString *parameterString = [parameters URLQueryString];
     if(self.method == PutIOAPIMethodGET){
         requestURLString = [requestURLString stringByAppendingFormat:@"?%@", parameterString];
@@ -61,7 +64,7 @@
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
-    NSLog(@"<API> %@\nParameters: %@", requestURL, [self.parameters description]);
+    //NSLog(@"<API> %@\nParameters: %@", requestURL, [self.parameters description]);
 
     NSError *networkError;
     NSURLResponse *response;

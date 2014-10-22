@@ -22,6 +22,7 @@ typedef void (^PutIOAPIRequestCompletion)(void);
 
 @property (weak) PutIOAPI *api;
 @property (readonly) PutIOAPIMethod method;
+@property (assign) BOOL doesNotRequireAuthentication;
 @property (readonly) NSString *endpoint;
 @property (readonly) NSDictionary *parameters;
 @property (readonly) NSString *queryString;

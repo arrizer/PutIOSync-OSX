@@ -21,6 +21,7 @@
                                                            parameters:parameters
                                                       completionBlock:completion];
     request.parseAPIResponse = NO;
+    request.doesNotRequireAuthentication = YES;
     return request;
 }
 

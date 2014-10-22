@@ -59,6 +59,11 @@ static NSString *oAuthAccessToken;
 
 #pragma mark - OAuth
 
+-(void)setOAuthAccessToken:(NSString *)oAuthAccessToken
+{
+    _oAuthAccessToken = oAuthAccessToken;
+}
+
 - (NSURL *)oAuthLogoutURL
 {
     return [NSURL URLWithString:@"https://put.io/logout"];
