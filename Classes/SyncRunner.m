@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         syncInstruction = instruction;
-        putio = [PutIOAPI api];
+        putio = [PutIOAPI new];
         self.localizedOperationName = NSLocalizedString(@"Looking for items to download", nil);
     }
     return self;
@@ -56,8 +56,9 @@
 - (void)cancel
 {
     [putio cancelAllRequests];
-    if([_delegate respondsToSelector:@selector(syncRunnerDidCancel:)])
+    if([_delegate respondsToSelector:@selector(syncRunnerDidCancel:)]){
         [_delegate syncRunnerDidCancel:self];
+    }
 }
 
 #pragma mark - Scan Origin
@@ -107,7 +108,7 @@
                 PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:folder.fileID completion:nil];
                 [putio performRequest:deleteRequest];
             }
-        }else{
+        }else if(request.error != nil){
             [self failWithError:request.error];
         }
         if(pendingRequests == 0){
@@ -164,8 +165,9 @@
 
 -(void)failWithError:(NSError*)error
 {
-    if([_delegate respondsToSelector:@selector(syncRunner:didFailWithError:)])
+    if([_delegate respondsToSelector:@selector(syncRunner:didFailWithError:)]){
        [_delegate syncRunner:self didFailWithError:error];
+    }
 }
 
 -(void)finish

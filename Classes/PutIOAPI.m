@@ -25,15 +25,20 @@ static NSString *oAuthAccessToken;
     static PutIOAPI *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[PutIOAPI alloc] initWithBaseURL:[NSURL URLWithString:kDefaultBaseURL]
-                                          oAuthAccessToken:[PutIOAPIKeychainManager keychainItemPassword]
-                                             oAuthClientID:kDefaultClientID
-                                          oAuthRedirectURI:kDefaultRedirectURI];
+        sharedInstance = [[PutIOAPI alloc] init];
     });
     return sharedInstance;
 }
 
 #pragma mark - Initializers
+
+-(instancetype)init
+{
+    return [self initWithBaseURL:[NSURL URLWithString:kDefaultBaseURL]
+                oAuthAccessToken:[PutIOAPIKeychainManager keychainItemPassword]
+                   oAuthClientID:kDefaultClientID
+                oAuthRedirectURI:kDefaultRedirectURI];
+}
 
 -(instancetype)initWithBaseURL:(NSURL *)baseURL
               oAuthAccessToken:(NSString *)oAuthAccessToken
