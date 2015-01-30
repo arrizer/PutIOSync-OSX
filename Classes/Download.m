@@ -205,6 +205,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     if(connection){
         [self cancelConnection];
         [progressUpdateTimer invalidate];
+        progressUpdateTimer = nil;
         self.receivedSize += receivedBytesSinceLastProgressUpdate;
     }
     //NSLog(@"%@ paused download after receiving %li bytes", self, self.receivedSize);
@@ -213,9 +214,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 - (void)cancelDownload
 {
-    if(connection){
-        [self cancelConnection];
-    }
+    [self cancelConnection];
     [self deleteTemporaryDataFile];
     [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusCancelled];
@@ -224,6 +223,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 - (void)cancelConnection
 {
     if(connection){
+        [progressUpdateTimer invalidate];
+        progressUpdateTimer = nil;
         [connection cancel];
         connection = nil;
     }
@@ -235,16 +236,18 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 #pragma mark - Manage temporary file
 
-- (void)createAndOpenTemporaryDataFile
+- (BOOL)createAndOpenTemporaryDataFile
 {
     if(localFileTemporary == nil){
         localFileTemporary = [NSString stringWithFormat:@"%@/.%@.part", localPath, self.putioFile.name];
         localFileTemporary = [self resolveNamingConflictForFileAtPath:localFileTemporary];
         if(![[NSFileManager defaultManager] createFileAtPath:localFileTemporary contents:nil attributes:nil]){
             [self failWithLocalizedErrorDescription:NSLocalizedString(@"Unable to create file on disk", nil)];
+            return NO;
         }
     }
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:localFileTemporary];
+    return YES;
 }
 
 - (void)deleteTemporaryDataFile
@@ -321,7 +324,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         return YES;
     }else{
         NSLog(@"%@ downloaded file has not expected size:\nBytes received = %lli\nContent-length = %lli\nPutIO file size = %li\nActual file size = %lli", self, self.receivedSize, self.totalSize, self.putioFile.size, [attributes fileSize]);
-        //[self failWithError:nil];
+        [self cancelDownload];
         [self startDownload];
     }
     return NO;
@@ -340,11 +343,17 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
     NSDictionary *responseHeaders = [httpResponse allHeaderFields];
-    // NSLog(@"PutIO download response headers: %@", responseHeaders);
+    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:[self.putioFile fileID]];
+    NSLog(@"PutIO download %@ response headers: %@", requestURL, responseHeaders);
     NSInteger httpStatus = [httpResponse statusCode];
-    if((httpStatus >= 200 && httpStatus < 300) && responseHeaders[@"Content-Length"] != nil){
-        if(self.receivedSize == 0)
-            self.totalSize = [responseHeaders[@"Content-Length"] integerValue];
+    if((httpStatus >= 200 && httpStatus < 300)){
+        if(responseHeaders[@"Content-Length"] != nil){
+            if(self.receivedSize == 0)
+                self.totalSize = [responseHeaders[@"Content-Length"] integerValue];
+        }else{
+            if(self.receivedSize == 0)
+                self.totalSize = self.putioFile.size;
+        }
     }else{
         [self failWithLocalizedErrorDescription:[NSHTTPURLResponse localizedStringForStatusCode:httpStatus]];
     }
@@ -352,10 +361,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    if(fileHandle == nil)
+    if(fileHandle == nil){
         [self createAndOpenTemporaryDataFile];
-    if(fileHandle == nil)
-        [self failWithLocalizedErrorDescription:NSLocalizedString(@"Unable to write to file on disk", nil)];
+    }
+    if(fileHandle == nil){
+        return;
+    }
     [fileHandle seekToEndOfFile];
     [fileHandle writeData:data];
     
@@ -393,10 +404,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         [fileHandle closeFile];
         fileHandle = nil;
     }
-    if(![self verifyDownload])
+    if(![self verifyDownload]){
         return;
-    if(![self moveTemporaryDataFileToFinalLocation])
+    }
+    if(![self moveTemporaryDataFileToFinalLocation]){
         return;
+    }
     
     self.progressIsKnown = YES;
     self.progress = 1.0f;
