@@ -36,7 +36,7 @@
 		39A66FC4178213650073DB81 /* PutIOAPIAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FBE178213650073DB81 /* PutIOAPIAccountInfo.m */; };
 		39A66FC5178213650073DB81 /* PutIOAPIFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FC0178213650073DB81 /* PutIOAPIFile.m */; };
 		39A66FC6178213650073DB81 /* PutIOAPIObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FC2178213650073DB81 /* PutIOAPIObject.m */; };
-		39A66FD0178214C20073DB81 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FCF178214C20073DB81 /* Media.xcassets */; };
+		39A66FD0178214C20073DB81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FCF178214C20073DB81 /* Assets.xcassets */; };
 		39A66FD8178215430073DB81 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */; };
 		39A66FD9178215430073DB81 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */; };
 		39A66FDC178215C90073DB81 /* AccountSetupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A66FDA178215C90073DB81 /* AccountSetupController.xib */; };
@@ -85,10 +85,7 @@
 
 /* Begin PBXFileReference section */
 		3903FA69177FABA400EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainPanel.xib; sourceTree = "<group>"; };
-		3903FA6C177FACF700EC6ABB /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainPanel.xib; sourceTree = "<group>"; };
-		3903FA6D177FACF700EC6ABB /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3903FA6F177FAD7C00EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PutIOFolderPicker.xib; sourceTree = "<group>"; };
-		3903FA71177FAD9400EC6ABB /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/PutIOFolderPicker.xib; sourceTree = "<group>"; };
 		3903FA7D177FAF4E00EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
 		391A9F3116E388E2003BDE51 /* PanelRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelRowView.h; sourceTree = "<group>"; };
 		391A9F3216E388E2003BDE51 /* PanelRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelRowView.m; sourceTree = "<group>"; };
@@ -105,13 +102,9 @@
 		392460F4163EB38600954B64 /* SyncRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRunner.m; sourceTree = "<group>"; };
 		392F8F7619513AAE001E8ECF /* NSDictionary+URLQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+URLQueryString.h"; path = "Classes/NSDictionary+URLQueryString.h"; sourceTree = "<group>"; };
 		392F8F7719513AAE001E8ECF /* NSDictionary+URLQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+URLQueryString.m"; path = "Classes/NSDictionary+URLQueryString.m"; sourceTree = "<group>"; };
-		39585BAB177FBF88004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
 		39585BAF177FC396004B74B3 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		39585BB1177FC39A004B74B3 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		39585BB3177FC592004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AccountPreferences.xib; sourceTree = "<group>"; };
-		39585BB5177FC597004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/AccountPreferences.xib; sourceTree = "<group>"; };
 		39585BBB177FC5DE004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
-		39585BBE177FC69D004B74B3 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
 		39585BC0177FC7F1004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		39587321195CED830049CFCB /* PutIOSync-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PutIOSync-Info.plist"; sourceTree = SOURCE_ROOT; };
 		395F3198195D11BA00829AE4 /* BytesFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BytesFormatter.h; sourceTree = "<group>"; };
@@ -128,7 +121,6 @@
 		3992D391195A55680063758C /* PutIODownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutIODownloadManager.m; sourceTree = "<group>"; };
 		3992D393195A59880063758C /* Download.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Download.h; path = Classes/Download.h; sourceTree = "<group>"; };
 		3992D394195A59880063758C /* Download.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Download.m; path = Classes/Download.m; sourceTree = "<group>"; };
-		39937B2918E9B03D00105963 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/SyncInstructionEditor.xib; sourceTree = "<group>"; };
 		3993ABCE163AD36A0020AE61 /* SyncInstructionEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncInstructionEditor.h; sourceTree = "<group>"; };
 		3993ABCF163AD36A0020AE61 /* SyncInstructionEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncInstructionEditor.m; sourceTree = "<group>"; };
 		39A66FBB178213650073DB81 /* PutIOAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPI.h; path = Classes/PutIOAPI.h; sourceTree = "<group>"; };
@@ -139,12 +131,11 @@
 		39A66FC0178213650073DB81 /* PutIOAPIFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIFile.m; path = Classes/PutIOAPIFile.m; sourceTree = "<group>"; };
 		39A66FC1178213650073DB81 /* PutIOAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutIOAPIObject.h; path = Classes/PutIOAPIObject.h; sourceTree = "<group>"; };
 		39A66FC2178213650073DB81 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = Classes/PutIOAPIObject.m; sourceTree = "<group>"; };
-		39A66FCF178214C20073DB81 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		39A66FCF178214C20073DB81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39A66FD4178215430073DB81 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesViewController.h; path = Frameworks/MASPreferences/MASPreferencesViewController.h; sourceTree = "<group>"; };
 		39A66FD5178215430073DB81 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesWindowController.h; path = Frameworks/MASPreferences/MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MASPreferencesWindow.xib; path = Frameworks/MASPreferences/MASPreferencesWindow.xib; sourceTree = "<group>"; };
 		39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MASPreferencesWindowController.m; path = Frameworks/MASPreferences/MASPreferencesWindowController.m; sourceTree = "<group>"; };
-		39A66FDB178215C90073DB81 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/AccountSetupController.xib; sourceTree = "<group>"; };
 		39A66FDD178215D40073DB81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AccountSetupController.xib; sourceTree = "<group>"; };
 		39A86DDE1643F32D004CAAEE /* DownloadCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadCellView.h; sourceTree = "<group>"; };
 		39A86DDF1643F32D004CAAEE /* DownloadCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadCellView.m; sourceTree = "<group>"; };
@@ -349,7 +340,7 @@
 			children = (
 				DD4F7C1A13C30F9F00825C6E /* ApplicationDelegate.h */,
 				DD4F7C1B13C30F9F00825C6E /* ApplicationDelegate.m */,
-				39A66FCF178214C20073DB81 /* Media.xcassets */,
+				39A66FCF178214C20073DB81 /* Assets.xcassets */,
 				3993ABC9163AC9380020AE61 /* Model */,
 				39F8743E1634279400D9026F /* PutIO API */,
 				DD4F7C2613C311DF00825C6E /* Classes */,
@@ -490,7 +481,7 @@
 		DD4F7BFB13C30F9F00825C6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0820;
 				TargetAttributes = {
 					399C9546195BE52B003E773D = {
 						CreatedOnToolsVersion = 6.0;
@@ -510,7 +501,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				de,
 			);
 			mainGroup = DD4F7BF913C30F9F00825C6E;
 			productRefGroup = DD4F7C0513C30F9F00825C6E /* Products */;
@@ -538,7 +528,7 @@
 				39585BBF177FC7F1004B74B3 /* SyncInstructionEditor.xib in Resources */,
 				39A66FD8178215430073DB81 /* MASPreferencesWindow.xib in Resources */,
 				3903FA6E177FAD7C00EC6ABB /* PutIOFolderPicker.xib in Resources */,
-				39A66FD0178214C20073DB81 /* Media.xcassets in Resources */,
+				39A66FD0178214C20073DB81 /* Assets.xcassets in Resources */,
 				39585BAE177FC396004B74B3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,7 +609,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3903FA69177FABA400EC6ABB /* en */,
-				3903FA6C177FACF700EC6ABB /* de */,
 			);
 			name = MainPanel.xib;
 			sourceTree = "<group>";
@@ -628,7 +617,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3903FA6F177FAD7C00EC6ABB /* en */,
-				3903FA71177FAD9400EC6ABB /* de */,
 			);
 			name = PutIOFolderPicker.xib;
 			sourceTree = "<group>";
@@ -637,7 +625,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3903FA7D177FAF4E00EC6ABB /* en */,
-				39585BAB177FBF88004B74B3 /* de */,
 			);
 			name = GeneralPreferences.xib;
 			sourceTree = "<group>";
@@ -646,7 +633,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				39585BAF177FC396004B74B3 /* en */,
-				39585BB1177FC39A004B74B3 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -655,7 +641,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				39585BB3177FC592004B74B3 /* en */,
-				39585BB5177FC597004B74B3 /* de */,
 			);
 			name = AccountPreferences.xib;
 			sourceTree = "<group>";
@@ -664,7 +649,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				39585BBB177FC5DE004B74B3 /* en */,
-				39585BBE177FC69D004B74B3 /* de */,
 			);
 			name = SyncPreferences.xib;
 			sourceTree = "<group>";
@@ -673,7 +657,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				39585BC0177FC7F1004B74B3 /* en */,
-				39937B2918E9B03D00105963 /* de */,
 			);
 			name = SyncInstructionEditor.xib;
 			sourceTree = "<group>";
@@ -681,7 +664,6 @@
 		39A66FDA178215C90073DB81 /* AccountSetupController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				39A66FDB178215C90073DB81 /* de */,
 				39A66FDD178215D40073DB81 /* en */,
 			);
 			name = AccountSetupController.xib;
@@ -691,7 +673,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				DD4F7C1E13C30F9F00825C6E /* en */,
-				3903FA6D177FACF700EC6ABB /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -749,20 +730,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -777,7 +763,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -787,12 +773,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
@@ -801,6 +790,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -809,7 +799,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -832,6 +822,7 @@
 				INFOPLIST_FILE = "PutIOSync-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = de.matthiasschwab.putiosync;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;
 			};
@@ -855,6 +846,7 @@
 				INFOPLIST_FILE = "PutIOSync-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_BUNDLE_IDENTIFIER = de.matthiasschwab.putiosync;
 				PRODUCT_NAME = PutIOSync;
 				WRAPPER_EXTENSION = app;
 			};
