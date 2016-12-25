@@ -12,6 +12,13 @@
 #define PANEL_WIDTH 280
 #define MENU_ANIMATION_DURATION .1
 
+@interface PanelController ()
+
+@property (nonatomic, assign, readwrite) BOOL hasActivePanel;
+
+@end
+
+
 @implementation PanelController
 
 #pragma mark - Initializers
@@ -21,7 +28,7 @@
     self = [super initWithWindowNibName:NSStringFromClass([self class])];
     if (self != nil)
     {
-        _delegate = delegate;
+        self.delegate = delegate;
     }
     return self;
 }
@@ -42,11 +49,11 @@
 
 - (void)setHasActivePanel:(BOOL)flag
 {
-    if (_hasActivePanel != flag)
+    if (self.hasActivePanel != flag)
     {
-        _hasActivePanel = flag;
+        self.hasActivePanel = flag;
         
-        if (_hasActivePanel)
+        if (self.hasActivePanel)
         {
             [self openPanel];
         }
@@ -103,16 +110,16 @@
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     NSRect statusRect = NSZeroRect;
     
-    StatusItemView *statusItemView = nil;
+    NSView *statusItemView = nil;
     if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)]){
         statusItemView = [self.delegate statusItemViewForPanelController:self];
     }
     
     if(statusItemView){
-        statusRect = statusItemView.globalRect;
+        statusRect = [statusItemView.window convertRectToScreen:statusItemView.frame];
         statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
     }else{
-        statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
+        statusRect.size = NSMakeSize(MenubarControllerStatusItemWidth, [[NSStatusBar systemStatusBar] thickness]);
         statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
         statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
     }

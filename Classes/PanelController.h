@@ -6,23 +6,19 @@
 @protocol PanelControllerDelegate <NSObject>
 
 @optional
-- (StatusItemView *)statusItemViewForPanelController:(PanelController *)controller;
+- (NSView *)statusItemViewForPanelController:(PanelController *)controller;
 @end
 
 #pragma mark -
 
-@interface PanelController : NSWindowController
-<NSWindowDelegate>
-{
-    BOOL _hasActivePanel;
-}
+@interface PanelController : NSWindowController <NSWindowDelegate>
 
 - (id)initWithDelegate:(id<PanelControllerDelegate>)delegate;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained) IBOutlet BackgroundView *backgroundView;
-@property (nonatomic, unsafe_unretained, readonly) id<PanelControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained, readwrite) id<PanelControllerDelegate> delegate;
 
 - (void)openPanel;
 - (void)closePanel;
