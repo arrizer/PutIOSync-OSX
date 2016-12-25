@@ -75,7 +75,11 @@
     }else{
         [self parseResponse:data];
     }
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_queue_t queue = self.completionQueue;
+    if (queue == nil) {
+        queue = dispatch_get_main_queue();
+    }
+    dispatch_async(queue, ^{
         if(self.completion != nil){
             self.completion();
         }

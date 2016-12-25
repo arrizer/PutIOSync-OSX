@@ -18,6 +18,8 @@
 }
 
 @property (strong) NSString *localizedOperationName;
+@property (assign) dispatch_queue_t queue;
+
 @end
 
 @implementation SyncRunner
@@ -26,6 +28,7 @@
 {
     self = [super init];
     if (self) {
+        self.queue = dispatch_queue_create("syncRunner.queue", 0);
         syncInstruction = instruction;
         putio = [PutIOAPI new];
         self.localizedOperationName = NSLocalizedString(@"Looking for items to download", nil);
@@ -45,12 +48,15 @@
 
 -(void)run
 {
-    if([self isBusy])
+    if ([self isBusy]) {
         return;
-    //NSLog(@"%@ sync run began", [self description]);
+    }
+    
     foundFiles = 0;
-//    [self performPreflightChecks];
-    [self deepScanOrigin];
+
+    dispatch_async(self.queue, ^{
+        [self deepScanOrigin];
+    });
 }
 
 - (void)cancel
@@ -65,7 +71,6 @@
 
 -(void)deepScanOrigin
 {
-//    [self beginOperation:SyncRunnerOperationOriginScan];
     [putio cancelAllRequests];
     originTree = nil;
     [self scanNode:nil];
@@ -106,6 +111,7 @@
             if([syncInstruction.deleteRemoteEmptyFolders boolValue] && folder.fileID != [syncInstruction.originFolderID integerValue] && [request.files count] == 0){
                 NSLog(@"Deleting empty folder");
                 PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:folder.fileID completion:nil];
+                deleteRequest.completionQueue = self.queue;
                 [putio performRequest:deleteRequest];
             }
         }else if(request.error != nil){
@@ -116,6 +122,7 @@
             [self finish];
         }
     }];
+    request.completionQueue = self.queue;
     pendingRequests++;
     [putio performRequest:request];
 }
@@ -165,9 +172,11 @@
 
 -(void)failWithError:(NSError*)error
 {
-    if([_delegate respondsToSelector:@selector(syncRunner:didFailWithError:)]){
-       [_delegate syncRunner:self didFailWithError:error];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if([_delegate respondsToSelector:@selector(syncRunner:didFailWithError:)]){
+            [_delegate syncRunner:self didFailWithError:error];
+        }
+    });
 }
 
 -(void)finish
@@ -175,11 +184,12 @@
     NSLog(@"%@ sync run finished", [self description]);
     syncInstruction.lastSynced = [NSDate date];
     [syncInstruction.managedObjectContext save:nil];
-//    if([downloadQueue count] > 0)
-//        if([_delegate respondsToSelector:@selector(syncRunner:foundFilesForDownload:)])
-//            [_delegate syncRunner:self foundFilesForDownload:downloadQueue];
-    if([_delegate respondsToSelector:@selector(syncRunnerDidFinish:afterFindingFiles:)])
-        [_delegate syncRunnerDidFinish:self afterFindingFiles:foundFiles];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if([_delegate respondsToSelector:@selector(syncRunnerDidFinish:afterFindingFiles:)]) {
+            [_delegate syncRunnerDidFinish:self afterFindingFiles:foundFiles];
+        }
+    });
 }
 
 -(NSString *)description

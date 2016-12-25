@@ -69,12 +69,16 @@ static SyncScheduler* sharedInstance;
 
 -(void)startSyncingAll
 {
-    if(![[PutIOAPI api] isAuthenticated])
+    if(![[PutIOAPI api] isAuthenticated]) {
         return;
-    if([self.runningSyncs count] > 0)
+    }
+    if([self.runningSyncs count] > 0) {
         return;
+    }
+    
     foundFiles = 0;
-    for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions]){
+    
+    for (SyncInstruction *instruction in [SyncInstruction allSyncInstructions]) {
         SyncRunner *runner = [[SyncRunner alloc] initWithSyncInstruction:instruction];
         [runner setDelegate:self];
         [runner run];
@@ -85,15 +89,18 @@ static SyncScheduler* sharedInstance;
 
 -(void)cancelAllSyncsInProgress
 {
-    for(SyncRunner *runner in self.runningSyncs)
+    for(SyncRunner *runner in self.runningSyncs) {
         [runner cancel];
+    }
 }
 
 -(void)cancelSyncForInstruction:(SyncInstruction*)instruction
 {
-    for(SyncRunner *runner in self.runningSyncs)
-        if([runner.syncInstruction.objectID.URIRepresentation isEqual:instruction.objectID.URIRepresentation])
+    for (SyncRunner *runner in self.runningSyncs) {
+        if ([runner.syncInstruction.objectID.URIRepresentation isEqual:instruction.objectID.URIRepresentation]) {
             [runner cancel];
+        }
+    }
 }
 
 //-(BOOL)syncForInstructionIsInProgess:(SyncInstruction*)instruction

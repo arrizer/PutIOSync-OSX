@@ -31,6 +31,7 @@ typedef void (^PutIOAPIRequestCompletion)(void);
 @property (readonly) id responseObject;
 @property (assign) BOOL parseAPIResponse;
 @property (copy) PutIOAPIRequestCompletion completion;
+@property (assign) dispatch_queue_t completionQueue;
 
 - (id)initWithMethod:(PutIOAPIMethod)method
             endpoint:(NSString*)endpoint
