@@ -1,5 +1,5 @@
 
-#import <Sparkle/Sparkle.h>
+@import Sparkle;
 #import "MenubarController.h"
 #import "MainPanel.h"
 

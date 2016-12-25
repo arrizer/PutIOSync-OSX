@@ -1,5 +1,5 @@
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import "PutIOAPI.h"
 
 #define PutIOTransfersMonitorUpdatedNotification @"PutIOTransfersMonitorUpdatedNotification"

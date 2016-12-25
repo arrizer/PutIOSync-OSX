@@ -1,5 +1,5 @@
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 #import "Download.h"
 
 @interface DownloadCellView : NSTableCellView

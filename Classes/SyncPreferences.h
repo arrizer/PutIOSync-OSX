@@ -1,7 +1,7 @@
 
 #import "MASPreferencesViewController.h"
 #import "SyncInstructionEditor.h"
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 @interface SyncPreferences : NSViewController
 <MASPreferencesViewController, NSTableViewDelegate>

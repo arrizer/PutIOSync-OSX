@@ -1,8 +1,8 @@
 
 #ifdef __OBJC__
 
-#import <Cocoa/Cocoa.h>
-#import <CoreData/CoreData.h>
+@import Cocoa;
+@import CoreData;
 #import "Persistency.h"
 
 #endif

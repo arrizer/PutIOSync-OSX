@@ -1,6 +1,6 @@
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
+@import Cocoa;
+@import WebKit;
 
 #import "PutIOAPI.h"
 

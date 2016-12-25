@@ -1,5 +1,5 @@
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 #import "SyncInstruction.h"
 #import "PutIOFolderPicker.h"
 
