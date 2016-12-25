@@ -815,7 +815,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/Frameworks",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PutIOSync-drpidpwwnmgbjtetzpknkhlrbbuz/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";
@@ -839,7 +838,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/Frameworks",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PutIOSync-drpidpwwnmgbjtetzpknkhlrbbuz/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/PutIOSync-Prefix.pch";

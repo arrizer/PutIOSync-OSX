@@ -515,7 +515,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     if(self.status == PutIODownloadStatusFinished){
         identifier = @"downloadfinished";
     }
-    if(self.status == self.status == PutIODownloadStatusFailed){
+    if(self.status == PutIODownloadStatusFailed){
         identifier = @"downloadfailed";
         message = [message stringByAppendingFormat:NSLocalizedString(@" failed: %@",nil), self.downloadError.localizedDescription];
     }

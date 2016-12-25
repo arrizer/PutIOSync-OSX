@@ -10,8 +10,7 @@
 -(void)accountSetupControllerDidCancelSetup:(AccountSetupController*)c;
 @end
 
-@interface AccountSetupController : NSWindowController
-<NSWindowDelegate>
+@interface AccountSetupController : NSWindowController <NSWindowDelegate, WebFrameLoadDelegate, WebPolicyDelegate>
 {
     IBOutlet WebView *webView;
     IBOutlet NSProgressIndicator *spinner;

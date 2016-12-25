@@ -12,13 +12,6 @@
 #define PANEL_WIDTH 280
 #define MENU_ANIMATION_DURATION .1
 
-@interface PanelController ()
-
-@property (nonatomic, assign, readwrite) BOOL hasActivePanel;
-
-@end
-
-
 @implementation PanelController
 
 #pragma mark - Initializers
@@ -49,11 +42,11 @@
 
 - (void)setHasActivePanel:(BOOL)flag
 {
-    if (self.hasActivePanel != flag)
+    if (_hasActivePanel != flag)
     {
-        self.hasActivePanel = flag;
+        _hasActivePanel = flag;
         
-        if (self.hasActivePanel)
+        if (_hasActivePanel)
         {
             [self openPanel];
         }
