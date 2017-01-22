@@ -181,9 +181,11 @@
 
 -(void)finish
 {
-    NSLog(@"%@ sync run finished", [self description]);
+    NSLog(@"%@ sync run finished", self.description);
     syncInstruction.lastSynced = [NSDate date];
-    [syncInstruction.managedObjectContext save:nil];
+    [syncInstruction.managedObjectContext performBlockAndWait:^{
+        [syncInstruction.managedObjectContext save:nil];
+    }];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         if([_delegate respondsToSelector:@selector(syncRunnerDidFinish:afterFindingFiles:)]) {
