@@ -1,10 +1,10 @@
 
 #import "PanelController.h"
 
-typedef enum  : NSInteger{
+typedef NS_ENUM(NSInteger, MainPanelListMode) {
     MainPanelListModeDownloads = 1,
     MainPanelListModeTransfers = 0
-} MainPanelListMode;
+};
 
 @interface MainPanel : PanelController
 <NSTableViewDataSource, NSTableViewDelegate, NSWindowDelegate>

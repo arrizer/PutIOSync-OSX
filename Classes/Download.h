@@ -43,7 +43,7 @@ typedef enum PutIODownloadStatusEnum : int16_t{
 @property (nonatomic) NSUInteger bytesPerSecond;
 @property (nonatomic, strong) NSError *downloadError;
 
-- (id)initWithPutIOFile:(PutIOAPIFile*)file
+- (instancetype)initWithPutIOFile:(PutIOAPIFile*)file
               localPath:(NSString*)path
        subdirectoryPath:(NSString*)subdirectoryPath
 originatingSyncInstruction:(SyncInstruction*)syncInstruction;

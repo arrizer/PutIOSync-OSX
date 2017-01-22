@@ -17,7 +17,7 @@
 @property (readonly) SyncInstruction *syncInstruction;
 @property (readonly, strong) NSString *localizedOperationName;
 
-- (id)initWithSyncInstruction:(SyncInstruction*)instruction;
+- (instancetype)initWithSyncInstruction:(SyncInstruction*)instruction NS_DESIGNATED_INITIALIZER;
 - (void)run;
 - (void)cancel;
 

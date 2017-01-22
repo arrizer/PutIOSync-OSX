@@ -11,10 +11,10 @@
 
 #pragma mark -
 
-- (id)initWithStatusItem:(NSStatusItem *)statusItem
+- (instancetype)initWithStatusItem:(NSStatusItem *)statusItem
 {
-    CGFloat itemWidth = [statusItem length];
-    CGFloat itemHeight = [[NSStatusBar systemStatusBar] thickness];
+    CGFloat itemWidth = statusItem.length;
+    CGFloat itemHeight = [NSStatusBar systemStatusBar].thickness;
     NSRect itemRect = NSMakeRect(0.0, 0.0, itemWidth, itemHeight);
     self = [super initWithFrame:itemRect];
     
@@ -33,7 +33,7 @@
 	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:self.isHighlighted];
     
     NSImage *icon = self.isHighlighted ? self.alternateImage : self.image;
-    NSSize iconSize = [icon size];
+    NSSize iconSize = icon.size;
     NSRect bounds = self.bounds;
     CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2);
     CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
@@ -84,7 +84,7 @@
 
 - (NSRect)globalRect
 {
-    return [self.window convertRectToScreen:[self frame]];
+    return [self.window convertRectToScreen:self.frame];
 }
 
 @end

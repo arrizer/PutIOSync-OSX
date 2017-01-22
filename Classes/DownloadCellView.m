@@ -44,7 +44,7 @@ static TimeIntervalFormatter *timeIntervalFormatter;
 
 -(void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle
 {
-    [super setBackgroundStyle:backgroundStyle];
+    super.backgroundStyle = backgroundStyle;
     if(backgroundStyle == NSBackgroundStyleDark){
         statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
     }else if (backgroundStyle == NSBackgroundStyleLight){
@@ -70,16 +70,16 @@ static TimeIntervalFormatter *timeIntervalFormatter;
     }
     
     Download *download = _download;
-    [progressBar setHidden:!(download.status == PutIODownloadStatusDownloading)];
-    [statusLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 0 : -8)];
-    [textLabelConstraint setConstant:((download.status == PutIODownloadStatusDownloading) ? 3 : 12)];
+    progressBar.hidden = !(download.status == PutIODownloadStatusDownloading);
+    statusLabelConstraint.constant = ((download.status == PutIODownloadStatusDownloading) ? 0 : -8);
+    textLabelConstraint.constant = ((download.status == PutIODownloadStatusDownloading) ? 3 : 12);
     if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
         NSString *stopImage = (self.backgroundStyle == NSBackgroundStyleDark ? @"stopImageInverted.png" : @"stopImage.png");
-        [pauseResumeButton setImage:[NSImage imageNamed:stopImage]];
+        pauseResumeButton.image = [NSImage imageNamed:stopImage];
         [pauseResumeButton setHidden:NO];
     }else if(download.status == PutIODownloadStatusPaused || download.status == PutIODownloadStatusFailed){
         NSString *resumeImage = (self.backgroundStyle == NSBackgroundStyleDark ? @"resumeImageInverted.png" : @"resumeImage.png");
-        [pauseResumeButton setImage:[NSImage imageNamed:resumeImage]];
+        pauseResumeButton.image = [NSImage imageNamed:resumeImage];
         [pauseResumeButton setHidden:NO];
     }else{
         [pauseResumeButton setHidden:YES];

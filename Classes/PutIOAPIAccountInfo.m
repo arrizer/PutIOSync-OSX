@@ -3,7 +3,7 @@
 
 @implementation PutIOAPIAccountInfo
 
--(id)initWithRawData:(id)data
+-(instancetype)initWithRawData:(id)data
 {
     self = [super initWithRawData:data];
     if(self){

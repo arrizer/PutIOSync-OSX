@@ -24,7 +24,7 @@
 
 @implementation SyncRunner
 
-- (id)initWithSyncInstruction:(SyncInstruction*)instruction
+- (instancetype)initWithSyncInstruction:(SyncInstruction*)instruction
 {
     self = [super init];
     if (self) {
@@ -48,7 +48,7 @@
 
 -(void)run
 {
-    if ([self isBusy]) {
+    if (self.isBusy) {
         return;
     }
     
@@ -80,9 +80,9 @@
 {
     NSInteger folderID;
     if(node == nil){
-        folderID = [syncInstruction.originFolderID integerValue];
+        folderID = (syncInstruction.originFolderID).integerValue;
     }else{
-        folderID = ((PutIOAPIFile*)[(NSTreeNode*)node representedObject]).fileID;
+        folderID = ((PutIOAPIFile*)((NSTreeNode*)node).representedObject).fileID;
     }
     
     __block PutIOAPIFileRequest *request = [PutIOAPIFileRequest requestFilesInFolderWithID:folderID completion:^{
@@ -97,9 +97,9 @@
             }
             for(PutIOAPIFile *file in request.files){
                 NSTreeNode *childNode = [[NSTreeNode alloc] initWithRepresentedObject:file];
-                [[currentNode mutableChildNodes] addObject:childNode];
-                if([file isFolder]){
-                    if([syncInstruction.recursive boolValue]){
+                [currentNode.mutableChildNodes addObject:childNode];
+                if(file.isFolder){
+                    if((syncInstruction.recursive).boolValue){
                         [self scanNode:childNode];
                     }
                 }else{
@@ -108,7 +108,7 @@
             }
             
             PutIOAPIFile *folder = request.parentFolder;
-            if([syncInstruction.deleteRemoteEmptyFolders boolValue] && folder.fileID != [syncInstruction.originFolderID integerValue] && [request.files count] == 0){
+            if((syncInstruction.deleteRemoteEmptyFolders).boolValue && folder.fileID != (syncInstruction.originFolderID).integerValue && (request.files).count == 0){
                 NSLog(@"Deleting empty folder");
                 PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:folder.fileID completion:nil];
                 deleteRequest.completionQueue = self.queue;
@@ -129,17 +129,17 @@
 
 -(void)evaulateFileAtNode:(NSTreeNode*)node
 {
-    PutIOAPIFile *file = [node representedObject];
-    if([syncInstruction itemWithIDIsKnown:[file fileID]])
+    PutIOAPIFile *file = node.representedObject;
+    if([syncInstruction itemWithIDIsKnown:file.fileID])
         return;
     NSString *relativePath = nil;
-    if(![syncInstruction.flattenSubdirectories boolValue])
+    if(!(syncInstruction.flattenSubdirectories).boolValue)
         relativePath = [self relativePathOfFileAtNode:node];
     //NSString *filename = [file name];
 
     if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
         //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
-        NSString *localPath = [syncInstruction.localDestination relativePath];
+        NSString *localPath = (syncInstruction.localDestination).relativePath;
         if(localPath != nil){
             Download *download = [[Download alloc] initWithPutIOFile:file
                                                            localPath:localPath
@@ -156,14 +156,14 @@
 - (NSString*)relativePathOfFileAtNode:(NSTreeNode*)node
 {
     NSMutableArray *parentFolderNames = [NSMutableArray array];
-    NSTreeNode *parentNode = [node parentNode];
+    NSTreeNode *parentNode = node.parentNode;
     while(parentNode != nil && parentNode != originTree){
-        NSString *folderName = [(PutIOAPIFile*)[parentNode representedObject] name];
+        NSString *folderName = ((PutIOAPIFile*)parentNode.representedObject).name;
         [parentFolderNames insertObject:folderName atIndex:0];
-        parentNode = [parentNode parentNode];
+        parentNode = parentNode.parentNode;
     }
     NSString *relativePath = @"";
-    if([parentFolderNames count] > 0)
+    if(parentFolderNames.count > 0)
         relativePath = [parentFolderNames componentsJoinedByString:@"/"];
     return relativePath;
 }

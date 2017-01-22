@@ -9,7 +9,7 @@
 
 @implementation AccountPreferences
 
-- (id)init
+- (instancetype)init
 {
     self = [super initWithNibName:@"AccountPreferences" bundle:nil];
     self.putio = [PutIOAPI api];
@@ -47,9 +47,9 @@
 {
     if(!accountSetup)
         accountSetup = [[AccountSetupController alloc] init];
-    [accountSetup setDelegate:self];
-    [NSApp beginSheet:[accountSetup window]
-       modalForWindow:[self.view window]
+    accountSetup.delegate = self;
+    [NSApp beginSheet:accountSetup.window
+       modalForWindow:(self.view).window
         modalDelegate:nil 
        didEndSelector:nil
           contextInfo:nil];
@@ -60,8 +60,8 @@
 
 -(void)accountSetupController:(AccountSetupController *)c didFinishSetupWithOAuthAccessToken:(NSString *)token
 {
-    [[accountSetup window] close];
-    [NSApp endSheet:[accountSetup window]];
+    [accountSetup.window close];
+    [NSApp endSheet:accountSetup.window];
     
     // Abort all running syncs and downloads
     [[SyncScheduler sharedSyncScheduler] cancelAllSyncsInProgress];
@@ -85,8 +85,8 @@
 
 -(void)accountSetupControllerDidCancelSetup:(AccountSetupController *)c
 {
-    [[accountSetup window] close];
-    [NSApp endSheet:[accountSetup window]];    
+    [accountSetup.window close];
+    [NSApp endSheet:accountSetup.window];    
 }
 
 #pragma mark - Account Details
@@ -103,10 +103,10 @@
             if(request.error == nil && !request.isCancelled){
                 PutIOAPIAccountInfo *accountInfo = request.accountInfo;
                 NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-                [d setObject:[accountInfo eMailAddress] forKey:@"account_email"];
-                [d setObject:[accountInfo username] forKey:@"account_username"];
-                [d setInteger:[accountInfo usedDiskSpace] forKey:@"account_space_used"];
-                [d setInteger:[accountInfo totalDiskSpace] forKey:@"account_space_total"];
+                [d setObject:accountInfo.eMailAddress forKey:@"account_email"];
+                [d setObject:accountInfo.username forKey:@"account_username"];
+                [d setInteger:accountInfo.usedDiskSpace forKey:@"account_space_used"];
+                [d setInteger:accountInfo.totalDiskSpace forKey:@"account_space_total"];
                 [self updateAccountDetailLabels];
             }
             [activityLabel setHidden:YES];
@@ -132,17 +132,17 @@
         NSUInteger accountTotalSpace = [d integerForKey:@"account_space_total"];
         if(accountUsername){
             [accountUsernameLabel setHidden:NO];
-            [accountUsernameLabel setStringValue:accountUsername];
+            accountUsernameLabel.stringValue = accountUsername;
         }
         if(accountEMailAddress){
             [accountEMailAddressLabel setHidden:NO];
-            [accountEMailAddressLabel setStringValue:accountEMailAddress];
+            accountEMailAddressLabel.stringValue = accountEMailAddress;
         }
         if(accountUsedSpace > 0 || accountTotalSpace > 0){
             BytesFormatter *formatter = [[BytesFormatter alloc] init];
             NSString *accountUsedSpaceString = [formatter stringFromBytes:accountUsedSpace];
             NSString *accountTotalSpaceString = [formatter stringFromBytes:accountTotalSpace];
-            [spaceLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"Used space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString]];
+            spaceLabel.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Used space: %@ of %@", nil), accountUsedSpaceString, accountTotalSpaceString];
             [spaceLabel setHidden:NO];
         }
     }else{

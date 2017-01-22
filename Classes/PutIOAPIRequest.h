@@ -3,18 +3,18 @@
 
 @class PutIOAPI;
 
-typedef enum{
+typedef NS_ENUM(unsigned int, PutIOAPIMethod) {
     PutIOAPIMethodGET,
     PutIOAPIMethodPOST
-} PutIOAPIMethod;
+};
 
-typedef enum{
+typedef NS_ENUM(unsigned int, PutIOAPIInternalError) {
     PutIOAPIInternalErrorBadHTTPStatus = 1,
     PutIOAPIInternalErrorNetworkError = 2,
     PutIOAPIInternalErrorMalformedJSON = 3,
     PutIOAPIInternalErrorUnexpectedData = 4,
     PutIOAPIInternalErrorNotAuthorized = 5
-} PutIOAPIInternalError;
+};
 
 typedef void (^PutIOAPIRequestCompletion)(void);
 
@@ -33,10 +33,10 @@ typedef void (^PutIOAPIRequestCompletion)(void);
 @property (copy) PutIOAPIRequestCompletion completion;
 @property (assign) dispatch_queue_t completionQueue;
 
-- (id)initWithMethod:(PutIOAPIMethod)method
+- (instancetype)initWithMethod:(PutIOAPIMethod)method
             endpoint:(NSString*)endpoint
           parameters:(NSDictionary *)parameters
-     completionBlock:(PutIOAPIRequestCompletion)completionBlock;
+     completionBlock:(PutIOAPIRequestCompletion)completionBlock NS_DESIGNATED_INITIALIZER;
 
 - (void)parseResponseObject:(id)response;
 

@@ -9,7 +9,7 @@
 
 @property (readonly) id rawData;
 
-- (id)initWithRawData:(id)data;
+- (instancetype)initWithRawData:(id)data NS_DESIGNATED_INITIALIZER;
 
 // Helper functions
 

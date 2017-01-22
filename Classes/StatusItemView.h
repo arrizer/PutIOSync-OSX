@@ -10,7 +10,7 @@
     __unsafe_unretained id _target;
 }
 
-- (id)initWithStatusItem:(NSStatusItem *)statusItem;
+- (instancetype)initWithStatusItem:(NSStatusItem *)statusItem NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, strong) NSImage *image;

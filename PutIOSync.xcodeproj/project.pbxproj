@@ -132,10 +132,10 @@
 		39A66FC1178213650073DB81 /* PutIOAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PutIOAPIObject.h; path = Classes/PutIOAPIObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		39A66FC2178213650073DB81 /* PutIOAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutIOAPIObject.m; path = Classes/PutIOAPIObject.m; sourceTree = "<group>"; };
 		39A66FCF178214C20073DB81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		39A66FD4178215430073DB81 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesViewController.h; path = Frameworks/MASPreferences/MASPreferencesViewController.h; sourceTree = "<group>"; };
-		39A66FD5178215430073DB81 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesWindowController.h; path = Frameworks/MASPreferences/MASPreferencesWindowController.h; sourceTree = "<group>"; };
-		39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MASPreferencesWindow.xib; path = Frameworks/MASPreferences/MASPreferencesWindow.xib; sourceTree = "<group>"; };
-		39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MASPreferencesWindowController.m; path = Frameworks/MASPreferences/MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		39A66FD4178215430073DB81 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		39A66FD5178215430073DB81 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
 		39A66FDD178215D40073DB81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AccountSetupController.xib; sourceTree = "<group>"; };
 		39A86DDE1643F32D004CAAEE /* DownloadCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DownloadCellView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		39A86DDF1643F32D004CAAEE /* DownloadCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadCellView.m; sourceTree = "<group>"; };
@@ -247,11 +247,12 @@
 			children = (
 				39A66FD4178215430073DB81 /* MASPreferencesViewController.h */,
 				39A66FD5178215430073DB81 /* MASPreferencesWindowController.h */,
-				39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */,
 				39A66FD7178215430073DB81 /* MASPreferencesWindowController.m */,
+				39A66FD6178215430073DB81 /* MASPreferencesWindow.xib */,
 			);
 			name = MASPreferences;
-			sourceTree = "<group>";
+			path = Classes;
+			sourceTree = SOURCE_ROOT;
 		};
 		39C51FC9163440A1006BD1C8 /* Menu Item */ = {
 			isa = PBXGroup;
@@ -316,6 +317,7 @@
 		39F8744F1634347A00D9026F /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				39A66FD3178215390073DB81 /* MASPreferences */,
 				39F874601634386300D9026F /* GeneralPreferences.h */,
 				39F874611634386300D9026F /* GeneralPreferences.m */,
 				3903FA7E177FAF4E00EC6ABB /* GeneralPreferences.xib */,
@@ -363,7 +365,6 @@
 		DD4F7C0713C30F9F00825C6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				39A66FD3178215390073DB81 /* MASPreferences */,
 				3965359E178231DD00BE21DE /* Sparkle.framework */,
 				39910AB6164FFB3D00967014 /* Security.framework */,
 				39C51FCC16345B81006BD1C8 /* WebKit.framework */,

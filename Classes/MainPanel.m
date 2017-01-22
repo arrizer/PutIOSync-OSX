@@ -10,7 +10,7 @@
 
 @implementation MainPanel
 
-- (id)initWithDelegate:(id<PanelControllerDelegate>)delegate
+- (instancetype)initWithDelegate:(id<PanelControllerDelegate>)delegate
 {
     self = [super initWithDelegate:delegate];
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -24,7 +24,7 @@
                name:PutIOTransfersMonitorUpdatedNotification
              object:nil];
     listMode = MainPanelListModeDownloads;
-    [listModeSelector setSelectedSegment:listMode];
+    listModeSelector.selectedSegment = listMode;
     return self;
 }
 
@@ -41,8 +41,8 @@
         [[PutIOTransfersMonitor monitor] startMonitoringTransfers];
     else
         [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
-    [tableView setTarget:self];
-    [tableView setDoubleAction:@selector(doubleClickTableViewRow:)];
+    tableView.target = self;
+    tableView.doubleAction = @selector(doubleClickTableViewRow:);
     [super openPanel];
 }
 
@@ -55,7 +55,7 @@
 - (void)adaptiveResizeAnimated:(BOOL)animate
 {
     NSUInteger rowCount = MAX(2, [self numberOfRowsInTableView:tableView]);
-    CGFloat maxHeight = NSHeight([[NSScreen mainScreen] visibleFrame]);
+    CGFloat maxHeight = NSHeight([NSScreen mainScreen].visibleFrame);
     CGSize size = CGSizeMake(420.0f, MIN(46.0f + (rowCount * 56.0f), maxHeight));
     NSRect frame = self.window.frame;
     NSRect statusRect = [self statusRectForWindow:self.window];
@@ -64,7 +64,7 @@
     frame.origin.y = NSMaxY(statusRect) - NSHeight(frame);
     
     [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:(animate ? 0.2f : 0.0f)];
+    [NSAnimationContext currentContext].duration = (animate ? 0.2f : 0.0f);
     [[self.window animator] setFrame:frame display:YES];
     [NSAnimationContext endGrouping];
 }
@@ -79,7 +79,7 @@
 
 -(void)windowDidResignKey:(NSNotification *)notification
 {
-    if([self.window isVisible])
+    if((self.window).visible)
         [[PutIOTransfersMonitor monitor] stopMonitoringTransfers];
     [super windowDidResignKey:notification];
 }
@@ -88,15 +88,15 @@
 
 -(IBAction)showOptionsMenu:(id)sender
 {
-    NSRect frame = [(NSButton *)sender frame];
-    NSPoint menuOrigin = [[(NSButton *)sender superview] convertPoint:NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height-27)
+    NSRect frame = ((NSButton *)sender).frame;
+    NSPoint menuOrigin = [((NSButton *)sender).superview convertPoint:NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height-27)
                                                                toView:nil];
     NSEvent *event =  [NSEvent mouseEventWithType:NSLeftMouseDown
                                          location:menuOrigin
                                     modifierFlags:0
                                         timestamp:0
-                                     windowNumber:[[(NSButton *)sender window] windowNumber]
-                                          context:[[(NSButton *)sender window] graphicsContext]
+                                     windowNumber:((NSButton *)sender).window.windowNumber
+                                          context:((NSButton *)sender).window.graphicsContext
                                       eventNumber:0
                                        clickCount:1
                                          pressure:1];
@@ -105,7 +105,7 @@
 
 -(IBAction)showPreferences:(id)sender
 {
-    [(ApplicationDelegate*)[NSApp delegate] showPreferences:self];
+    [(ApplicationDelegate*)NSApp.delegate showPreferences:self];
 }
 
 -(IBAction)quit:(id)sender
@@ -142,7 +142,7 @@
 
 - (IBAction)changeListMode:(id)sender
 {
-    NSInteger index = [listModeSelector selectedSegment];
+    NSInteger index = listModeSelector.selectedSegment;
     listMode = index;
     [self reloadTableData];
     if(listMode == MainPanelListModeTransfers)
@@ -153,7 +153,7 @@
 
 - (IBAction)doubleClickTableViewRow:(id)sender
 {
-    NSInteger row = [tableView clickedRow];
+    NSInteger row = tableView.clickedRow;
     NSTableCellView *cell = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
     if([cell.objectValue isKindOfClass:[Download class]]){
         Download *download = (Download*)cell.objectValue;
@@ -168,9 +168,9 @@
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     if(listMode == MainPanelListModeDownloads){
-        return ([[[SyncScheduler sharedSyncScheduler] runningSyncs] count] + [[[PutIODownloadManager manager] allDownloads] count]);
+        return ([[SyncScheduler sharedSyncScheduler] runningSyncs].count + [[PutIODownloadManager manager] allDownloads].count);
     }else if(listMode == MainPanelListModeTransfers){
-        return ([[[PutIOTransfersMonitor monitor] allActiveTransfers] count]);
+        return ([[PutIOTransfersMonitor monitor] allActiveTransfers].count);
     }
     return 0;
 }
@@ -178,16 +178,16 @@
 -(NSView *)tableView:(NSTableView *)aTableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     if(listMode == MainPanelListModeDownloads){
-        if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
+        if(row < [[SyncScheduler sharedSyncScheduler] runningSyncs].count){
             NSTableCellView *cell = [tableView makeViewWithIdentifier:@"syncRunnerCell" owner:self];
             SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
             cell.textField.stringValue = [NSString stringWithFormat:NSLocalizedString(@"Syncing '%@'...", nil), runner.syncInstruction.originFolderName];
             return cell;
         }else{
-            row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
+            row -= [[SyncScheduler sharedSyncScheduler] runningSyncs].count;
             DownloadCellView *cell = [tableView makeViewWithIdentifier:@"downloadCell" owner:self];
             Download *download = [[PutIODownloadManager manager] allDownloads][row];
-            [cell setDownload:download];
+            cell.download = download;
             return cell;
         }
     }else if(listMode == MainPanelListModeTransfers){
@@ -205,11 +205,11 @@
 -(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     if(listMode == MainPanelListModeDownloads){
-        if(row < [[[SyncScheduler sharedSyncScheduler] runningSyncs] count]){
+        if(row < [[SyncScheduler sharedSyncScheduler] runningSyncs].count){
             SyncRunner *runner = [[SyncScheduler sharedSyncScheduler] runningSyncs][row];
             return runner;
         }else{
-            row -= [[[SyncScheduler sharedSyncScheduler] runningSyncs] count];
+            row -= [[SyncScheduler sharedSyncScheduler] runningSyncs].count;
             Download *download = [[PutIODownloadManager manager] allDownloads][row];
             return download;
         }

@@ -14,18 +14,18 @@
 
 static PutIOTransfersMonitor *sharedInstance;
 
-+(id)monitor
++(instancetype)monitor
 {
     if(!sharedInstance)
         sharedInstance = [[PutIOTransfersMonitor alloc] init];
     return sharedInstance;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
-        activeTransfers = [NSArray array];
+        activeTransfers = @[];
         api = [PutIOAPI api];
     }
     return self;

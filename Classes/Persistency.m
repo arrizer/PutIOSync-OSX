@@ -20,7 +20,7 @@
 - (NSURL *)applicationFilesDirectory
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *appSupportURL = [fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].lastObject;
     return [appSupportURL URLByAppendingPathComponent:@"de.matthiasschwab.putiosync"];
 }
 
@@ -52,8 +52,8 @@
     NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
     if(!properties){
         BOOL ok = NO;
-        if ([error code] == NSFileReadNoSuchFileError) {
-            ok = [fileManager createDirectoryAtPath:[applicationFilesDirectory path] withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error.code == NSFileReadNoSuchFileError) {
+            ok = [fileManager createDirectoryAtPath:applicationFilesDirectory.path withIntermediateDirectories:YES attributes:nil error:&error];
         }
         if (!ok) {
             [[NSApplication sharedApplication] presentError:error];
@@ -61,7 +61,7 @@
         }
     }else{
         if (![properties[NSURLIsDirectoryKey] boolValue]) {
-            NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]];
+            NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", applicationFilesDirectory.path];
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
             error = [NSError errorWithDomain:@"de.matthiasschwab.putiosync" code:101 userInfo:dict];
@@ -86,7 +86,7 @@
         return _context;
     }
     
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
     if(!coordinator){
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
@@ -95,8 +95,8 @@
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_context setPersistentStoreCoordinator:coordinator];
+    _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    _context.persistentStoreCoordinator = coordinator;
     
     return _context;
 }
@@ -121,7 +121,7 @@
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
         return NSTerminateCancel;
     }
-    if(![self.context hasChanges]){
+    if(!(self.context).hasChanges){
         return NSTerminateNow;
     }
     
@@ -137,8 +137,8 @@
         NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
         NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:question];
-        [alert setInformativeText:info];
+        alert.messageText = question;
+        alert.informativeText = info;
         [alert addButtonWithTitle:quitButton];
         [alert addButtonWithTitle:cancelButton];
         

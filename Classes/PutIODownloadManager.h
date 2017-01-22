@@ -8,8 +8,8 @@
 
 - (void)addDownload:(Download*)download;
 - (void)loadDownloads;
-- (NSInteger)numberOfRunningDownloads;
-- (NSArray*)allDownloads;
+@property (nonatomic, readonly) NSInteger numberOfRunningDownloads;
+@property (nonatomic, readonly, copy) NSArray *allDownloads;
 - (void)clearDownloadList;
 - (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
 - (void)saveDownloads;

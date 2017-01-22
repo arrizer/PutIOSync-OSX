@@ -12,7 +12,7 @@
     NSTimer *timer;
 }
 
-+(id)sharedSyncScheduler;
++(SyncScheduler*)sharedSyncScheduler;
 
 @property (strong) NSMutableArray *runningSyncs;
 

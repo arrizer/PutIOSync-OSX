@@ -17,7 +17,7 @@ static TimeIntervalFormatter *timeIntervalFormatter;
         timeIntervalFormatter = [[TimeIntervalFormatter alloc] init];
     }
     
-    [super setObjectValue:objectValue];
+    super.objectValue = objectValue;
     PutIOAPITransfer *transfer = (PutIOAPITransfer*)objectValue;
     
     icon.image = [NSImage imageNamed:@"transfer"];
@@ -58,19 +58,19 @@ static TimeIntervalFormatter *timeIntervalFormatter;
             status = @"";
             break;
     }
-    [cancelButton setHidden:(transfer.status == PutIOAPITransferStatusCompleted || transfer.status == PutIOAPITransferStatusFailed)];
+    cancelButton.hidden = (transfer.status == PutIOAPITransferStatusCompleted || transfer.status == PutIOAPITransferStatusFailed);
     statusLabel.stringValue = status;
 }
 
 -(void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle
 {
-    [super setBackgroundStyle:backgroundStyle];
+    super.backgroundStyle = backgroundStyle;
     if(backgroundStyle == NSBackgroundStyleDark){
         statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
-        [cancelButton setImage:[NSImage imageNamed:@"stopImageInverted.png"]];
+        cancelButton.image = [NSImage imageNamed:@"stopImageInverted.png"];
     }else if (backgroundStyle == NSBackgroundStyleLight){
         statusLabel.textColor = [NSColor controlShadowColor];
-        [cancelButton setImage:[NSImage imageNamed:@"stopImage.png"]];
+        cancelButton.image = [NSImage imageNamed:@"stopImage.png"];
     }
 }
 

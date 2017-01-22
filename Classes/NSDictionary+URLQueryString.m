@@ -7,7 +7,7 @@
 {
     NSMutableArray *parts = [NSMutableArray array];
     for(NSString *key in self){
-        NSString *value = [self objectForKey:key];
+        NSString *value = self[key];
         NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *encodedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];

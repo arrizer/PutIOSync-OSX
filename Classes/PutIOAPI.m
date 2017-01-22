@@ -81,7 +81,7 @@ static NSString *oAuthAccessToken;
         @"response_type" : @"code",
         @"redirect_uri" : self.oAuthRedirectURI
     };
-    NSString *urlString = [[self.baseURL URLByAppendingPathComponent:@"oauth2/authenticate"] absoluteString];
+    NSString *urlString = [self.baseURL URLByAppendingPathComponent:@"oauth2/authenticate"].absoluteString;
     urlString = [urlString stringByAppendingFormat:@"?%@", [parameters URLQueryString]];
     return [NSURL URLWithString:urlString];
 }
@@ -101,7 +101,7 @@ static NSString *oAuthAccessToken;
 
 -(NSURL *)downloadURLForFileWithID:(NSInteger)fileID
 {
-    NSString *requestURLString = [self.baseURL absoluteString];
+    NSString *requestURLString = (self.baseURL).absoluteString;
     requestURLString = [requestURLString stringByAppendingFormat:@"/files/%ld/download?oauth_token=%@", fileID, self.oAuthAccessToken];
     return [NSURL URLWithString:requestURLString];
 }

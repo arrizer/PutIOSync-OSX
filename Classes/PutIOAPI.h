@@ -4,7 +4,7 @@
 
 @interface PutIOAPI : NSObject
 
-+ (id)api;
++ (instancetype)api;
 
 @property (readonly) NSURL *baseURL;
 @property (readonly) NSURL *oAuthAuthenticationURL;
@@ -15,7 +15,7 @@
 @property (strong, nonatomic) NSString *oAuthAccessToken;
 @property (readonly) BOOL isAuthenticated;
 
-- (instancetype)initWithBaseURL:(NSURL*)baseURL oAuthAccessToken:(NSString*)oAuthAccessToken oAuthClientID:(NSString*)clientID oAuthRedirectURI:(NSString*)redirectURI;
+- (instancetype)initWithBaseURL:(NSURL*)baseURL oAuthAccessToken:(NSString*)oAuthAccessToken oAuthClientID:(NSString*)clientID oAuthRedirectURI:(NSString*)redirectURI NS_DESIGNATED_INITIALIZER;
 - (NSURL*)downloadURLForFileWithID:(NSInteger)fileID;
 - (void)performRequest:(PutIOAPIRequest*)request;
 - (void)cancelAllRequests;

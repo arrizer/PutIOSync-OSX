@@ -3,7 +3,7 @@
 
 @implementation PutIOAPIObject
 
-- (id)initWithRawData:(id)data
+- (instancetype)initWithRawData:(id)data
 {
     self = [super init];
     if (self) {
@@ -12,7 +12,7 @@
     return self;
 }
 
--(id)initWithCoder:(NSCoder *)decoder
+-(instancetype)initWithCoder:(NSCoder *)decoder
 {
     rawData = [decoder decodeObjectForKey:@"rawData"];
     self = [self initWithRawData:rawData];

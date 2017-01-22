@@ -13,7 +13,7 @@
 
 @implementation PutIOAPIRequest
 
--(id)initWithMethod:(PutIOAPIMethod)method
+-(instancetype)initWithMethod:(PutIOAPIMethod)method
            endpoint:(NSString *)endpoint
          parameters:(NSDictionary *)parameters
     completionBlock:(PutIOAPIRequestCompletion)completionBlock
@@ -42,7 +42,7 @@
         return;
     }
     
-    NSString *requestURLString = [self.api.baseURL absoluteString];
+    NSString *requestURLString = (self.api.baseURL).absoluteString;
     requestURLString = [requestURLString stringByAppendingPathComponent:self.endpoint];
     NSMutableDictionary *parameters;
     if(self.parameters == nil){
@@ -60,8 +60,8 @@
     NSURL *requestURL = [NSURL URLWithString:requestURLString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     if(self.method == PutIOAPIMethodPOST){
-        [request setHTTPBody:[parameterString dataUsingEncoding:NSUTF8StringEncoding]];
-        [request setHTTPMethod:@"POST"];
+        request.HTTPBody = [parameterString dataUsingEncoding:NSUTF8StringEncoding];
+        request.HTTPMethod = @"POST";
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
     //NSLog(@"<API> %@\nParameters: %@", requestURL, [self.parameters description]);
@@ -88,21 +88,21 @@
 
 - (void)parseResponse:(NSData*)data
 {
-    NSDictionary *responseHeaders = [(NSHTTPURLResponse*)self.urlResponse allHeaderFields];
-    NSInteger httpStatus = [(NSHTTPURLResponse*)self.urlResponse statusCode];
+    NSDictionary *responseHeaders = ((NSHTTPURLResponse*)self.urlResponse).allHeaderFields;
+    NSInteger httpStatus = ((NSHTTPURLResponse*)self.urlResponse).statusCode;
     if(httpStatus >= 400){
         [self failWithInternalError:PutIOAPIInternalErrorBadHTTPStatus
                         userMessage:NSLocalizedString(@"The server responded with an error", nil)];
     }else{
         if(data){
-            NSString *contentType = [responseHeaders objectForKey:@"Content-Type"];
+            NSString *contentType = responseHeaders[@"Content-Type"];
             if([contentType isEqualToString:@"application/json"]){
                 NSError *JSONError;
                 id result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
                 _responseObject = result;
                 if(self.parseAPIResponse){
                     if(result && [result isKindOfClass:[NSDictionary class]]){
-                        NSString *status = [(NSDictionary*)result objectForKey:@"status"];
+                        NSString *status = ((NSDictionary*)result)[@"status"];
                         if([status isEqualToString:@"OK"]){
                             [self parseResponseObject:result];
                         }else{
@@ -112,7 +112,7 @@
                         }
                     }else{
                         [self failWithInternalError:PutIOAPIInternalErrorMalformedJSON
-                                        userMessage:[JSONError localizedDescription]];
+                                        userMessage:JSONError.localizedDescription];
                     }
                 }
             }else{
@@ -152,7 +152,7 @@
        @"TransferNotFoundError" : NSLocalizedString(@"Transfer is not present at put.io", @"PutIO API Error 'TransferNotFoundError'")
     };
     if(!message)
-        message = [knownPutIOErrors objectForKey:errorName];
+        message = knownPutIOErrors[errorName];
     if(!message)
         message = errorName;
     NSError *error = [NSError errorWithDomain:@"putioapi"
@@ -164,7 +164,7 @@
 
 - (void)failWithError:(NSError*)error
 {
-    NSLog(@"API Error: %@", [error description]);
+    NSLog(@"API Error: %@", error.description);
     _error = error;
 }
 

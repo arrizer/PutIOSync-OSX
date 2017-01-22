@@ -5,7 +5,7 @@
 
 @implementation GeneralPreferences
 
-- (id)init
+- (instancetype)init
 {
     return [super initWithNibName:@"GeneralPreferences" bundle:nil];
 }
@@ -20,12 +20,12 @@
 
 - (void)updateUpdaterState
 {
-    SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
-    autocheckForUpdatesCheckbox.state = ([updater automaticallyChecksForUpdates] ? NSOnState : NSOffState);
+    SUUpdater *updater = ((ApplicationDelegate*)NSApp.delegate).updater;
+    autocheckForUpdatesCheckbox.state = (updater.automaticallyChecksForUpdates ? NSOnState : NSOffState);
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setLocale:[NSLocale currentLocale]];
+    dateFormatter.dateStyle = NSDateFormatterLongStyle;
+    dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    dateFormatter.locale = [NSLocale currentLocale];
     NSString *dateString = (updater.lastUpdateCheckDate == nil
                             ? NSLocalizedString(@"never", nil)
                             : [dateFormatter stringFromDate:updater.lastUpdateCheckDate]);
@@ -51,19 +51,19 @@
 
 -(IBAction)checkForUpdatesNow:(id)sender
 {
-    [(ApplicationDelegate*)[NSApp delegate] checkForUpdates:sender];
+    [(ApplicationDelegate*)NSApp.delegate checkForUpdates:sender];
     [self updateUpdaterState];
 }
 
 -(IBAction)autocheckForUpdatesChanged:(id)sender
 {
-    SUUpdater *updater = [(ApplicationDelegate*)[NSApp delegate] updater];
+    SUUpdater *updater = ((ApplicationDelegate*)NSApp.delegate).updater;
     updater.automaticallyChecksForUpdates = ((autocheckForUpdatesCheckbox.state == NSOnState) ? YES : NO);
 }
 
 -(IBAction)launchOnLoginToggled:(id)sender
 {
-    ApplicationDelegate *appDelegate = (ApplicationDelegate*)[NSApp delegate];
+    ApplicationDelegate *appDelegate = (ApplicationDelegate*)NSApp.delegate;
     if(launchOnLoginCheckbox.state == NSOnState)
         [appDelegate addApplicationAsLoginItem];
     else

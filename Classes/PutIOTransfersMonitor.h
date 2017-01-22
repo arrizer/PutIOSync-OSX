@@ -6,11 +6,11 @@
 
 @interface PutIOTransfersMonitor : NSObject
 
-+ (id)monitor;
++ (instancetype)monitor;
 
 - (void)startMonitoringTransfers;
 - (void)stopMonitoringTransfers;
 - (void)updateTransfers;
-- (NSArray*)allActiveTransfers;
+@property (nonatomic, readonly, copy) NSArray *allActiveTransfers;
 
 @end

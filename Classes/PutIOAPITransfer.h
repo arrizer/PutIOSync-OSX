@@ -1,14 +1,14 @@
 
 #import "PutIOAPIObject.h"
 
-typedef enum : NSInteger {
+typedef NS_ENUM(NSInteger, PutIOAPITransferStatus) {
     PutIOAPITransferStatusUnknown = 0,
     PutIOAPITransferStatusInQueue = 1,
     PutIOAPITransferStatusDownloading = 2,
     PutIOAPITransferStatusSeeding = 3,
     PutIOAPITransferStatusCompleted = 4,
     PutIOAPITransferStatusFailed = 5
-} PutIOAPITransferStatus;
+};
 
 @interface PutIOAPITransfer : PutIOAPIObject
 {

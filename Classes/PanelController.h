@@ -13,7 +13,7 @@
 
 @interface PanelController : NSWindowController <NSWindowDelegate>
 
-- (id)initWithDelegate:(id<PanelControllerDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<PanelControllerDelegate>)delegate NS_DESIGNATED_INITIALIZER;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
 @property (nonatomic) BOOL hasActivePanel;

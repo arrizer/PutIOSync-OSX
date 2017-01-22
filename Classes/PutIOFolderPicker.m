@@ -9,7 +9,7 @@
 @implementation PutIOFolderPicker
 @synthesize pendingFetches = _pendingFetches;
 
-- (id)init
+- (instancetype)init
 {
     self = [super initWithWindowNibName:@"PutIOFolderPicker"];
     return self;
@@ -34,9 +34,9 @@
 
 -(void)chooseSelectedFolder:(id)sender
 {
-    if([outlineView selectedRow] != -1){
-        NSTableCellView *selectedCellView = [outlineView viewAtColumn:0 row:[outlineView selectedRow] makeIfNecessary:YES];
-        PutIOAPIFile *pickedFolder = [selectedCellView objectValue];
+    if(outlineView.selectedRow != -1){
+        NSTableCellView *selectedCellView = [outlineView viewAtColumn:0 row:outlineView.selectedRow makeIfNecessary:YES];
+        PutIOAPIFile *pickedFolder = selectedCellView.objectValue;
         [self.window close];
         if([_delegate respondsToSelector:@selector(folderPicker:didPickFolder:)])
             [_delegate folderPicker:self didPickFolder:pickedFolder];
@@ -101,7 +101,7 @@
 
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-    [chooseButton setEnabled:([outlineView selectedRow] != -1)];
+    chooseButton.enabled = (outlineView.selectedRow != -1);
 }
 
 #pragma mark - Fetch Folder Listing
@@ -130,7 +130,7 @@
             }
             NSMutableArray *subfolders = [NSMutableArray array];
             for(PutIOAPIFile *file in request.files){
-                if([file isFolder]){
+                if(file.isFolder){
                     [subfolders addObject:file];
                 }
             }

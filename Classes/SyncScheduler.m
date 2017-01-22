@@ -7,14 +7,14 @@
 
 static SyncScheduler* sharedInstance;
 
-+(id)sharedSyncScheduler
++(SyncScheduler*)sharedSyncScheduler
 {
     if(!sharedInstance)
         sharedInstance = [[SyncScheduler alloc] init];
     return sharedInstance;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -72,7 +72,7 @@ static SyncScheduler* sharedInstance;
     if(![[PutIOAPI api] isAuthenticated]) {
         return;
     }
-    if([self.runningSyncs count] > 0) {
+    if((self.runningSyncs).count > 0) {
         return;
     }
     
@@ -80,7 +80,7 @@ static SyncScheduler* sharedInstance;
     
     for (SyncInstruction *instruction in [SyncInstruction allSyncInstructions]) {
         SyncRunner *runner = [[SyncRunner alloc] initWithSyncInstruction:instruction];
-        [runner setDelegate:self];
+        runner.delegate = self;
         [runner run];
         [self.runningSyncs addObject:runner];
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncSchedulerSyncDidChangeNotification object:runner];
@@ -136,10 +136,10 @@ static SyncScheduler* sharedInstance;
 
 -(void)deliverNotificationConditionally
 {
-    if([self.runningSyncs count] == 0 && foundFiles > 0){
+    if((self.runningSyncs).count == 0 && foundFiles > 0){
         NSString *message = [NSString stringWithFormat:NSLocalizedString(@"%i files from put.io began downloading",nil),
                              foundFiles];
-        [(ApplicationDelegate*)[NSApp delegate] deliverUserNotificationWithIdentifier:@"newfiles" message:message];
+        [(ApplicationDelegate*)NSApp.delegate deliverUserNotificationWithIdentifier:@"newfiles" message:message];
     }
 }
 

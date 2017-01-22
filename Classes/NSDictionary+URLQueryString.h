@@ -3,6 +3,6 @@
 
 @interface NSDictionary(URLQueryString)
 
--(NSString *)URLQueryString;
+@property (nonatomic, readonly, copy) NSString *URLQueryString;
 
 @end

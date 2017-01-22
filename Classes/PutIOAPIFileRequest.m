@@ -13,7 +13,7 @@
 {
     return [[self alloc] initWithMethod:PutIOAPIMethodGET
                                endpoint:@"files/list"
-                             parameters:@{@"parent_id" : [@(folderID) stringValue]}
+                             parameters:@{@"parent_id" : (@(folderID)).stringValue}
                         completionBlock:completion];
 }
 

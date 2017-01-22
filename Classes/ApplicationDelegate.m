@@ -159,7 +159,7 @@ static NSDictionary *userNotifications = nil;
 
 - (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-    NSString *url = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+    NSString *url = [event paramDescriptorForKeyword:keyDirectObject].stringValue;
     NSLog(@"Got URL event: %@", url);
 }
 
@@ -170,7 +170,7 @@ static NSDictionary *userNotifications = nil;
     // Make sure we are not added twice
     [self removeApplicationLoginItem];
     
-	NSString *appPath = [[NSBundle mainBundle] bundlePath];
+	NSString *appPath = [NSBundle mainBundle].bundlePath;
     
 	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
 	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
@@ -187,19 +187,18 @@ static NSDictionary *userNotifications = nil;
 
 -(void)removeApplicationLoginItem
 {
-	NSString *appPath = [[NSBundle mainBundle] bundlePath];
+	NSString *appPath = [NSBundle mainBundle].bundlePath;
     
 	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
 	LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
 	if(loginItems){
 		UInt32 seedValue;
 		NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
-		for(int i = 0; i < [loginItemsArray count]; i++){
-			LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray
-                                                                                 objectAtIndex:i];
+		for(int i = 0; i < loginItemsArray.count; i++){
+			LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)loginItemsArray[i];
 			//Resolve the item with URL
 			if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-				NSString * urlPath = [(__bridge NSURL*)url path];
+				NSString * urlPath = ((__bridge NSURL*)url).path;
 				if ([urlPath compare:appPath] == NSOrderedSame){
 					LSSharedFileListItemRemove(loginItems,itemRef);
 				}

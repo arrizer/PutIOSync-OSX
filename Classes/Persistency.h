@@ -13,7 +13,4 @@
 
 - (NSEntityDescription*)entityNamed:(NSString*)entityName;
 
-//+(id)retrievePersistentObjectForKey:(NSString*)key;
-//+(void)storePersistentObject:(id<NSCoding>)object forKey:(NSString*)key;
-
 @end

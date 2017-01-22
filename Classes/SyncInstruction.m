@@ -57,7 +57,7 @@
 
 -(void)resetKnownItems
 {
-    for(KnownItem *item in [self knownItems]){
+    for(KnownItem *item in self.knownItems){
         [item.managedObjectContext deleteObject:item];
     }
 }
@@ -72,7 +72,7 @@
 
 -(BOOL)itemWithIDIsKnown:(NSInteger)itemID
 {
-    for(KnownItem *item in [self knownItems]){
+    for(KnownItem *item in self.knownItems){
         if([item.itemID isEqual:@(itemID)]){
             return YES;
         }

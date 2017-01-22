@@ -7,7 +7,7 @@
 {
     return [[self alloc] initWithMethod:PutIOAPIMethodPOST
                                endpoint:@"files/delete"
-                             parameters:@{@"file_ids" : [@(fileID) stringValue]}
+                             parameters:@{@"file_ids" : (@(fileID)).stringValue}
                         completionBlock:completion];
 }
 

@@ -4,7 +4,7 @@
 
 - (void)viewWillAppear;
 - (void)viewDidDisappear;
-- (NSView*)initialKeyView;
+@property (nonatomic, readonly, strong) NSView *initialKeyView;
 
 @required
 

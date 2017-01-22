@@ -44,7 +44,7 @@
 
 #pragma mark - Init
 
-- (id)initWithPutIOFile:(PutIOAPIFile*)file
+- (instancetype)initWithPutIOFile:(PutIOAPIFile*)file
               localPath:(NSString*)path
        subdirectoryPath:(NSString*)subPath
 originatingSyncInstruction:(SyncInstruction*)syncInstruction;
@@ -84,52 +84,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 {
     [self stopWaitingForOtherDownloads];
 }
-
-//#pragma mark - Coding
-//
-//-(id)initWithCoder:(NSCoder *)decoder
-//{
-//    self = [super init];
-//    if(self){
-//        self.putioFile = [decoder decodeObjectForKey:@"putioFile"];
-//        self.localFile = [decoder decodeObjectForKey:@"localFile"];
-//        localPath = [decoder decodeObjectForKey:@"localPath"];
-//        subdirectoryPath = [decoder decodeObjectForKey:@"subdirectoryPath"];
-//        self.progress = [decoder decodeFloatForKey:@"progress"];
-//        self.progressIsKnown = [decoder decodeBoolForKey:@"progressIsKnown"];
-//        self.estimatedRemainingTime = [decoder decodeIntegerForKey:@"estimatedRemainingTime"];
-//        self.estimatedRemainingTimeIsKnown = [decoder decodeBoolForKey:@"estimatedRemainingTimeIsKnown"];
-//        //      NSInteger uniqueID = [decoder decodeIntegerForKey:@"originatingSyncInstruction.uniqueID"];
-//        //        for(SyncInstruction *instruction in [SyncInstruction allSyncInstructions])
-//        //            if(instruction.uniqueID == uniqueID)
-//        //                self.originatingSyncInstruction = instruction;
-//        self.totalSize = [decoder decodeIntegerForKey:@"totalSize"];
-//        self.receivedSize = [decoder decodeIntegerForKey:@"receivedSize"];
-//        localFileTemporary = [decoder decodeObjectForKey:@"localFileTemporary"];
-//        self.shouldResumeOnAppLaunch = [decoder decodeBoolForKey:@"shouldResumeOnAppLaunch"];
-//        self.status = [decoder decodeIntForKey:@"status"];
-//
-//    }
-//    return self;
-//}
-//
-//-(void)encodeWithCoder:(NSCoder *)coder
-//{
-//    [coder encodeObject:self.putioFile forKey:@"putioFile"];
-//    [coder encodeObject:self.localFile forKey:@"localFile"];
-//    [coder encodeObject:localPath forKey:@"localPath"];
-//    [coder encodeObject:subdirectoryPath forKey:@"subdirectoryPath"];
-//    [coder encodeFloat:self.progress forKey:@"progress"];
-//    [coder encodeBool:self.progressIsKnown forKey:@"progressIsKnown"];
-//    [coder encodeInteger:self.estimatedRemainingTime forKey:@"estimatedRemainingTime"];
-//    [coder encodeBool:self.estimatedRemainingTimeIsKnown forKey:@"estimatedRemainingTimeIsKnown"];
-//    //  [coder encodeInteger:self.originatingSyncInstruction.uniqueID forKey:@"originatingSyncInstruction.uniqueID"];
-//    [coder encodeInteger:self.totalSize forKey:@"totalSize"];
-//    [coder encodeInteger:self.receivedSize forKey:@"receivedSize"];
-//    [coder encodeObject:localFileTemporary forKey:@"localFileTemporary"];
-//    [coder encodeInt:(int)self.status forKey:@"status"];
-//    [coder encodeBool:self.shouldResumeOnAppLaunch forKey:@"shouldResumeOnAppLaunch"];
-//}
 
 #pragma mark - Accessors
 
@@ -177,7 +131,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
                                                          selector:@selector(updateProgress)
                                                          userInfo:nil repeats:YES];
     
-    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:[self.putioFile fileID]];
+    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:(self.putioFile).fileID];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:60.0f];
@@ -289,8 +243,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSUInteger number = 0;
     while([fm fileExistsAtPath:filePath])
-        filePath = [NSString stringWithFormat:@"%@/%@-%li.%@", [filePath stringByDeletingLastPathComponent],
-                    [[filePath lastPathComponent] stringByDeletingPathExtension], ++number, [filePath pathExtension]];
+        filePath = [NSString stringWithFormat:@"%@/%@-%li.%@", filePath.stringByDeletingLastPathComponent,
+                    filePath.lastPathComponent.stringByDeletingPathExtension, ++number, filePath.pathExtension];
     return filePath;
 }
 
@@ -342,10 +296,10 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 -(void)connection:(NSURLConnection *)aConnection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-    NSDictionary *responseHeaders = [httpResponse allHeaderFields];
-    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:[self.putioFile fileID]];
+    NSDictionary *responseHeaders = httpResponse.allHeaderFields;
+    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:(self.putioFile).fileID];
     NSLog(@"PutIO download %@ response headers: %@", requestURL, responseHeaders);
-    NSInteger httpStatus = [httpResponse statusCode];
+    NSInteger httpStatus = httpResponse.statusCode;
     if((httpStatus >= 200 && httpStatus < 300)){
         if(responseHeaders[@"Content-Length"] != nil){
             if(self.receivedSize == 0)
@@ -371,12 +325,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     [fileHandle writeData:data];
     
     // Don't update the progress too often
-    receivedBytesSinceLastProgressUpdate += [data length];
+    receivedBytesSinceLastProgressUpdate += data.length;
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSInteger c = [error code];
+    NSInteger c = error.code;
     if(c == NSURLErrorNetworkConnectionLost|| c == NSURLErrorNotConnectedToInternet){
         [self pauseDownload];
         return;
@@ -420,7 +374,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     NSLog(@"%@: Download finished", self);
     if(self.originatingSyncInstruction != nil){
         [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
-        if([self.originatingSyncInstruction.deleteRemoteFilesAfterSync boolValue]){
+        if((self.originatingSyncInstruction.deleteRemoteFilesAfterSync).boolValue){
             PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
                                                                                                  completion:nil];
             [[PutIOAPI api] performRequest:request];
@@ -521,7 +475,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     }
     if(identifier == nil)
         return;
-    [(ApplicationDelegate*)[NSApp delegate] deliverUserNotificationWithIdentifier:identifier message:message];
+    [(ApplicationDelegate*)NSApp.delegate deliverUserNotificationWithIdentifier:identifier message:message];
 }
 
 -(NSString *)description

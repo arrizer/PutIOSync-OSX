@@ -18,7 +18,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect contentRect = NSInsetRect([self bounds], LINE_THICKNESS, LINE_THICKNESS);
+    NSRect contentRect = NSInsetRect(self.bounds, LINE_THICKNESS, LINE_THICKNESS);
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     [path moveToPoint:NSMakePoint(_arrowX, NSMaxY(contentRect))];
@@ -54,7 +54,7 @@
     
     [NSGraphicsContext saveGraphicsState];
 
-    NSBezierPath *clip = [NSBezierPath bezierPathWithRect:[self bounds]];
+    NSBezierPath *clip = [NSBezierPath bezierPathWithRect:self.bounds];
     [clip appendBezierPath:path];
     [clip addClip];
     

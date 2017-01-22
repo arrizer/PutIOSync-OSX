@@ -65,7 +65,7 @@
 - (BOOL)downloadExistsForFile:(PutIOAPIFile *)file
 {
     for(Download *download in allDownloads)
-        if([download.putioFile fileID] == file.fileID)
+        if((download.putioFile).fileID == file.fileID)
             return YES;
     return NO;
 }

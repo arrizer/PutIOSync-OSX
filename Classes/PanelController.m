@@ -16,7 +16,7 @@
 
 #pragma mark - Initializers
 
-- (id)initWithDelegate:(id<PanelControllerDelegate>)delegate
+- (instancetype)initWithDelegate:(id<PanelControllerDelegate>)delegate
 {
     self = [super initWithWindowNibName:NSStringFromClass([self class])];
     if (self != nil)
@@ -31,11 +31,11 @@
     [super awakeFromNib];
     
     // Make a fully skinned panel
-    NSPanel *panel = (id)[self window];
+    NSPanel *panel = (id)self.window;
     [panel setAcceptsMouseMovedEvents:YES];
     [panel setLevel:NSPopUpMenuWindowLevel];
     [panel setOpaque:NO];
-    [panel setBackgroundColor:[NSColor clearColor]];
+    panel.backgroundColor = [NSColor clearColor];
 }
 
 #pragma mark - Accessors
@@ -66,7 +66,7 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification;
 {
-    if ([[self window] isVisible])
+    if (self.window.visible)
     {
         self.hasActivePanel = NO;
     }
@@ -79,9 +79,9 @@
 
 - (void)updateArrowX
 {
-    NSWindow *panel = [self window];
+    NSWindow *panel = self.window;
     NSRect statusRect = [self statusRectForWindow:panel];
-    NSRect panelRect = [panel frame];
+    NSRect panelRect = panel.frame;
     
     CGFloat statusX = roundf(NSMidX(statusRect));
     CGFloat panelX = statusX - NSMinX(panelRect);
@@ -100,7 +100,7 @@
 
 - (NSRect)statusRectForWindow:(NSWindow *)window
 {
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
+    NSRect screenRect = [NSScreen screens][0].frame;
     NSRect statusRect = NSZeroRect;
     
     NSView *statusItemView = nil;
@@ -112,7 +112,7 @@
         statusRect = [statusItemView.window convertRectToScreen:statusItemView.frame];
         statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
     }else{
-        statusRect.size = NSMakeSize(MenubarControllerStatusItemWidth, [[NSStatusBar systemStatusBar] thickness]);
+        statusRect.size = NSMakeSize(MenubarControllerStatusItemWidth, [NSStatusBar systemStatusBar].thickness);
         statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
         statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
     }
@@ -121,12 +121,12 @@
 
 - (void)openPanel
 {
-    NSWindow *panel = [self window];
+    NSWindow *panel = self.window;
     
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
+    NSRect screenRect = [NSScreen screens][0].frame;
     NSRect statusRect = [self statusRectForWindow:panel];
 
-    NSRect panelRect = [panel frame];
+    NSRect panelRect = panel.frame;
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
     
@@ -134,7 +134,7 @@
         panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
     
     [NSApp activateIgnoringOtherApps:NO];
-    [panel setAlphaValue:0];
+    panel.alphaValue = 0;
     
     NSRect fromRect = NSMakeRect(panelRect.origin.x, panelRect.origin.y - ANIMATION_OFFSET, panelRect.size.width, panelRect.size.height);
     [panel setFrame:fromRect display:YES];
@@ -143,9 +143,9 @@
     
     NSTimeInterval openDuration = OPEN_DURATION;
     
-    NSEvent *currentEvent = [NSApp currentEvent];
-    if ([currentEvent type] == NSLeftMouseDown){
-        NSUInteger clearFlags = ([currentEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+    NSEvent *currentEvent = NSApp.currentEvent;
+    if (currentEvent.type == NSLeftMouseDown){
+        NSUInteger clearFlags = (currentEvent.modifierFlags & NSDeviceIndependentModifierFlagsMask);
         BOOL shiftPressed = (clearFlags == NSShiftKeyMask);
         BOOL shiftOptionPressed = (clearFlags == (NSShiftKeyMask | NSAlternateKeyMask));
         if (shiftPressed || shiftOptionPressed){
@@ -154,9 +154,9 @@
     }
     
     [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:openDuration];
+    [NSAnimationContext currentContext].duration = openDuration;
     [[panel animator] setFrame:panelRect display:YES];
-    [[panel animator] setAlphaValue:1];
+    [panel animator].alphaValue = 1;
     [NSAnimationContext endGrouping];
 }
 
@@ -164,7 +164,7 @@
 {
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:CLOSE_DURATION];
-    [[[self window] animator] setAlphaValue:0];
+    [self.window animator].alphaValue = 0;
     [NSAnimationContext endGrouping];
     
     dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{

@@ -8,7 +8,7 @@
 
 @implementation SyncPreferences
 
-- (id)init
+- (instancetype)init
 {
     self = [super initWithNibName:@"SyncPreferences" bundle:nil];
     return self;
@@ -23,7 +23,7 @@
 
 - (NSImage *)toolbarItemImage
 {
-    return [NSImage imageNamed:@"syncIcon.png"];
+    return [NSImage imageNamed:@"syncIcon"];
 }
 
 - (NSString *)toolbarItemLabel
@@ -34,7 +34,7 @@
 -(void)viewWillAppear
 {
     //[super viewWillAppear];
-    [addButton setEnabled:[[PutIOAPI api] isAuthenticated]];
+    addButton.enabled = [[PutIOAPI api] isAuthenticated];
 }
 
 #pragma mark - Accessors
@@ -70,7 +70,7 @@
     if(row == -1)
         [syncInstructionEditor setSyncInstruction:nil];
     else
-        [syncInstructionEditor setSyncInstruction:[SyncInstruction allSyncInstructions][row]];
+        syncInstructionEditor.syncInstruction = [SyncInstruction allSyncInstructions][row];
     [NSApp beginSheet:syncInstructionEditor.window
        modalForWindow:self.view.window
         modalDelegate:nil
