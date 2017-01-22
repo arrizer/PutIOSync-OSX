@@ -4,12 +4,13 @@
 
 @interface PutIODownloadManager : NSObject
 
+@property (nonatomic, readonly) NSInteger numberOfRunningDownloads;
+@property (nonatomic, readonly, copy) NSArray *allDownloads;
+
 + (instancetype)manager;
 
 - (void)addDownload:(Download*)download;
 - (void)loadDownloads;
-@property (nonatomic, readonly) NSInteger numberOfRunningDownloads;
-@property (nonatomic, readonly, copy) NSArray *allDownloads;
 - (void)clearDownloadList;
 - (BOOL)downloadExistsForFile:(PutIOAPIFile*)file;
 - (void)saveDownloads;

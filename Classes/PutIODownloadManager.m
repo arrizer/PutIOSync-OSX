@@ -43,7 +43,6 @@
 -(void)addDownload:(Download *)download
 {
     [allDownloads addObject:download];
-    
 }
 
 - (NSArray*)allDownloads

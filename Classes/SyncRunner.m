@@ -129,27 +129,29 @@
 
 -(void)evaulateFileAtNode:(NSTreeNode*)node
 {
-    PutIOAPIFile *file = node.representedObject;
-    if([syncInstruction itemWithIDIsKnown:file.fileID])
-        return;
-    NSString *relativePath = nil;
-    if(!(syncInstruction.flattenSubdirectories).boolValue)
-        relativePath = [self relativePathOfFileAtNode:node];
-    //NSString *filename = [file name];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        PutIOAPIFile *file = node.representedObject;
+        if([syncInstruction itemWithIDIsKnown:file.fileID])
+            return;
+        NSString *relativePath = nil;
+        if(!(syncInstruction.flattenSubdirectories).boolValue)
+            relativePath = [self relativePathOfFileAtNode:node];
+        //NSString *filename = [file name];
 
-    if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
-        //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
-        NSString *localPath = (syncInstruction.localDestination).relativePath;
-        if(localPath != nil){
-            Download *download = [[Download alloc] initWithPutIOFile:file
-                                                           localPath:localPath
-                                                    subdirectoryPath:relativePath
-                                          originatingSyncInstruction:syncInstruction];
-            [[PutIODownloadManager manager] addDownload:download];
-            [download startDownload];
-            foundFiles++;
+        if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
+            //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
+            NSString *localPath = (syncInstruction.localDestination).relativePath;
+            if(localPath != nil){
+                Download *download = [[Download alloc] initWithPutIOFile:file
+                                                               localPath:localPath
+                                                        subdirectoryPath:relativePath
+                                              originatingSyncInstruction:syncInstruction];
+                [[PutIODownloadManager manager] addDownload:download];
+                [download startDownload];
+                foundFiles++;
+            }
         }
-    }
+    });
     //[syncInstruction addKnownItemWithID:[file fileID]];
 }
 

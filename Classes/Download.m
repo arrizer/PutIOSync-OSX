@@ -4,12 +4,12 @@
 #import "PutIOAPIFileDeletionRequest.h"
 #import "ApplicationDelegate.h"
 
-@interface Download()
+@interface Download() <NSURLSessionDownloadDelegate>
 {
     NSString *localPath;
     NSString *subdirectoryPath;
-    NSString *localFileTemporary;
-    NSURLConnection *connection;
+    NSURLSession *urlSession;
+    NSURLSessionDownloadTask *download;
     NSTimer *progressUpdateTimer;
     NSTimeInterval currentSessionStartTime;
     NSTimeInterval lastProgressUpdate;
@@ -18,6 +18,9 @@
     NSFileHandle *fileHandle;
     NSUInteger numberOfRetries;
 }
+
+@property NSData *resumeData;
+
 @end
 
 @implementation Download
@@ -30,12 +33,11 @@
 @dynamic progressIsKnown;
 @dynamic estimatedRemainingTime;
 @dynamic estimatedRemainingTimeIsKnown;
-@dynamic totalSize;
-@dynamic receivedSize;
 @dynamic localFileTemporary;
 @dynamic status;
 @dynamic shouldResumeOnAppLaunch;
 @dynamic originatingSyncInstruction;
+@dynamic resumeData;
 
 @synthesize downloadError = _downloadError;
 @synthesize bytesPerSecond = _bytesPerSecond;
@@ -45,12 +47,15 @@
 #pragma mark - Init
 
 - (instancetype)initWithPutIOFile:(PutIOAPIFile*)file
-              localPath:(NSString*)path
-       subdirectoryPath:(NSString*)subPath
-originatingSyncInstruction:(SyncInstruction*)syncInstruction;
+                        localPath:(NSString*)path
+                 subdirectoryPath:(NSString*)subPath
+       originatingSyncInstruction:(SyncInstruction*)syncInstruction
 {
     self = [self initWithEntity:[[Persistency manager] entityNamed:@"Download"] insertIntoManagedObjectContext:[Persistency manager].context];
     if (self) {
+        urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]
+                                                   delegate:self
+                                              delegateQueue:nil];
         self.putioFile = file;
         localPath = path;
         subdirectoryPath = [subPath stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
@@ -60,7 +65,6 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         self.estimatedRemainingTime = 0;
         self.estimatedRemainingTimeIsKnown = NO;
         self.originatingSyncInstruction = syncInstruction;
-        self.totalSize = 0;
         self.shouldResumeOnAppLaunch = NO;
         numberOfRetries = 0;
         [self changeStatus:PutIODownloadStatusPending];
@@ -71,6 +75,9 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)awakeFromFetch
 {
+    urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]
+                                               delegate:self
+                                          delegateQueue:nil];
     [self changeStatus:self.status andDeliverNotification:NO];
     numberOfRetries = 0;
     self.estimatedRemainingTimeIsKnown = NO;
@@ -100,11 +107,21 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     return _putioFile;
 }
 
+- (int64_t)totalSize
+{
+    return download.countOfBytesExpectedToReceive;
+}
+
+- (int64_t)receivedSize
+{
+    return download.countOfBytesReceived;
+}
+
 #pragma mark - Controlling the download
 
 -(void)startDownload
 {
-    if(connection != nil || self.status == PutIODownloadStatusFinished || self.status == PutIODownloadStatusCancelled)
+    if(download != nil || self.status == PutIODownloadStatusFinished || self.status == PutIODownloadStatusCancelled)
         return;
     if(![[PutIOAPI api] isAuthenticated])
         return;
@@ -136,85 +153,46 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:60.0f];
     
-    if([self canResume]){
+    if(self.resumeData != nil){
         // Resume the download
-        [request setValue:[NSString stringWithFormat:@"bytes=%lli-", self.receivedSize] forHTTPHeaderField:@"Range"];
-        NSLog(@"%@ resuming download from byte %lli", self, self.receivedSize);
+        NSLog(@"%@ resuming download", self);
+        download = [urlSession downloadTaskWithResumeData:self.resumeData];
     }else{
-        [self deleteTemporaryDataFile];
         // Download from beginning
-        self.totalSize = 0;
-        self.receivedSize = 0;
-        localFileTemporary = nil;
         NSLog(@"%@ starting download from beginning", self);
+        download = [urlSession downloadTaskWithRequest:request];
     }
     
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    [download resume];
     [self changeStatus:PutIODownloadStatusDownloading];
 }
 
 - (void)pauseDownload
 {
     [self stopWaitingForOtherDownloads];
-    if(connection){
-        [self cancelConnection];
+    if(download){
+        [download cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            [self.managedObjectContext performBlockAndWait:^{
+                self.resumeData = resumeData;
+            }];
+        }];
         [progressUpdateTimer invalidate];
         progressUpdateTimer = nil;
-        self.receivedSize += receivedBytesSinceLastProgressUpdate;
+        download = nil;
     }
-    //NSLog(@"%@ paused download after receiving %li bytes", self, self.receivedSize);
     [self changeStatus:PutIODownloadStatusPaused];
 }
 
 - (void)cancelDownload
 {
-    [self cancelConnection];
-    [self deleteTemporaryDataFile];
+    [download cancel];
     [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusCancelled];
 }
 
-- (void)cancelConnection
-{
-    if(connection){
-        [progressUpdateTimer invalidate];
-        progressUpdateTimer = nil;
-        [connection cancel];
-        connection = nil;
-    }
-    if(fileHandle){
-        [fileHandle closeFile];
-        fileHandle = nil;
-    }
-}
-
 #pragma mark - Manage temporary file
 
-- (BOOL)createAndOpenTemporaryDataFile
-{
-    if(localFileTemporary == nil){
-        localFileTemporary = [NSString stringWithFormat:@"%@/.%@.part", localPath, self.putioFile.name];
-        localFileTemporary = [self resolveNamingConflictForFileAtPath:localFileTemporary];
-        if(![[NSFileManager defaultManager] createFileAtPath:localFileTemporary contents:nil attributes:nil]){
-            [self failWithLocalizedErrorDescription:NSLocalizedString(@"Unable to create file on disk", nil)];
-            return NO;
-        }
-    }
-    fileHandle = [NSFileHandle fileHandleForWritingAtPath:localFileTemporary];
-    return YES;
-}
-
-- (void)deleteTemporaryDataFile
-{
-    if(localFileTemporary != nil && [[NSFileManager defaultManager] fileExistsAtPath:localFileTemporary]){
-        NSError *error;
-        if(![[NSFileManager defaultManager] removeItemAtPath:localFileTemporary error:&error]){
-            NSLog(@"%@: Unable to remove temporary data file: %@", self, error.localizedDescription);
-        }
-    }
-}
-
-- (BOOL)moveTemporaryDataFileToFinalLocation
+- (BOOL)moveTemporaryDataFileToFinalLocation:(NSURL*)temporaryFileURL
 {
     NSString *path = localPath;
     NSError *error;
@@ -230,7 +208,7 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     }
     self.localFile = [NSString stringWithFormat:@"%@/%@", path, self.putioFile.name];
     self.localFile = [self resolveNamingConflictForFileAtPath:self.localFile];
-    if(![[NSFileManager defaultManager] moveItemAtPath:localFileTemporary toPath:self.localFile error:&error]){
+    if (![[NSFileManager defaultManager] moveItemAtURL:temporaryFileURL toURL:[NSURL fileURLWithPath:self.localFile] error:&error]) {
         self.localFile = nil;
         [self failWithError:error];
         return NO;
@@ -248,29 +226,11 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     return filePath;
 }
 
-#pragma mark - Resuming downloads
-
-- (BOOL)canResume
-{
-    // We can only resume if the temporary file is still there and has the expected size
-    if(self.receivedSize <= 0)
-        return NO;
-    if(localFileTemporary != nil && [[NSFileManager defaultManager] fileExistsAtPath:localFileTemporary]){
-        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:localFileTemporary error:nil];
-        if([attributes fileSize] == self.receivedSize)
-            return YES;
-        else
-            NSLog(@"%@: Unable to resume: Temporary file has invalid size", self);
-    }
-    NSLog(@"%@: Unable to resume: Temporary file not present", self);
-    return NO;
-}
-
 #pragma mark - Verifying downloaded files
 
-- (BOOL)verifyDownload
+- (BOOL)verifyDownloadAt:(NSURL*)temporaryFileURL
 {
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:localFileTemporary error:nil];
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:temporaryFileURL.path error:nil];
     if((self.receivedSize == self.totalSize)
        && (self.totalSize == [attributes fileSize])
        && (self.totalSize == self.putioFile.size)){
@@ -278,8 +238,8 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
         return YES;
     }else{
         NSLog(@"%@ downloaded file has not expected size:\nBytes received = %lli\nContent-length = %lli\nPutIO file size = %li\nActual file size = %lli", self, self.receivedSize, self.totalSize, self.putioFile.size, [attributes fileSize]);
-        [self cancelDownload];
-        [self startDownload];
+        download = nil;
+        [self failWithLocalizedErrorDescription:@"Unexpected file size"];
     }
     return NO;
 }
@@ -291,94 +251,60 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
     self.originatingSyncInstruction = nil;
 }
 
-#pragma mark - URL connection delegate
+#pragma mark - Download Task Delegate
 
--(void)connection:(NSURLConnection *)aConnection didReceiveResponse:(NSURLResponse *)response
+-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-    NSDictionary *responseHeaders = httpResponse.allHeaderFields;
-    NSURL *requestURL = [[PutIOAPI api] downloadURLForFileWithID:(self.putioFile).fileID];
-    NSLog(@"PutIO download %@ response headers: %@", requestURL, responseHeaders);
-    NSInteger httpStatus = httpResponse.statusCode;
-    if((httpStatus >= 200 && httpStatus < 300)){
-        if(responseHeaders[@"Content-Length"] != nil){
-            if(self.receivedSize == 0)
-                self.totalSize = [responseHeaders[@"Content-Length"] integerValue];
-        }else{
-            if(self.receivedSize == 0)
-                self.totalSize = self.putioFile.size;
+    dispatch_sync(dispatch_get_main_queue() , ^{
+        if(![self verifyDownloadAt:location]){
+            return;
         }
-    }else{
-        [self failWithLocalizedErrorDescription:[NSHTTPURLResponse localizedStringForStatusCode:httpStatus]];
-    }
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    if(fileHandle == nil){
-        [self createAndOpenTemporaryDataFile];
-    }
-    if(fileHandle == nil){
-        return;
-    }
-    [fileHandle seekToEndOfFile];
-    [fileHandle writeData:data];
-    
-    // Don't update the progress too often
-    receivedBytesSinceLastProgressUpdate += data.length;
-}
-
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSInteger c = error.code;
-    if(c == NSURLErrorNetworkConnectionLost|| c == NSURLErrorNotConnectedToInternet){
-        [self pauseDownload];
-        return;
-    }
-    
-    BOOL shouldRetry = (c == NSURLErrorTimedOut
-                        || c == NSURLErrorCannotConnectToHost);
-    
-    if(shouldRetry && numberOfRetries < 5){
-        // PutIO servers are wonky, so retry a few times
-        numberOfRetries++;
-        NSLog(@"%@ failed: %@ but trying again, retry number %li", self, error.localizedDescription, numberOfRetries);
-        [self cancelConnection];
-        [self startDownload];
-    }else{
-        numberOfRetries = 0;
-        [self failWithError:error];
-    }
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection *)aConnection
-{
-    self.receivedSize += receivedBytesSinceLastProgressUpdate;
-    if(fileHandle){
-        [fileHandle closeFile];
-        fileHandle = nil;
-    }
-    if(![self verifyDownload]){
-        return;
-    }
-    if(![self moveTemporaryDataFileToFinalLocation]){
-        return;
-    }
-    
-    self.progressIsKnown = YES;
-    self.progress = 1.0f;
-    self.estimatedRemainingTimeIsKnown = YES;
-    self.estimatedRemainingTime = 0;
-    connection = nil;
-    [self changeStatus:PutIODownloadStatusFinished];
-    NSLog(@"%@: Download finished", self);
-    if(self.originatingSyncInstruction != nil){
-        [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
-        if((self.originatingSyncInstruction.deleteRemoteFilesAfterSync).boolValue){
-            PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
-                                                                                                 completion:nil];
-            [[PutIOAPI api] performRequest:request];
+        if(![self moveTemporaryDataFileToFinalLocation:location]){
+            return;
         }
+        
+        self.progressIsKnown = YES;
+        self.progress = 1.0f;
+        self.estimatedRemainingTimeIsKnown = YES;
+        self.estimatedRemainingTime = 0;
+        download = nil;
+        [self changeStatus:PutIODownloadStatusFinished];
+        NSLog(@"%@: Download finished", self);
+        if(self.originatingSyncInstruction != nil){
+            [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
+            if((self.originatingSyncInstruction.deleteRemoteFilesAfterSync).boolValue){
+                PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
+                                                                                                     completion:nil];
+                [[PutIOAPI api] performRequest:request];
+            }
+        }
+    });
+}
+
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+    if (error != nil && !([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled)) {
+        dispatch_async(dispatch_get_main_queue() , ^{
+            NSInteger c = error.code;
+            if(c == NSURLErrorNetworkConnectionLost|| c == NSURLErrorNotConnectedToInternet){
+                [self pauseDownload];
+                return;
+            }
+            
+            BOOL shouldRetry = (c == NSURLErrorTimedOut
+                                || c == NSURLErrorCannotConnectToHost);
+            
+            if (shouldRetry && numberOfRetries < 5) {
+                // PutIO servers are wonky, so retry a few times
+                numberOfRetries++;
+                NSLog(@"%@ failed: %@ but trying again, retry number %li", self, error.localizedDescription, numberOfRetries);
+                [self startDownload];
+            }else{
+                numberOfRetries = 0;
+                [self failWithError:error];
+            }
+        
+        });
     }
 }
 
@@ -386,24 +312,23 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)updateProgress
 {
-    NSUInteger length = receivedBytesSinceLastProgressUpdate;
+    NSUInteger chunkSize = download.countOfBytesReceived - receivedBytesSinceLastProgressUpdate;
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
     if(currentSessionStartTime == 0.0f){
         currentSessionStartTime = now;
     }else{
-        self.bytesPerSecond = (int)round((double)length / (now - lastProgressUpdate));
+        self.bytesPerSecond = (int)round((double)chunkSize / (now - lastProgressUpdate));
         NSUInteger averageBytesPerSecond = (int)round((double)receivedBytesInCurrentSession / (now - currentSessionStartTime));
         self.estimatedRemainingTime = ((double)(self.totalSize - self.receivedSize) / (double)averageBytesPerSecond);
         self.estimatedRemainingTimeIsKnown = (now - currentSessionStartTime) >= 5.0f && receivedBytesInCurrentSession > 1024;
     }
-    self.receivedSize += length;
-    receivedBytesInCurrentSession += length;
+    receivedBytesInCurrentSession += chunkSize;
     if(self.totalSize > 0){
         self.progress = ((float)self.receivedSize / (float)self.totalSize);
         self.progressIsKnown = YES;
     }
     lastProgressUpdate = now;
-    receivedBytesSinceLastProgressUpdate = 0;
+    receivedBytesSinceLastProgressUpdate = chunkSize;
 }
 
 #pragma mark - Error handling
@@ -418,12 +343,12 @@ originatingSyncInstruction:(SyncInstruction*)syncInstruction;
 
 -(void)failWithError:(NSError *)error
 {
-    [self cancelConnection];
+    [download cancel];
+    download = nil;
     self.downloadError = error;
     NSLog(@"%@ failed: %@", self, error.localizedDescription);
     [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusFailed];
-    
 }
 
 #pragma mark - Download status

@@ -87,6 +87,7 @@
 		3903FA69177FABA400EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainPanel.xib; sourceTree = "<group>"; };
 		3903FA6F177FAD7C00EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PutIOFolderPicker.xib; sourceTree = "<group>"; };
 		3903FA7D177FAF4E00EC6ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
+		390775781E35181500091B9A /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		391A9F3116E388E2003BDE51 /* PanelRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PanelRowView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		391A9F3216E388E2003BDE51 /* PanelRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelRowView.m; sourceTree = "<group>"; };
 		391DD7D4195512A0003CCF55 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -889,9 +890,10 @@
 		391DD7D3195512A0003CCF55 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				390775781E35181500091B9A /* Model 2.xcdatamodel */,
 				391DD7D4195512A0003CCF55 /* Model.xcdatamodel */,
 			);
-			currentVersion = 391DD7D4195512A0003CCF55 /* Model.xcdatamodel */;
+			currentVersion = 390775781E35181500091B9A /* Model 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

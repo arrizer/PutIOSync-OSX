@@ -72,7 +72,10 @@
     
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"putiosync.storedata"];
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]) {
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES),
+                              NSInferMappingModelAutomaticallyOption: @(YES)};
+
+    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error]) {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
