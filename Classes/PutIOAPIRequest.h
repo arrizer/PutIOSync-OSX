@@ -33,6 +33,8 @@ typedef void (^PutIOAPIRequestCompletion)(void);
 @property (copy) PutIOAPIRequestCompletion completion;
 @property (assign) dispatch_queue_t completionQueue;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 - (instancetype)initWithMethod:(PutIOAPIMethod)method
             endpoint:(NSString*)endpoint
           parameters:(NSDictionary *)parameters

@@ -2,13 +2,6 @@
 
 @implementation StatusItemView
 
-@synthesize statusItem = _statusItem;
-@synthesize image = _image;
-@synthesize alternateImage = _alternateImage;
-@synthesize isHighlighted = _isHighlighted;
-@synthesize action = _action;
-@synthesize target = _target;
-
 #pragma mark -
 
 - (instancetype)initWithStatusItem:(NSStatusItem *)statusItem

@@ -16,16 +16,14 @@ static NSString *const PreferencesKeyForViewBounds (NSString *identifier)
 
 @property (readonly) NSArray *toolbarItemIdentifiers;
 @property (nonatomic, retain) NSViewController <MASPreferencesViewController> *selectedViewController;
+@property (strong) NSMutableDictionary *minimumViewRects;
+@property (nonatomic, readwrite) NSArray *viewControllers;
 
 @end
 
 #pragma mark -
 
 @implementation MASPreferencesWindowController
-
-@synthesize viewControllers = _viewControllers;
-@synthesize selectedViewController = _selectedViewController;
-@synthesize title = _title;
 
 #pragma mark -
 

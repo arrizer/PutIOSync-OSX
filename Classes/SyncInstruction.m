@@ -51,6 +51,9 @@
                                                relativeToURL:nil
                                          bookmarkDataIsStale:&isStale
                                                        error:&error];
+        if (error != nil) {
+            NSLog(@"Failed to resolve localDestination of %@: %@", self, error);
+        }
     }
     return _localDestination;
 }

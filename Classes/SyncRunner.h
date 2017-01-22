@@ -17,6 +17,7 @@
 @property (readonly) SyncInstruction *syncInstruction;
 @property (readonly, strong) NSString *localizedOperationName;
 
+- (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithSyncInstruction:(SyncInstruction*)instruction NS_DESIGNATED_INITIALIZER;
 - (void)run;
 - (void)cancel;
