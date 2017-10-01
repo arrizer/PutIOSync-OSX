@@ -43,6 +43,13 @@
     }
 }
 
+- (IBAction)useRootFolder:(id)sender {
+    if ([_delegate respondsToSelector:@selector(folderPicker:didPickFolderID:)]) {
+        [_delegate folderPicker:self didPickFolderID:0];
+    }
+    [self.window close];
+}
+
 -(void)cancel:(id)sender
 {
     [self.window close];
