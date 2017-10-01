@@ -127,6 +127,15 @@
     [self updateLabels];
 }
 
+-(void)folderPicker:(PutIOFolderPicker *)picker didPickFolderID:(int)folderID
+{
+    [NSApp endSheet:folderPicker.window];
+    _editedSyncInstruction.originFolderID = @(folderID);
+    _editedSyncInstruction.originFolderName = @"Root";
+    
+    [self updateLabels];
+}
+
 -(void)folderPickerDidCancel:(PutIOFolderPicker *)picker
 {
     [NSApp endSheet:folderPicker.window];

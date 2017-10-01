@@ -5,6 +5,7 @@
 @class PutIOFolderPicker;
 @protocol PutIOFolderPickerDelegate <NSObject>
 -(void)folderPicker:(PutIOFolderPicker*)picker didPickFolder:(PutIOAPIFile*)folder;
+-(void)folderPicker:(PutIOFolderPicker *)picker didPickFolderID:(int)folderID;
 -(void)folderPickerDidCancel:(PutIOFolderPicker*)picker;
 @end
 
