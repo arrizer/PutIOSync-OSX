@@ -33,6 +33,8 @@
 @dynamic progressIsKnown;
 @dynamic estimatedRemainingTime;
 @dynamic estimatedRemainingTimeIsKnown;
+@dynamic totalSize;
+@dynamic receivedSize;
 @dynamic localFileTemporary;
 @dynamic status;
 @dynamic shouldResumeOnAppLaunch;
@@ -107,22 +109,13 @@
     return _putioFile;
 }
 
-- (int64_t)totalSize
-{
-    return download.countOfBytesExpectedToReceive;
-}
-
-- (int64_t)receivedSize
-{
-    return download.countOfBytesReceived;
-}
-
 #pragma mark - Controlling the download
 
 -(void)startDownload
 {
-    if(download != nil || self.status == PutIODownloadStatusFinished || self.status == PutIODownloadStatusCancelled)
+    if(self.status == PutIODownloadStatusFinished || self.status == PutIODownloadStatusCancelled)
         return;
+    
     if(![[PutIOAPI api] isAuthenticated])
         return;
     
@@ -157,6 +150,7 @@
         // Resume the download
         NSLog(@"%@ resuming download", self);
         download = [urlSession downloadTaskWithResumeData:self.resumeData];
+        receivedBytesSinceLastProgressUpdate = download.countOfBytesReceived;
     }else{
         // Download from beginning
         NSLog(@"%@ starting download from beginning", self);
@@ -186,6 +180,8 @@
 - (void)cancelDownload
 {
     [download cancel];
+    [progressUpdateTimer invalidate];
+    progressUpdateTimer = nil;
     [self stopWaitingForOtherDownloads];
     [self changeStatus:PutIODownloadStatusCancelled];
 }
@@ -231,9 +227,9 @@
 - (BOOL)verifyDownloadAt:(NSURL*)temporaryFileURL
 {
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:temporaryFileURL.path error:nil];
-    if((self.receivedSize == self.totalSize)
-       && (self.totalSize == [attributes fileSize])
-       && (self.totalSize == self.putioFile.size)){
+    if((self.receivedSize == self.totalSize || self.totalSize == NSURLSessionTransferSizeUnknown)
+       && (self.receivedSize == [attributes fileSize])
+       && (self.receivedSize == self.putioFile.size)){
         // File size == HTTP Content-Length == PutIO API file size == Received size => it worked!
         return YES;
     }else{
@@ -256,6 +252,11 @@
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
     dispatch_sync(dispatch_get_main_queue() , ^{
+        [progressUpdateTimer invalidate];
+        progressUpdateTimer = nil;
+        
+        [self updateProgress];
+        
         if(![self verifyDownloadAt:location]){
             return;
         }
@@ -285,25 +286,11 @@
 {
     if (error != nil && !([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled)) {
         dispatch_async(dispatch_get_main_queue() , ^{
-            NSInteger c = error.code;
-            if(c == NSURLErrorNetworkConnectionLost|| c == NSURLErrorNotConnectedToInternet){
-                [self pauseDownload];
-                return;
-            }
-            
-            BOOL shouldRetry = (c == NSURLErrorTimedOut
-                                || c == NSURLErrorCannotConnectToHost);
-            
-            if (shouldRetry && numberOfRetries < 5) {
-                // PutIO servers are wonky, so retry a few times
-                numberOfRetries++;
-                NSLog(@"%@ failed: %@ but trying again, retry number %li", self, error.localizedDescription, numberOfRetries);
+            numberOfRetries++;
+            NSLog(@"%@ failed: %@ but trying again, retry number %li", self, error.localizedDescription, numberOfRetries);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self startDownload];
-            }else{
-                numberOfRetries = 0;
-                [self failWithError:error];
-            }
-        
+            });
         });
     }
 }
@@ -312,13 +299,18 @@
 
 -(void)updateProgress
 {
+    self.totalSize = download.countOfBytesExpectedToReceive;
+    self.receivedSize = download.countOfBytesReceived;
+    
     NSUInteger chunkSize = download.countOfBytesReceived - receivedBytesSinceLastProgressUpdate;
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    NSUInteger averageBytesPerSecond = 0;
+    
     if(currentSessionStartTime == 0.0f){
         currentSessionStartTime = now;
     }else{
         self.bytesPerSecond = (int)round((double)chunkSize / (now - lastProgressUpdate));
-        NSUInteger averageBytesPerSecond = (int)round((double)receivedBytesInCurrentSession / (now - currentSessionStartTime));
+        averageBytesPerSecond = (int)round((double)receivedBytesInCurrentSession / (now - currentSessionStartTime));
         self.estimatedRemainingTime = ((double)(self.totalSize - self.receivedSize) / (double)averageBytesPerSecond);
         self.estimatedRemainingTimeIsKnown = (now - currentSessionStartTime) >= 5.0f && receivedBytesInCurrentSession > 1024;
     }
@@ -328,7 +320,9 @@
         self.progressIsKnown = YES;
     }
     lastProgressUpdate = now;
-    receivedBytesSinceLastProgressUpdate = chunkSize;
+    receivedBytesSinceLastProgressUpdate = self.receivedSize;
+    
+    NSLog(@"%@ - chunkSize: %lu bytes, speed: %lu bps (avg %lu bps)", self, chunkSize, self.bytesPerSecond, averageBytesPerSecond);
 }
 
 #pragma mark - Error handling
@@ -345,6 +339,8 @@
 {
     [download cancel];
     download = nil;
+    [progressUpdateTimer invalidate];
+    progressUpdateTimer = nil;
     self.downloadError = error;
     NSLog(@"%@ failed: %@", self, error.localizedDescription);
     [self stopWaitingForOtherDownloads];

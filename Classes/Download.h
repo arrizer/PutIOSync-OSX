@@ -30,8 +30,8 @@ typedef enum PutIODownloadStatusEnum : int16_t{
 @property (nonatomic) BOOL progressIsKnown;
 @property (nonatomic) double estimatedRemainingTime;
 @property (nonatomic) BOOL estimatedRemainingTimeIsKnown;
-@property (nonatomic, readonly) int64_t totalSize;
-@property (nonatomic, readonly) int64_t receivedSize;
+@property (nonatomic) int64_t totalSize;
+@property (nonatomic) int64_t receivedSize;
 @property (nonatomic, strong) NSString *localFileTemporary;
 @property (nonatomic) PutIODownloadStatus status;
 @property (nonatomic) BOOL shouldResumeOnAppLaunch;
