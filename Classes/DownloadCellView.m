@@ -57,7 +57,9 @@ static TimeIntervalFormatter *timeIntervalFormatter;
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self updateStatus];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self updateStatus];
+    });
 }
 
 -(void)updateStatus

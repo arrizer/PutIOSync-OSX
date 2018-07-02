@@ -103,13 +103,6 @@ static SyncScheduler* sharedInstance;
     }
 }
 
-//-(BOOL)syncForInstructionIsInProgess:(SyncInstruction*)instruction
-//{
-//    for(SyncRunner *runner in self.runningSyncs)
-//        if([runner.syncInstruction uniqueID] == instruction.uniqueID) return YES;
-//    return NO;
-//}
-
 #pragma mark - Sync Runner Delegate
 
 -(void)syncRunner:(SyncRunner *)runner didFailWithError:(NSError *)error

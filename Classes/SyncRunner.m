@@ -18,7 +18,6 @@
 }
 
 @property (strong) NSString *localizedOperationName;
-@property (assign) dispatch_queue_t queue;
 
 @end
 
@@ -28,7 +27,6 @@
 {
     self = [super init];
     if (self) {
-        self.queue = dispatch_queue_create("syncRunner.queue", 0);
         syncInstruction = instruction;
         putio = [PutIOAPI new];
         self.localizedOperationName = NSLocalizedString(@"Looking for items to download", nil);
@@ -53,10 +51,8 @@
     }
     
     foundFiles = 0;
-
-    dispatch_async(self.queue, ^{
-        [self deepScanOrigin];
-    });
+    
+    [self deepScanOrigin];
 }
 
 - (void)cancel
@@ -111,7 +107,6 @@
             if((syncInstruction.deleteRemoteEmptyFolders).boolValue && folder.fileID != (syncInstruction.originFolderID).integerValue && (request.files).count == 0){
                 NSLog(@"Deleting empty folder");
                 PutIOAPIFileDeletionRequest *deleteRequest = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:folder.fileID completion:nil];
-                deleteRequest.completionQueue = self.queue;
                 [putio performRequest:deleteRequest];
             }
         }else if(request.error != nil){
@@ -122,37 +117,34 @@
             [self finish];
         }
     }];
-    request.completionQueue = self.queue;
+    
     pendingRequests++;
     [putio performRequest:request];
 }
 
 -(void)evaulateFileAtNode:(NSTreeNode*)node
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        PutIOAPIFile *file = node.representedObject;
-        if([syncInstruction itemWithIDIsKnown:file.fileID])
-            return;
-        NSString *relativePath = nil;
-        if(!(syncInstruction.flattenSubdirectories).boolValue)
-            relativePath = [self relativePathOfFileAtNode:node];
-        //NSString *filename = [file name];
+    PutIOAPIFile *file = node.representedObject;
+    if([syncInstruction itemWithIDIsKnown:file.fileID])
+        return;
+    NSString *relativePath = nil;
+    if(!(syncInstruction.flattenSubdirectories).boolValue)
+        relativePath = [self relativePathOfFileAtNode:node];
+    //NSString *filename = [file name];
 
-        if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
-            //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
-            NSString *localPath = (syncInstruction.localDestination).relativePath;
-            if(localPath != nil){
-                Download *download = [[Download alloc] initWithPutIOFile:file
-                                                               localPath:localPath
-                                                        subdirectoryPath:relativePath
-                                              originatingSyncInstruction:syncInstruction];
-                [[PutIODownloadManager manager] addDownload:download];
-                [download startDownload];
-                foundFiles++;
-            }
+    if(![[PutIODownloadManager manager] downloadExistsForFile:file]){
+        //NSLog(@"%@ found file to download: %@/%@", [self description], relativePath, filename);
+        NSString *localPath = (syncInstruction.localDestination).relativePath;
+        if(localPath != nil){
+            Download *download = [[Download alloc] initWithPutIOFile:file
+                                                           localPath:localPath
+                                                    subdirectoryPath:relativePath
+                                          originatingSyncInstruction:syncInstruction];
+            [[PutIODownloadManager manager] addDownload:download];
+            [download startDownload];
+            foundFiles++;
         }
-    });
-    //[syncInstruction addKnownItemWithID:[file fileID]];
+    }
 }
 
 - (NSString*)relativePathOfFileAtNode:(NSTreeNode*)node
@@ -184,8 +176,8 @@
 -(void)finish
 {
     NSLog(@"%@ sync run finished", self.description);
-    syncInstruction.lastSynced = [NSDate date];
     [syncInstruction.managedObjectContext performBlockAndWait:^{
+        syncInstruction.lastSynced = [NSDate date];
         [syncInstruction.managedObjectContext save:nil];
     }];
 

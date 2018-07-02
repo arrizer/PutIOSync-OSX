@@ -322,7 +322,7 @@
     lastProgressUpdate = now;
     receivedBytesSinceLastProgressUpdate = self.receivedSize;
     
-    NSLog(@"%@ - chunkSize: %lu bytes, speed: %lu bps (avg %lu bps)", self, chunkSize, self.bytesPerSecond, averageBytesPerSecond);
+    //NSLog(@"%@ - chunkSize: %lu bytes, speed: %lu bps (avg %lu bps)", self, chunkSize, self.bytesPerSecond, averageBytesPerSecond);
 }
 
 #pragma mark - Error handling
