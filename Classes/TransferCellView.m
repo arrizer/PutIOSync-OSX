@@ -66,10 +66,10 @@ static TimeIntervalFormatter *timeIntervalFormatter;
 {
     super.backgroundStyle = backgroundStyle;
     if(backgroundStyle == NSBackgroundStyleDark){
-        statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
+        statusLabel.textColor = [NSColor selectedTextColor];
         cancelButton.image = [NSImage imageNamed:@"stopImageInverted.png"];
     }else if (backgroundStyle == NSBackgroundStyleLight){
-        statusLabel.textColor = [NSColor controlShadowColor];
+        statusLabel.textColor = [NSColor secondaryLabelColor];
         cancelButton.image = [NSImage imageNamed:@"stopImage.png"];
     }
 }

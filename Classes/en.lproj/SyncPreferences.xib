@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9046" systemVersion="15A279b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9046"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14835.7"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SyncPreferences">
@@ -26,9 +27,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="52" rowSizeStyle="automatic" viewBased="YES" id="4">
-                                <rect key="frame" x="0.0" y="0.0" width="458" height="0.0"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
+                                <rect key="frame" x="0.0" y="0.0" width="458" height="321"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
@@ -36,7 +36,7 @@
                                 <tableColumns>
                                     <tableColumn width="455" minWidth="40" maxWidth="1000" id="8">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="controlContent" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableHeaderCell>
@@ -53,7 +53,6 @@
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="67">
                                                         <rect key="frame" x="113" y="29" width="116" height="17"/>
-                                                        <animations/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="OriginFolderName" id="68">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +64,6 @@
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="304">
                                                         <rect key="frame" x="113" y="10" width="107" height="17"/>
-                                                        <animations/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="LocalDestination" id="305">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -81,38 +79,34 @@
                                                             <constraint firstAttribute="height" constant="45" id="405"/>
                                                             <constraint firstAttribute="width" constant="45" id="406"/>
                                                         </constraints>
-                                                        <animations/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="syncIcon" id="134"/>
                                                     </imageView>
                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="142">
-                                                        <rect key="frame" x="395" y="11" width="57" height="28"/>
-                                                        <animations/>
+                                                        <rect key="frame" x="395" y="12" width="57" height="27"/>
                                                         <buttonCell key="cell" type="push" title="Edit..." bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="143">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <font key="font" metaFont="controlContent" size="11"/>
                                                         </buttonCell>
                                                         <connections>
                                                             <action selector="editSyncInstruction:" target="-2" id="346"/>
                                                         </connections>
                                                     </button>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="371">
-                                                        <rect key="frame" x="65" y="29" width="44" height="17"/>
+                                                        <rect key="frame" x="65" y="30" width="44" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="383"/>
                                                         </constraints>
-                                                        <animations/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="from" id="372">
                                                             <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="385">
-                                                        <rect key="frame" x="65" y="10" width="44" height="17"/>
-                                                        <animations/>
+                                                        <rect key="frame" x="65" y="12" width="44" height="16"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="to" id="387">
                                                             <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
@@ -132,7 +126,6 @@
                                                     <constraint firstItem="142" firstAttribute="centerY" secondItem="133" secondAttribute="centerY" id="408"/>
                                                     <constraint firstItem="371" firstAttribute="leading" secondItem="133" secondAttribute="trailing" constant="14" id="409"/>
                                                 </constraints>
-                                                <animations/>
                                                 <connections>
                                                     <outlet property="imageView" destination="133" id="364"/>
                                                     <outlet property="textField" destination="67" id="69"/>
@@ -148,19 +141,14 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="5">
                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="7">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="7">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23">
@@ -169,7 +157,6 @@
                         <constraint firstAttribute="width" constant="23" id="37"/>
                         <constraint firstAttribute="height" constant="21" id="175"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="24">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -183,7 +170,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="23" id="40"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="41">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -193,15 +179,14 @@
                         <binding destination="QmO-Lx-YZZ" name="enabled" keyPath="canRemove" id="aNW-LW-ObF"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="147">
+                <textField verticalHuggingPriority="750" preferredMaxLayoutWidth="399" translatesAutoresizingMaskIntoConstraints="NO" id="147">
                     <rect key="frame" x="79" y="6" width="403" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="176"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="New content of synced folders will be downloaded to your Mac automatically" id="148">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                        <font key="font" metaFont="controlContent" size="11"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -220,7 +205,7 @@
                 <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="20" symbolic="YES" id="247"/>
                 <constraint firstAttribute="trailing" secondItem="147" secondAttribute="trailing" constant="20" symbolic="YES" id="250"/>
             </constraints>
-            <animations/>
+            <point key="canvasLocation" x="140" y="154"/>
         </customView>
         <userDefaultsController id="49"/>
         <arrayController mode="entity" entityName="SyncInstruction" automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="QmO-Lx-YZZ" userLabel="SyncInstructions">
@@ -232,6 +217,6 @@
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="syncIcon" width="128" height="128"/>
+        <image name="syncIcon" width="33.333332061767578" height="33.333332061767578"/>
     </resources>
 </document>

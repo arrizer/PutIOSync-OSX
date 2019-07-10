@@ -46,9 +46,9 @@ static TimeIntervalFormatter *timeIntervalFormatter;
 {
     super.backgroundStyle = backgroundStyle;
     if(backgroundStyle == NSBackgroundStyleDark){
-        statusLabel.textColor = [NSColor alternateSelectedControlTextColor];
+        statusLabel.textColor = [NSColor selectedTextColor];
     }else if (backgroundStyle == NSBackgroundStyleLight){
-        statusLabel.textColor = [NSColor controlShadowColor];
+        statusLabel.textColor = [NSColor secondaryLabelColor];
     }
     [self updateStatus];
 }

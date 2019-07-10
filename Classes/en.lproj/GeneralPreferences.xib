@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14835.7"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralPreferences">
@@ -13,14 +15,14 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <userDefaultsController id="204"/>
         <customView id="1">
             <rect key="frame" x="0.0" y="0.0" width="500" height="343"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="176">
-                    <rect key="frame" x="148" y="306" width="54" height="17"/>
+                    <rect key="frame" x="149" y="307" width="53" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Startup:" id="177">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -28,7 +30,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="211">
-                    <rect key="frame" x="163" y="255" width="39" height="17"/>
+                    <rect key="frame" x="164" y="256" width="38" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sync:" id="212">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -36,7 +38,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="266">
-                    <rect key="frame" x="117" y="216" width="85" height="17"/>
+                    <rect key="frame" x="117" y="218" width="85" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Notifications:" id="267">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +46,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="374">
-                    <rect key="frame" x="83" y="87" width="119" height="17"/>
+                    <rect key="frame" x="85" y="91" width="117" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Software Updates:" id="375">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,15 +54,15 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="407">
-                    <rect key="frame" x="206" y="63" width="122" height="16"/>
+                    <rect key="frame" x="206" y="67" width="120" height="15"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Last checked: Never" id="408">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                        <font key="font" metaFont="label" size="12"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="329">
-                    <rect key="frame" x="147" y="142" width="55" height="17"/>
+                    <rect key="frame" x="148" y="145" width="54" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sounds:" id="331">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +70,7 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="199">
-                    <rect key="frame" x="206" y="305" width="105" height="18"/>
+                    <rect key="frame" x="206" y="305" width="104" height="18"/>
                     <buttonCell key="cell" type="check" title="Start on login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="200">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -79,10 +81,10 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="226">
-                    <rect key="frame" x="206" y="275" width="91" height="26"/>
+                    <rect key="frame" x="206" y="275" width="94" height="25"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="227">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" metaFont="system"/>
                         <menu key="menu" title="OtherViews" id="228">
                             <items>
                                 <menuItem title="unlimited" id="502"/>
@@ -101,7 +103,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="446">
-                    <rect key="frame" x="77" y="281" width="125" height="17"/>
+                    <rect key="frame" x="81" y="282" width="121" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Parallel downloads:" id="456">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -109,10 +111,10 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="447">
-                    <rect key="frame" x="206" y="249" width="139" height="26"/>
+                    <rect key="frame" x="206" y="249" width="143" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="every minute" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455" id="448">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                        <font key="font" metaFont="system"/>
                         <menu key="menu" title="OtherViews" id="449">
                             <items>
                                 <menuItem title="every minute" state="on" id="455"/>
@@ -129,7 +131,7 @@
                     </connections>
                 </popUpButton>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="291">
-                    <rect key="frame" x="206" y="215" width="118" height="18"/>
+                    <rect key="frame" x="206" y="216" width="117" height="18"/>
                     <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="292">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -139,7 +141,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="323">
-                    <rect key="frame" x="206" y="195" width="136" height="18"/>
+                    <rect key="frame" x="206" y="196" width="134" height="18"/>
                     <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="324">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -149,7 +151,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="351">
-                    <rect key="frame" x="206" y="175" width="122" height="18"/>
+                    <rect key="frame" x="206" y="176" width="119" height="18"/>
                     <buttonCell key="cell" type="check" title="Download failed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="352">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -159,7 +161,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="338">
-                    <rect key="frame" x="206" y="141" width="118" height="18"/>
+                    <rect key="frame" x="206" y="143" width="117" height="18"/>
                     <buttonCell key="cell" type="check" title="New files found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="341">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -169,7 +171,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="339">
-                    <rect key="frame" x="206" y="121" width="136" height="18"/>
+                    <rect key="frame" x="206" y="123" width="134" height="18"/>
                     <buttonCell key="cell" type="check" title="Download finished" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="340">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -179,7 +181,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="382">
-                    <rect key="frame" x="206" y="86" width="147" height="18"/>
+                    <rect key="frame" x="206" y="89" width="145" height="18"/>
                     <buttonCell key="cell" type="check" title="Check automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="383">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -190,10 +192,10 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="387">
-                    <rect key="frame" x="203" y="31" width="95" height="28"/>
+                    <rect key="frame" x="203" y="35" width="93" height="27"/>
                     <buttonCell key="cell" type="push" title="Check now..." bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="388">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
+                        <font key="font" metaFont="controlContent" size="11"/>
                     </buttonCell>
                     <connections>
                         <action selector="checkForUpdatesNow:" target="-2" id="440"/>
@@ -236,6 +238,7 @@
                 <constraint firstItem="387" firstAttribute="top" secondItem="407" secondAttribute="bottom" constant="8" id="wAm-eJ-85q"/>
                 <constraint firstItem="329" firstAttribute="trailing" secondItem="446" secondAttribute="trailing" id="wS8-7B-EuF"/>
             </constraints>
+            <point key="canvasLocation" x="140" y="154"/>
         </customView>
         <customView id="175">
             <rect key="frame" x="0.0" y="0.0" width="163" height="96"/>

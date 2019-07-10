@@ -49,7 +49,8 @@
     [path lineToPoint:NSMakePoint(_arrowX - ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path closePath];
     
-    [[NSColor colorWithDeviceWhite:1 alpha:FILL_OPACITY] setFill];
+    
+    [[NSColor windowBackgroundColor] setFill];
     [path fill];
     
     [NSGraphicsContext saveGraphicsState];
@@ -59,7 +60,7 @@
     [clip addClip];
     
     [path setLineWidth:LINE_THICKNESS * 2];
-    [[NSColor whiteColor] setStroke];
+    [[NSColor windowBackgroundColor] setStroke];
     [path stroke];
     
     [NSGraphicsContext restoreGraphicsState];
