@@ -188,8 +188,10 @@
 
 #pragma mark - Manage temporary file
 
-- (BOOL)moveTemporaryDataFileToFinalLocation:(NSURL*)temporaryFileURL
+- (void)moveTemporaryDataFileToFinalLocation:(NSURL*)temporaryFileURL
 {
+    [self changeStatus:PutIODownloadStatusFinishing];
+    
     NSString *path = localPath;
     NSError *error;
     if(subdirectoryPath){
@@ -198,18 +200,87 @@
         if(![fm fileExistsAtPath:path]){
             if(![fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]){
                 [self failWithError:error];
-                return NO;
+                return;
             }
         }
     }
     self.localFile = [NSString stringWithFormat:@"%@/%@", path, self.putioFile.name];
     self.localFile = [self resolveNamingConflictForFileAtPath:self.localFile];
-    if (![[NSFileManager defaultManager] moveItemAtURL:temporaryFileURL toURL:[NSURL fileURLWithPath:self.localFile] error:&error]) {
+    
+    NSURL *sourceVolumeTemporaryURL = [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:temporaryFileURL create:YES error:&error];
+    
+    if (sourceVolumeTemporaryURL == nil) {
         self.localFile = nil;
         [self failWithError:error];
-        return NO;
+        return;
     }
-    return YES;
+    
+    NSString *temporaryFilename = [NSString stringWithFormat:@"%@.download", [[NSUUID UUID] UUIDString]];
+    sourceVolumeTemporaryURL = [sourceVolumeTemporaryURL URLByAppendingPathComponent:temporaryFilename];
+    
+    NSLog(@"Moving finished download from %@ to %@", temporaryFileURL.path, sourceVolumeTemporaryURL.path);
+    if (![[NSFileManager defaultManager] moveItemAtURL:temporaryFileURL toURL:sourceVolumeTemporaryURL error:&error]) {
+        self.localFile = nil;
+        [self failWithError:error];
+        return;
+    }
+
+    self.localFileTemporary = [sourceVolumeTemporaryURL path];
+    
+    [self moveTemporaryDataFileToFinalLocation];
+}
+
+-(void)moveTemporaryDataFileToFinalLocation
+{
+    if (self.localFileTemporary == nil || ![[NSFileManager defaultManager] fileExistsAtPath:self.localFileTemporary]) {
+        self.localFileTemporary = nil;
+        self.localFile = nil;
+        [self failWithLocalizedErrorDescription:@"Downloaded file vanished"];
+        return;
+    }
+    
+    NSError *error;
+    NSURL *finalURL = [NSURL fileURLWithPath:self.localFile];
+    NSURL *targetVolumeTemporaryURL = [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:finalURL create:YES error:&error];
+    
+    if (targetVolumeTemporaryURL == nil) {
+        self.localFile = nil;
+        [self failWithError:error];
+        return;
+    }
+    
+    NSURL *sourceVolumeTemporaryURL = [NSURL fileURLWithPath:self.localFileTemporary];
+    targetVolumeTemporaryURL = [targetVolumeTemporaryURL URLByAppendingPathComponent:[sourceVolumeTemporaryURL lastPathComponent]];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+        NSError *error;
+        // Potentially long running copy operation when the finalURL is not on the main volume
+        NSLog(@"Moving temporary file from %@ to %@", sourceVolumeTemporaryURL.path, targetVolumeTemporaryURL.path);
+        if (![[NSFileManager defaultManager] moveItemAtURL:sourceVolumeTemporaryURL toURL:targetVolumeTemporaryURL error:&error]) {
+            dispatch_async(dispatch_get_main_queue() , ^{
+                self.localFile = nil;
+                [self failWithError:error];
+            });
+        }
+        
+        if (self.status == PutIODownloadStatusCancelled) {
+            [[NSFileManager defaultManager] removeItemAtURL:[targetVolumeTemporaryURL URLByDeletingLastPathComponent] error:nil];
+            return;
+        }
+        
+        NSLog(@"Moving temporary file from %@ to final location at %@", targetVolumeTemporaryURL.path, finalURL.path);
+        if (![[NSFileManager defaultManager] moveItemAtURL:targetVolumeTemporaryURL toURL:finalURL error:&error]) {
+            [[NSFileManager defaultManager] removeItemAtURL:[targetVolumeTemporaryURL URLByDeletingLastPathComponent] error:nil];
+            dispatch_async(dispatch_get_main_queue() , ^{
+                self.localFile = nil;
+                [self failWithError:error];
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue() , ^{
+                [self finishSuccessfully];
+            });
+        }
+    });
 }
 
 - (NSString*)resolveNamingConflictForFileAtPath:(NSString*)filePath
@@ -260,25 +331,8 @@
         if(![self verifyDownloadAt:location]){
             return;
         }
-        if(![self moveTemporaryDataFileToFinalLocation:location]){
-            return;
-        }
         
-        self.progressIsKnown = YES;
-        self.progress = 1.0f;
-        self.estimatedRemainingTimeIsKnown = YES;
-        self.estimatedRemainingTime = 0;
-        download = nil;
-        [self changeStatus:PutIODownloadStatusFinished];
-        NSLog(@"%@: Download finished", self);
-        if(self.originatingSyncInstruction != nil){
-            [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
-            if((self.originatingSyncInstruction.deleteRemoteFilesAfterSync).boolValue){
-                PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
-                                                                                                     completion:nil];
-                [[PutIOAPI api] performRequest:request];
-            }
-        }
+        [self moveTemporaryDataFileToFinalLocation:location];
     });
 }
 
@@ -337,6 +391,10 @@
 
 -(void)failWithError:(NSError *)error
 {
+    if (self.status == PutIODownloadStatusCancelled) {
+        return;
+    }
+    
     [download cancel];
     download = nil;
     [progressUpdateTimer invalidate];
@@ -362,7 +420,8 @@
                                                   @((int)PutIODownloadStatusPaused) : NSLocalizedString(@"Paused", nil),
                                                   @((int)PutIODownloadStatusFinished) : NSLocalizedString(@"Finished", nil),
                                                   @((int)PutIODownloadStatusCancelled) : NSLocalizedString(@"Cancelled", nil),
-                                                  @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil)
+                                                  @((int)PutIODownloadStatusFailed) : NSLocalizedString(@"Failed", nil),
+                                                  @((int)PutIODownloadStatusFinishing) : NSLocalizedString(@"Finishing", nil)
                                                   };
     NSDictionary *notificationNames = @{
                                         @((int)PutIODownloadStatusDownloading) : PutIODownloadStartedNotification,
@@ -379,6 +438,29 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
     if(deliverNotification)
         [self deliverUserNotification];
+}
+
+-(void)finishSuccessfully
+{
+    if (self.status == PutIODownloadStatusCancelled) {
+        return;
+    }
+    
+    self.progressIsKnown = YES;
+    self.progress = 1.0f;
+    self.estimatedRemainingTimeIsKnown = YES;
+    self.estimatedRemainingTime = 0;
+    download = nil;
+    [self changeStatus:PutIODownloadStatusFinished];
+    NSLog(@"%@: Download finished", self);
+    if(self.originatingSyncInstruction != nil){
+        [self.originatingSyncInstruction addKnownItemWithID:self.putioFile.fileID];
+        if((self.originatingSyncInstruction.deleteRemoteFilesAfterSync).boolValue){
+            PutIOAPIFileDeletionRequest *request = [PutIOAPIFileDeletionRequest requestDeletionOfFileWithID:self.putioFile.fileID
+                                                                                                 completion:nil];
+            [[PutIOAPI api] performRequest:request];
+        }
+    }
 }
 
 #pragma mark - User Notifications

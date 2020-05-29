@@ -103,6 +103,7 @@
 		392460F4163EB38600954B64 /* SyncRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRunner.m; sourceTree = "<group>"; };
 		392F8F7619513AAE001E8ECF /* NSDictionary+URLQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "NSDictionary+URLQueryString.h"; path = "Classes/NSDictionary+URLQueryString.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		392F8F7719513AAE001E8ECF /* NSDictionary+URLQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+URLQueryString.m"; path = "Classes/NSDictionary+URLQueryString.m"; sourceTree = "<group>"; };
+		3945EC872481A149005F1926 /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
 		39585BAF177FC396004B74B3 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		39585BB3177FC592004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AccountPreferences.xib; sourceTree = "<group>"; };
 		39585BBB177FC5DE004B74B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SyncPreferences.xib; sourceTree = "<group>"; };
@@ -502,6 +503,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = DD4F7BF913C30F9F00825C6E;
@@ -890,10 +892,11 @@
 		391DD7D3195512A0003CCF55 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3945EC872481A149005F1926 /* Model 3.xcdatamodel */,
 				390775781E35181500091B9A /* Model 2.xcdatamodel */,
 				391DD7D4195512A0003CCF55 /* Model.xcdatamodel */,
 			);
-			currentVersion = 390775781E35181500091B9A /* Model 2.xcdatamodel */;
+			currentVersion = 3945EC872481A149005F1926 /* Model 3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

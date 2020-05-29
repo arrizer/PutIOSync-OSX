@@ -75,7 +75,7 @@ static TimeIntervalFormatter *timeIntervalFormatter;
     progressBar.hidden = !(download.status == PutIODownloadStatusDownloading);
     statusLabelConstraint.constant = ((download.status == PutIODownloadStatusDownloading) ? 0 : -8);
     textLabelConstraint.constant = ((download.status == PutIODownloadStatusDownloading) ? 3 : 12);
-    if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending){
+    if(download.status == PutIODownloadStatusDownloading || download.status == PutIODownloadStatusPending || download.status == PutIODownloadStatusFinishing){
         NSString *stopImage = (self.backgroundStyle == NSBackgroundStyleDark ? @"stopImageInverted.png" : @"stopImage.png");
         pauseResumeButton.image = [NSImage imageNamed:stopImage];
         [pauseResumeButton setHidden:NO];
@@ -108,6 +108,9 @@ static TimeIntervalFormatter *timeIntervalFormatter;
     else if(download.status == PutIODownloadStatusPaused || (download.status == PutIODownloadStatusPending && download.receivedSize > 0)){
         statusString = [NSString stringWithFormat:@"%@ - %@", sizesString, download.localizedStatus];
     }
+    else if(download.status == PutIODownloadStatusFinishing){
+        statusString = [NSString stringWithFormat:@"%@ - %@", sizeTotalString, download.localizedStatus];
+    }
     else if(download.status == PutIODownloadStatusFinished){
         statusString = [NSString stringWithFormat:@"%@ - %@", sizeTotalString, download.localizedStatus];
     }
@@ -124,6 +127,8 @@ static TimeIntervalFormatter *timeIntervalFormatter;
         [_download pauseDownload];
     else if(_download.status == PutIODownloadStatusPaused || _download.status == PutIODownloadStatusFailed)
         [_download startDownload];
+    else if(_download.status == PutIODownloadStatusFinishing)
+        [_download cancelDownload];
 }
 
 #pragma mark - Icon Loading

@@ -17,7 +17,8 @@ typedef enum PutIODownloadStatusEnum : int16_t{
     PutIODownloadStatusPaused = 2,
     PutIODownloadStatusFinished = 3,
     PutIODownloadStatusCancelled = 4,
-    PutIODownloadStatusFailed = 5
+    PutIODownloadStatusFailed = 5,
+    PutIODownloadStatusFinishing = 6
 } PutIODownloadStatus;
 
 @interface Download : NSManagedObject

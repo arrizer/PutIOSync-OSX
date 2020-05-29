@@ -53,7 +53,7 @@
 - (void)clearDownloadList
 {
     for(Download *download in [allDownloads copy]){
-        if(download.status != PutIODownloadStatusDownloading && download.status != PutIODownloadStatusPending){
+        if(download.status != PutIODownloadStatusDownloading && download.status != PutIODownloadStatusPending && download.status != PutIODownloadStatusFinishing){
             [download cancelDownload];
             [allDownloads removeObject:download];
             [download.managedObjectContext deleteObject:download];
